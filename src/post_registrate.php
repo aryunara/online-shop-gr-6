@@ -2,7 +2,9 @@
 
 $mainFlag = true;
 
-$name = $_POST['name'];
+if (isset($_POST['name'])) {
+    $name = $_POST['name'];
+}
 if (empty($name)) {
     echo 'Имя должно быть заполнено';
     $mainFlag = false;
@@ -12,7 +14,9 @@ if (strlen($name) < 2) {
     $mainFlag = false;
 }
 
-$email = $_POST['email'];
+if (isset($_POST['email'])) {
+    $email = $_POST['email'];
+}
 if (empty($email)) {
     echo 'Почта должна быть заполнена';
     $mainFlag = false;
@@ -28,12 +32,16 @@ if ($flag === false) {
     $mainFlag = false;
 }
 
-$password = $_POST['psw'];
+if (isset($_POST['psw'])) {
+    $password = $_POST['psw'];
+}
 if (empty($password)) {
     echo 'Пароль должен быть заполнен';
     $mainFlag = false;
 }
-$passwordRep = $_POST['psw-repeat'];
+if (isset($_POST['psw-repeat'])) {
+    $passwordRep = $_POST['psw-repeat'];
+}
 if (empty($passwordRep)) {
     echo 'Повторите пароль';
     $mainFlag = false;
