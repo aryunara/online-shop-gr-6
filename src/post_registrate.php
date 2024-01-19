@@ -73,4 +73,6 @@ if (empty($errors)) {
 else {
     print_r($errors);
 }
-//$pdo->exec("INSERT INTO users (name, email, password) VALUES ('$name', '$email', '$password')");
+
+require_once './get_registrate.php';
+?>
