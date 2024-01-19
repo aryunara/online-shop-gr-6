@@ -64,8 +64,11 @@ $pdo = new PDO("pgsql:host=db; port=5432; dbname=db", "aryuna", "030201");
 if (empty($errors)) {
     $stmt = $pdo->prepare("INSERT INTO users (name, email, password) VALUES (:name, :email, :password)");
     $stmt->execute(['name' => $name, 'email' => $email, 'password' => $password]);
-    $userInfo = $pdo->query('SELECT * FROM users ORDER BY id DESC LIMIT 1');
-    print_r($userInfo->fetch());
+
+    $stmt = $pdo->prepare('SELECT * FROM users WHERE email = :email');
+    $stmt->execute (['email' => $email]);
+    $userInfo = $stmt->fetch();
+    print_r($userInfo);
 }
 else {
     print_r($errors);
