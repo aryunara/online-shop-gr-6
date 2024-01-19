@@ -1,62 +1,73 @@
 <?php
 
-$mainFlag = true;
+$errors = [];
 
 if (isset($_POST['name'])) {
     $name = $_POST['name'];
+    if (empty($name)) {
+        $errors['name'] = 'Имя должно быть заполнено';
+    }
+    if (strlen($name) < 2) {
+        $errors['name'] = 'Имя должно содержать 2 или более символов';
+    }
+} else {
+    $errors['name'] = 'Поле name не указано';
 }
-if (empty($name)) {
-    echo 'Имя должно быть заполнено';
-    $mainFlag = false;
-}
-if (strlen($name) < 2) {
-    echo 'Имя должно быть двух символов';
-    $mainFlag = false;
-}
+
 
 if (isset($_POST['email'])) {
     $email = $_POST['email'];
-}
-if (empty($email)) {
-    echo 'Почта должна быть заполнена';
-    $mainFlag = false;
-}
-$flag = false;
-for ($i = 0; $i < strlen($email); $i++) {
-    if ($email[$i] === '@') {
-        $flag = true;
+    if (empty($email)) {
+        $errors['email'] = 'Почта должна быть заполнена';
     }
+    $flag = false;
+    for ($i = 0; $i < strlen($email); $i++) {
+        if ($email[$i] === '@') {
+            $flag = true;
+        }
+    }
+    if ($flag === false) {
+        $errors['email'] = 'Почта должна содержать "@"';
+    }
+} else {
+    $errors['email'] = 'Поле email не указано';
 }
-if ($flag === false) {
-    echo 'Почта должна содержать "@"';
-    $mainFlag = false;
-}
+
 
 if (isset($_POST['psw'])) {
     $password = $_POST['psw'];
+    if (empty($password)) {
+        $errors['psw'] = 'Пароль должен быть заполнен';
+    }
+    if (strlen($password) < 3) {
+        $errors['psw'] = 'Пароль слишком короткий';
+    }
+} else {
+    $errors['psw'] = 'Поле password не указано';
 }
-if (empty($password)) {
-    echo 'Пароль должен быть заполнен';
-    $mainFlag = false;
-}
+
 if (isset($_POST['psw-repeat'])) {
     $passwordRep = $_POST['psw-repeat'];
+    if (empty($passwordRep)) {
+        $errors['psw-repeat'] = 'Повторите пароль';
+    }
+    if ($password !== $passwordRep) {
+        $errors['psw-repeat'] = 'Пароли должны совпадать';
+    }
+} else {
+    $errors['psw-repeat'] = 'Поле repeat password не указано';
 }
-if (empty($passwordRep)) {
-    echo 'Повторите пароль';
-    $mainFlag = false;
-}
-if ($password !== $passwordRep) {
-    echo 'Пароли должны совпадать';
-    $mainFlag = false;
-}
+
 
 $pdo = new PDO("pgsql:host=db; port=5432; dbname=db", "aryuna", "030201");
 
-if ($mainFlag === true) {
+if (empty($errors)) {
     $stmt = $pdo->prepare("INSERT INTO users (name, email, password) VALUES (:name, :email, :password)");
     $stmt->execute(['name' => $name, 'email' => $email, 'password' => $password]);
     $userInfo = $pdo->query('SELECT * FROM users ORDER BY id DESC LIMIT 1');
-    print_r($userInfo->fetchAll());
+    print_r($userInfo->fetch());
+}
+else {
+    print_r($errors);
 }
 //$pdo->exec("INSERT INTO users (name, email, password) VALUES ('$name', '$email', '$password')");
