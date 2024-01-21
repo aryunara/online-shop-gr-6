@@ -1,5 +1,7 @@
 <?php
 
+$errors = [];
+
 if (isset($_POST['username'])) {
     $username = $_POST['username'];
 }
@@ -14,15 +16,16 @@ $stmt->execute(['username' => $username]);
 $userInfo = $stmt->fetch();
 
 if (empty($userInfo)) {
-    echo 'Неверный email';
+    $errors['username'] = 'Неверный email';
 } else {
     if ($password === $userInfo['password']) {
         echo "Вы залогинились";
     } else {
-        echo "Неверный пароль";
+        $errors['password'] = "Неверный пароль";
     }
 }
 
+require_once './get_login.php';
 
 
 
