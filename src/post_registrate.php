@@ -1,77 +1,78 @@
 <?php
 
-$errors = [];
+function validate(array $userInfo) : array
+{
+    $errors = [];
 
-if (isset($_POST['name'])) {
-    $name = $_POST['name'];
-    if (empty($name)) {
-        $errors['name'] = 'Имя должно быть заполнено';
-    }
-    if (strlen($name) < 2) {
-        $errors['name'] = 'Имя должно содержать 2 или более символов';
-    }
-} else {
-    $errors['name'] = 'Поле name не указано';
-}
-
-
-if (isset($_POST['email'])) {
-    $email = $_POST['email'];
-    if (empty($email)) {
-        $errors['email'] = 'Почта должна быть заполнена';
-    }
-    $flag = false;
-    for ($i = 0; $i < strlen($email); $i++) {
-        if ($email[$i] === '@') {
-            $flag = true;
+    if (isset($userInfo['name'])) {
+        $name = $userInfo['name'];
+        if (empty($name)) {
+            $errors['name'] = 'Имя должно быть заполнено';
         }
+        if (strlen($name) < 2) {
+            $errors['name'] = 'Имя должно содержать 2 или более символов';
+        }
+    } else {
+        $errors['name'] = 'Поле name не указано';
     }
-    if ($flag === false) {
-        $errors['email'] = 'Почта должна содержать "@"';
+
+    if (isset($userInfo['email'])) {
+        $email = $userInfo['email'];
+        if (empty($email)) {
+            $errors['email'] = 'Почта должна быть заполнена';
+        }
+        $flag = false;
+        for ($i = 0; $i < strlen($email); $i++) {
+            if ($email[$i] === '@') {
+                $flag = true;
+            }
+        }
+        if ($flag === false) {
+            $errors['email'] = 'Почта должна содержать "@"';
+        }
+    } else {
+        $errors['email'] = 'Поле email не указано';
     }
-} else {
-    $errors['email'] = 'Поле email не указано';
+
+    if (isset($userInfo['psw'])) {
+        $password = $userInfo['psw'];
+        if (empty($password)) {
+            $errors['psw'] = 'Пароль должен быть заполнен';
+        }
+        if (strlen($password) < 3) {
+            $errors['psw'] = 'Пароль слишком короткий';
+        }
+    } else {
+        $errors['psw'] = 'Поле password не указано';
+    }
+
+    if (isset($_POST['psw-repeat'])) {
+        $passwordRep = $_POST['psw-repeat'];
+        if (empty($passwordRep)) {
+            $errors['psw-repeat'] = 'Повторите пароль';
+        }
+        if ($password !== $passwordRep) {
+            $errors['psw-repeat'] = 'Пароли должны совпадать';
+        }
+    } else {
+        $errors['psw-repeat'] = 'Поле repeat password не указано';
+    }
+    return $errors;
 }
 
-
-if (isset($_POST['psw'])) {
-    $password = $_POST['psw'];
-    if (empty($password)) {
-        $errors['psw'] = 'Пароль должен быть заполнен';
-    }
-    if (strlen($password) < 3) {
-        $errors['psw'] = 'Пароль слишком короткий';
-    }
-} else {
-    $errors['psw'] = 'Поле password не указано';
-}
-
-if (isset($_POST['psw-repeat'])) {
-    $passwordRep = $_POST['psw-repeat'];
-    if (empty($passwordRep)) {
-        $errors['psw-repeat'] = 'Повторите пароль';
-    }
-    if ($password !== $passwordRep) {
-        $errors['psw-repeat'] = 'Пароли должны совпадать';
-    }
-} else {
-    $errors['psw-repeat'] = 'Поле repeat password не указано';
-}
-
-
-$pdo = new PDO("pgsql:host=db; port=5432; dbname=db", "aryuna", "030201");
+$errors = validate($_POST);
 
 if (empty($errors)) {
+    $pdo = new PDO("pgsql:host=db; port=5432; dbname=db", "aryuna", "030201");
+
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $password = $_POST['psw'];
+    $passwordRep = $_POST['psw-repeat'];
+
     $stmt = $pdo->prepare("INSERT INTO users (name, email, password) VALUES (:name, :email, :password)");
     $stmt->execute(['name' => $name, 'email' => $email, 'password' => $password]);
-
-    $stmt = $pdo->prepare('SELECT * FROM users WHERE email = :email');
-    $stmt->execute (['email' => $email]);
-    $userInfo = $stmt->fetch();
-    print_r($userInfo);
-}
-else {
-    print_r($errors);
+    header('Location: /main.php');
 }
 
 require_once './get_registrate.php';

@@ -1,78 +1,103 @@
-<form action="post_login.php" method="POST">
-    <div class="wrapper">
-        <form class="form-signin">
-            <h2 class="form-signin-heading">Please login</h2>
+<form action="post_login.php" method="post">
 
-            <input type="text" class="form-control" name="username" placeholder="Email Address" required="" autofocus=""/>
-            <?php if (isset($errors['username'])): ?>
-                <label style="color: red"><?php echo $errors['username']; ?></label>
-            <?php endif;?>
-            <br>
+    <div class="container">
+        <h1>Sign In</h1>
+        <p>Please fill in this form to log in to your account.</p>
+        <hr>
 
-            <input type="password" class="form-control" name="password" placeholder="Password" required=""/>
-            <?php if (isset($errors['password'])): ?>
-                <label style="color: red"><?php echo $errors['password']; ?></label>
-            <?php endif;?>
-            <br>
+        <label for="email"><b>Username</b></label>
+        <?php if (isset($errors['email'])): ?>
+            <label style="color: red"><?php echo $errors['email']; ?></label>
+        <?php endif; ?>
+        <input type="text" placeholder="Enter Email" name="email" required>
 
-            <label class="checkbox">
-                <input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe"> Remember me
-            </label>
-            <br>
+        <label for="psw"><b>Password</b></label>
+        <?php if (isset($errors['psw'])): ?>
+            <label style="color: red"><?php echo $errors['psw']; ?></label>
+        <?php endif; ?>
+        <input type="password" placeholder="Enter Password" name="psw" required>
 
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
-        </form>
+        <button type="submit">Login</button>
+        <label>
+            <input type="checkbox" checked="checked" name="remember"> Remember me
+        </label>
     </div>
-    <style>
-        <link rel="stylesheet" type="text/css" href="bourbon" />
-        body {
-            background: #eee !important;
+
+    <div class="container" style="background-color:#f1f1f1">
+        <button type="button" class="cancelbtn">Cancel</button>
+        <span class="psw">Forgot <a href="#">password?</a></span>
+    </div>
+</form>
+
+<style>/* Bordered form */
+    form {
+        border: 3px solid #f1f1f1;
+    }
+
+    /* Full-width inputs */
+    input[type=text], input[type=password] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+
+    /* Set a style for all buttons */
+    button {
+        background-color: #04AA6D;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+    }
+
+    /* Add a hover effect for buttons */
+    button:hover {
+        opacity: 0.8;
+    }
+
+    /* Extra style for the cancel button (red) */
+    .cancelbtn {
+        width: auto;
+        padding: 10px 18px;
+        background-color: #f44336;
+    }
+
+    /* Center the avatar image inside this container */
+    .imgcontainer {
+        text-align: center;
+        margin: 24px 0 12px 0;
+    }
+
+    /* Avatar image */
+    img.avatar {
+        width: 40%;
+        border-radius: 50%;
+    }
+
+    /* Add padding to containers */
+    .container {
+        padding: 16px;
+    }
+
+    /* The "Forgot password" text */
+    span.psw {
+        float: right;
+        padding-top: 16px;
+    }
+
+    /* Change styles for span and cancel button on extra small screens */
+    @media screen and (max-width: 300px) {
+        span.psw {
+            display: block;
+            float: none;
+        }
+        .cancelbtn {
+            width: 100%;
         }
 
-        .wrapper {
-            margin-top: 80px;
-            margin-bottom: 80px;
-        }
-
-        .form-signin {
-            max-width: 380px;
-            padding: 15px 35px 45px;
-            margin: 0 auto;
-            background-color: #fff;
-            border: 1px solid rgba(0,0,0,0.1);
-
-            .form-signin-heading,
-            .checkbox {
-                margin-bottom: 30px;
-            }
-
-            .checkbox {
-                font-weight: normal;
-            }
-
-            .form-control {
-                position: relative;
-                font-size: 16px;
-                height: auto;
-                padding: 10px;
-                @include box-sizing(border-box);
-
-                &:focus {
-                    z-index: 2;
-                }
-            }
-
-            input[type="text"] {
-                margin-bottom: -1px;
-                border-bottom-left-radius: 0;
-                border-bottom-right-radius: 0;
-            }
-
-            input[type="password"] {
-                margin-bottom: 20px;
-                border-top-left-radius: 0;
-                border-top-right-radius: 0;
-            }
-        }
-
-    </style>
+    }</style>
