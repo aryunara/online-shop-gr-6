@@ -18,7 +18,7 @@ $userInfo = $stmt->fetch();
 if (empty($userInfo)) {
     $errors['email'] = 'Неверный email';
 } else {
-    if ($password === $userInfo['password']) {
+    if (password_verify($password, $userInfo['password'])) {
         session_start();
         $_SESSION['user_id'] = session_id();
         header('Location: /main.php');
@@ -28,7 +28,3 @@ if (empty($userInfo)) {
 }
 
 require_once './get_login.php';
-
-
-
-
