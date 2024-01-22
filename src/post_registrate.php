@@ -46,8 +46,8 @@ function validate(array $userInfo) : array
         $errors['psw'] = 'Поле password не указано';
     }
 
-    if (isset($_POST['psw-repeat'])) {
-        $passwordRep = $_POST['psw-repeat'];
+    if (isset($userInfo['psw-repeat'])) {
+        $passwordRep = $userInfo['psw-repeat'];
         if (empty($passwordRep)) {
             $errors['psw-repeat'] = 'Повторите пароль';
         }
@@ -72,7 +72,7 @@ if (empty($errors)) {
 
     $stmt = $pdo->prepare("INSERT INTO users (name, email, password) VALUES (:name, :email, :password)");
     $stmt->execute(['name' => $name, 'email' => $email, 'password' => $password]);
-    header('Location: /main.php');
+    header('Location: /get_login.php');
 }
 
 require_once './get_registrate.php';

@@ -5,7 +5,7 @@
         <p>Please fill in this form to log in to your account.</p>
         <hr>
 
-        <label for="email"><b>Username</b></label>
+        <label for="email"><b>Email</b></label>
         <?php if (isset($errors['email'])): ?>
             <label style="color: red"><?php echo $errors['email']; ?></label>
         <?php endif; ?>

@@ -19,6 +19,8 @@ if (empty($userInfo)) {
     $errors['email'] = 'Неверный email';
 } else {
     if ($password === $userInfo['password']) {
+        session_start();
+        $_SESSION['user_id'] = session_id();
         header('Location: /main.php');
     } else {
         $errors['psw'] = "Неверный пароль";
