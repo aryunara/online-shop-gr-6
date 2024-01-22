@@ -20,7 +20,9 @@ if (empty($userInfo)) {
 } else {
     if (password_verify($password, $userInfo['password'])) {
         session_start();
-        $_SESSION['user_id'] = session_id();
+        $_SESSION['user_name'] = $userInfo['name'];
+        $_SESSION['user_email'] = $userInfo['email'];
+        $_SESSION['user_id'] = $userInfo['id'];
         header('Location: /main.php');
     } else {
         $errors['psw'] = "Неверный пароль";
