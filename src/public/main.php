@@ -1,7 +1,7 @@
 <?php
 
-require_once './../Controller/MainController.php';
+require_once './../Controller/ProductController.php';
 
-$obj = new MainController();
+$obj = new ProductController();
 
 $obj->getCatalog();

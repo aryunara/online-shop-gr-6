@@ -7,8 +7,8 @@
                 <div class="card-header">
                     Hit!
                 </div>
-                <img class="card-img-top" src="<?php echo $product['img_url']; ?>" alt="Card image"  width="400"
-                     height="341">
+                <img class="card-img-top" src="<?php echo $product['img_url']; ?>" alt="Card image"  width="250"
+                     height="190">
                 <div class="card-body">
                     <p class="card-text text-muted"><?php echo $product['description']; ?></p>
                     <a href="#"><h5 class="card-title"><?php echo $product['name']; ?></h5></a>
@@ -18,6 +18,9 @@
                 </div>
             </a>
         </div>
+            <button type="button" name="popup-button">Добавить в корзину</button>
+        <br>
+        <br>
         <?php endforeach; ?>
     </div>
 </div>
