@@ -7,7 +7,7 @@ services:
       context: ./
       dockerfile: docker/Dockerfile
     volumes:
-      - './src:/var/www/html'
+      - '.:/var/www/html'
     links:
       - db
 
@@ -15,9 +15,9 @@ services:
   nginx:
     image: nginx:latest
     ports:
-      - '8082:80'
+      - '8081:80'
     volumes:
-      - './src:/var/www/html'
+      - '.:/var/www/html'
       - './docker/nginx/conf.d:/etc/nginx/conf.d'
     links:
       - php
