@@ -18,11 +18,14 @@ class UserController
             $passwordRep = $_POST['psw-repeat'];
 
             $hash = password_hash($password, PASSWORD_DEFAULT);
+            try {
+                $stmt = $pdo->prepare("INSERT INTO users (name, email, password) VALUES (:name, :email, :hash)");
+                $stmt->execute(['name' => $name, 'email' => $email, 'hash' => $hash]);
+                header('Location: /login');
+            } catch (PDOException){
+                $errors['email'] = "Пользователь с таким email уже существует";
+            }
 
-            $stmt = $pdo->prepare("INSERT INTO users (name, email, password) VALUES (:name, :email, :hash)");
-            $stmt->execute(['name' => $name, 'email' => $email, 'hash' => $hash]);
-
-            header('Location: /login');
         }
         require_once './../View/get_registrate.php';
     }
