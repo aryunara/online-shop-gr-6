@@ -22,7 +22,7 @@ class UserController
             $stmt = $pdo->prepare("INSERT INTO users (name, email, password) VALUES (:name, :email, :hash)");
             $stmt->execute(['name' => $name, 'email' => $email, 'hash' => $hash]);
 
-            header('Location: /get_login.php');
+            header('Location: /login');
         }
         require_once './../View/get_registrate.php';
     }
@@ -117,7 +117,7 @@ class UserController
                 $_SESSION['user_name'] = $userInfo['name'];
                 $_SESSION['user_email'] = $userInfo['email'];
                 $_SESSION['user_id'] = $userInfo['id'];
-                header('Location: /main.php');
+                header('Location: /main');
             } else {
                 $errors['psw'] = "Неверный пароль";
             }

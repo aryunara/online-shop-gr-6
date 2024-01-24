@@ -1,11 +1,37 @@
 <?php
 
-$pdo = new PDO("pgsql:host=db; port=5432; dbname=db", "aryuna", "030201");
+$requestUri = $_SERVER['REQUEST_URI'];
+$requestMethod = $_SERVER['REQUEST_METHOD'];
 
-$pdo->exec('CREATE TABLE test (id serial not null, name varchar (255) not null)');
+if ($requestUri === '/login') {
+    require_once './../Controller/UserController.php';
+    if ($requestMethod === 'GET') {
+        $obj = new UserController();
+        $obj->getLogin();
+    } elseif ($requestMethod === 'POST') {
+        $obj = new UserController();
+        $obj->postLogin();
+    } else {
+        echo "Метод $requestMethod не поддерживается для адреса $requestUri";
+    }
 
-//$pdo->exec("INSERT INTO test1 (name) VALUES ('Ivan')");
-//
-//$q = $pdo->query('SELECT * FROM test1');
-//
-//print_r($q->fetchAll());
+} elseif ($requestUri === '/registrate') {
+    require_once './../Controller/UserController.php';
+    if ($requestMethod === 'GET') {
+        $obj = new UserController();
+        $obj->getRegistrate();
+    } elseif ($requestMethod === 'POST') {
+        $obj = new UserController();
+        $obj->postRegistrate();
+    } else {
+        echo "Метод $requestMethod не поддерживается для адреса $requestUri";
+    }
+
+} elseif ($requestUri === '/main') {
+    require_once './../Controller/ProductController.php';
+
+    $obj = new ProductController();
+    $obj->getCatalog();
+    } else {
+    require_once './../View/404.html';
+}

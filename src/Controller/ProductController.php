@@ -6,7 +6,7 @@ class ProductController
     {
         session_start();
         if (!isset($_SESSION['user_id'])) {
-            header('Location: /get_login.php');
+            header('Location: /login');
         } else {
             echo "Hello, {$_SESSION['user_name']}!";
 

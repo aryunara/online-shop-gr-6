@@ -1,4 +1,4 @@
-<form action="post_login.php" method="post">
+<form action="/login" method="post">
 
     <div class="container">
         <h1>Sign In</h1>
@@ -25,7 +25,7 @@
 
     <div class="container" style="background-color:#f1f1f1">
         <button type="button" class="cancelbtn">Cancel</button>
-        <span class="psw">Forgot <a href="#">password?</a></span>
+        <span class="psw">Don't have an account? <a href="http://localhost:8081/registrate">Sign up.</a></span>
     </div>
 </form>
 
