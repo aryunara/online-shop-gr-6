@@ -3,7 +3,7 @@ class UserController
 {
     public function getRegistrate()
     {
-        require_once './../View/get_registrate.php';
+        require_once './../View/get_registrate.phtml';
     }
 
     public function postRegistrate()
@@ -27,7 +27,7 @@ class UserController
             }
 
         }
-        require_once './../View/get_registrate.php';
+        require_once './../View/get_registrate.phtml';
     }
     private function validate(array $userInfo) : array
     {
@@ -91,7 +91,7 @@ class UserController
 
     public function getLogin()
     {
-        require_once './../View/get_login.php';
+        require_once './../View/get_login.phtml';
     }
 
     public function postLogin()
@@ -125,6 +125,6 @@ class UserController
                 $errors['psw'] = "Неверный пароль";
             }
         }
-        require_once './../View/get_login.php';
+        require_once './../View/get_login.phtml';
     }
 }

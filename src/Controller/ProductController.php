@@ -15,7 +15,7 @@ class ProductController
             $stmt = $pdo->query('SELECT * FROM products');
             $products = $stmt->fetchAll();
 
-            require_once './../View/catalog.php';
+            require_once './../View/catalog.phtml';
         }
     }
 
@@ -23,7 +23,7 @@ class ProductController
     {
         session_start();
         if (!isset($_SESSION['user_id'])) {
-            header('Location: /get_login.php');
+            header('Location: /get_login.phtml');
         }
 
 
