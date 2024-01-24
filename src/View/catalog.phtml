@@ -2,25 +2,29 @@
     <h3>Product Catalog</h3>
     <div class="card-deck">
         <?php foreach ($products as $product) : ?>
-        <div class="card text-center">
-            <a href="#">
-                <div class="card-header">
-                    Hit!
+            <form action="/add-product" method="POST">
+                <div class="card text-center">
+                    <a href="#">
+                        <div class="card-header">
+                            Hit!
+                        </div>
+                        <img class="card-img-top" src="<?php echo $product['img_url']; ?>" alt="Card image"  width="250"
+                             height="190">
+                        <div class="card-body">
+                            <p class="card-text text-muted"><?php echo $product['description']; ?></p>
+                            <a href="#"><h5 class="card-title"><?php echo $product['name']; ?></h5></a>
+                            <div class="card-footer">
+                                <?php echo "{$product['price']} руб."; ?>
+                            </div>
+                        </div>
+                    </a>
+                    <input type="hidden" value="<?php echo "{$product['id']}"; ?>" placeholder="Enter product id" name="product-id" id="product-id" required>
+                    <input type="text" placeholder="Enter quantity" name="quantity" id="quantity" required>
+                    <button type="submit" class="registerbtn">Add products</button>
                 </div>
-                <img class="card-img-top" src="<?php echo $product['img_url']; ?>" alt="Card image"  width="250"
-                     height="190">
-                <div class="card-body">
-                    <p class="card-text text-muted"><?php echo $product['description']; ?></p>
-                    <a href="#"><h5 class="card-title"><?php echo $product['name']; ?></h5></a>
-                    <div class="card-footer">
-                        <?php echo "{$product['price']} руб."; ?>
-                    </div>
-                </div>
-            </a>
-        </div>
-            <button type="button" name="popup-button">Добавить в корзину</button>
-        <br>
-        <br>
+                <br>
+                <br>
+            </form>
         <?php endforeach; ?>
     </div>
 </div>

@@ -26,6 +26,14 @@ class ProductController
             header('Location: /get_login.phtml');
         }
 
+        $pdo = new PDO("pgsql:host=db; port=5432; dbname=db", "aryuna", "030201");
+        $userId = $_SESSION['user_id'];
+        $productId = $_POST['product-id'];
+        $quantity = $_POST['quantity'];
 
+        $stmt = $pdo->prepare("INSERT INTO user_products (user_id, product_id, quantity) VALUES (:userId, :productId, :quantity)");
+        $stmt->execute(['userId' => $userId, 'productId' => $productId, 'quantity' => $quantity]);
+
+        echo "Продукты добавлены!";
     }
 }
