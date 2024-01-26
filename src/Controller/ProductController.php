@@ -2,52 +2,45 @@
 
 class ProductController
 {
-    public function getCatalog()
+    public function getCatalog(): void
     {
         session_start();
         if (!isset($_SESSION['user_id'])) {
             header('Location: /login');
         } else {
-
-            $pdo = new PDO("pgsql:host=db; port=5432; dbname=db", "aryuna", "030201");
-
-            $stmt = $pdo->query('SELECT * FROM products');
-            $products = $stmt->fetchAll();
+            require './../Model/Product.php';
+            $productModel = new Product();
+            $products = $productModel->getAll();
 
             require_once './../View/catalog.phtml';
         }
     }
 
-    public function addProduct()
+    public function addProduct() : void
     {
         session_start();
         if (!isset($_SESSION['user_id'])) {
-            header('Location: /get_login.phtml');
+            header('Location: /login');
         }
-
         $errorsQuantity = $this->validateQuantity($_POST);
 
         if (empty($errorsQuantity)) {
-            try {
-                $pdo = new PDO("pgsql:host=db; port=5432; dbname=db", "aryuna", "030201");
-                $userId = $_SESSION['user_id'];
-                $productId = $_POST['product-id'];
-                $quantity = $_POST['quantity'];
+            $userId = $_SESSION['user_id'];
+            $productId = $_POST['product-id'];
+            $quantity = $_POST['quantity'];
 
-                $stmt = $pdo->prepare("INSERT INTO user_products (user_id, product_id, quantity) VALUES (:userId, :productId, :quantity)");
-                $stmt->execute(['userId' => $userId, 'productId' => $productId, 'quantity' => $quantity]);
+            require './../Model/UserProduct.php';
+            $userProductModel = new UserProduct();
+            $userProductModel->create($userId, $productId, $quantity);
 
-                header('Location: /main');
-            } catch(PDOException) {
-                $errorsQuantity['quantity'] = 'Укажите целое число';
-            }
+            header('Location: /main');
+        } else {
+            require './../Model/Product.php';
+            $productModel = new Product();
+            $products = $productModel->getAll();
+
+            require_once './../View/catalog.phtml';
         }
-        $pdo = new PDO("pgsql:host=db; port=5432; dbname=db", "aryuna", "030201");
-
-        $stmt = $pdo->query('SELECT * FROM products');
-        $products = $stmt->fetchAll();
-
-        require_once './../View/catalog.phtml';
     }
 
     private function validateQuantity() : array
@@ -56,12 +49,16 @@ class ProductController
 
         if (isset($_POST['quantity'])) {
             $quantity = $_POST['quantity'];
+            $quantity = (float)$quantity;
 
             if (empty($quantity)) {
                 $errorsQuantity['quantity'] = 'Укажите количество';
             }
             if ($quantity < 1) {
                 $errorsQuantity['quantity'] = 'Количество должно быть больше 0';
+            }
+            if (floor($quantity) !== $quantity) {
+                $errorsQuantity['quantity'] = 'Укажите целое число';
             }
         } else {
             $errorsQuantity['quantity'] = 'Поле quantity не указано';
