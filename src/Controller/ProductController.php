@@ -16,7 +16,7 @@ class ProductController
         }
     }
 
-    public function addProduct() : void
+    public function addProduct(): void
     {
         session_start();
         if (!isset($_SESSION['user_id'])) {
@@ -43,7 +43,7 @@ class ProductController
         }
     }
 
-    private function validateQuantity() : array
+    private function validateQuantity(): array
     {
         $errorsQuantity = [];
 
@@ -65,4 +65,25 @@ class ProductController
         }
         return $errorsQuantity;
     }
+
+    public function getCartProducts()
+    {
+        session_start();
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /main');
+        } else {
+            $user_id = $_SESSION['user_id'];
+            require './../Model/UserProduct.php';
+            $userProductModel = new UserProduct();
+            $cart = $userProductModel->getCart($user_id);
+            $i = 0;
+
+            foreach ($cart as $productInCart) {
+                $userProductModel = new UserProduct();
+                $productsInCartInfo[] = $userProductModel->getProductInCartInfo($productInCart['product_id']);
+            }
+        }
+        require_once './../View/cart.phtml';
+    }
 }
+

@@ -1,6 +1,9 @@
 <div class="container">
     <h3><?php echo "Hello, {$_SESSION['user_name']}!"?></h3>
     <h3>Product Catalog</h3>
+    <div class="container cart">
+        <p><a href="http://localhost:8082/cart">Go to a cart</a>.</p>
+    </div>
     <?php if (isset($errorsQuantity['quantity'])): ?>
         <label style="color: red"><?php echo $errorsQuantity['quantity']; ?></label>
     <?php endif; ?>

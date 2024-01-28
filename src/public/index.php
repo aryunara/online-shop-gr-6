@@ -39,6 +39,12 @@ elseif ($requestUri === '/add-product') {
     $obj->addProduct();
     }
 
+elseif ($requestUri === '/cart') {
+    require_once './../Controller/ProductController.php';
+    $obj = new ProductController();
+    $obj->getCartProducts();
+}
+
 else {
     require_once './../View/404.html';
 }
