@@ -18,7 +18,7 @@ class UserController
 
             $hash = password_hash($password, PASSWORD_DEFAULT);
             try {
-                require './../Model/User.php';
+
                 $userModel = new User();
                 $userModel->insertData($name, $email, $hash);
 
@@ -107,7 +107,6 @@ class UserController
             $password = $_POST['psw'];
         }
 
-        require './../Model/User.php';
         $userModel = new User();
         $userInfo = $userModel->getData($email);
 

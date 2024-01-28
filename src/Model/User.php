@@ -1,6 +1,5 @@
 <?php
 
-require './../Model/Model.php';
 class User extends Model
 {
     public function insertData(string $name, string $email, string $hash) : void

@@ -8,7 +8,7 @@ class ProductController
         if (!isset($_SESSION['user_id'])) {
             header('Location: /login');
         } else {
-            require './../Model/Product.php';
+
             $productModel = new Product();
             $products = $productModel->getAll();
 
@@ -29,13 +29,12 @@ class ProductController
             $productId = $_POST['product-id'];
             $quantity = $_POST['quantity'];
 
-            require './../Model/UserProduct.php';
             $userProductModel = new UserProduct();
             $userProductModel->create($userId, $productId, $quantity);
 
             header('Location: /main');
         } else {
-            require './../Model/Product.php';
+
             $productModel = new Product();
             $products = $productModel->getAll();
 
@@ -73,7 +72,7 @@ class ProductController
             header('Location: /main');
         } else {
             $user_id = $_SESSION['user_id'];
-            require './../Model/UserProduct.php';
+
             $userProductModel = new UserProduct();
             $cart = $userProductModel->getCart($user_id);
             $i = 0;

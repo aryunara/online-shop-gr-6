@@ -3,8 +3,32 @@
 $requestUri = $_SERVER['REQUEST_URI'];
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 
+$controllerAutloader = function (string $class)
+{
+    $path = "./../Controller/$class.php";
+    if (file_exists($path)) {
+        require_once $path;
+
+        return true;
+    }
+    return false;
+};
+
+$modelAutloader = function (string $class)
+{
+    $path = "./../Model/$class.php";
+    if (file_exists($path)) {
+        require_once $path;
+
+        return true;
+    }
+    return false;
+};
+
+spl_autoload_register($controllerAutloader);
+spl_autoload_register($modelAutloader);
+
 if ($requestUri === '/login') {
-    require_once './../Controller/UserController.php';
     if ($requestMethod === 'GET') {
         $obj = new UserController();
         $obj->getLogin();
@@ -16,7 +40,6 @@ if ($requestUri === '/login') {
     }
 
 } elseif ($requestUri === '/registrate') {
-    require_once './../Controller/UserController.php';
     if ($requestMethod === 'GET') {
         $obj = new UserController();
         $obj->getRegistrate();
@@ -28,19 +51,16 @@ if ($requestUri === '/login') {
     }
 
 } elseif ($requestUri === '/main') {
-    require_once './../Controller/ProductController.php';
     $obj = new ProductController();
     $obj->getCatalog();
     }
 
 elseif ($requestUri === '/add-product') {
-    require_once './../Controller/ProductController.php';
     $obj = new ProductController();
     $obj->addProduct();
     }
 
 elseif ($requestUri === '/cart') {
-    require_once './../Controller/ProductController.php';
     $obj = new ProductController();
     $obj->getCartProducts();
 }
