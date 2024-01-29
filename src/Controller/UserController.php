@@ -1,6 +1,11 @@
 <?php
 class UserController
 {
+    private User $user;
+    public function __construct()
+    {
+        $this->user = new User();
+    }
     public function getRegistrate()
     {
         require_once './../View/get_registrate.phtml';
@@ -19,8 +24,7 @@ class UserController
             $hash = password_hash($password, PASSWORD_DEFAULT);
             try {
 
-                $userModel = new User();
-                $userModel->insertData($name, $email, $hash);
+                $this->user->insertData($name, $email, $hash);
 
                 header('Location: /login');
             } catch (PDOException){
@@ -107,8 +111,7 @@ class UserController
             $password = $_POST['psw'];
         }
 
-        $userModel = new User();
-        $userInfo = $userModel->getData($email);
+        $userInfo = $this->user->getData($email);
 
         if (empty($userInfo)) {
             $errors['email'] = 'Неверный email';

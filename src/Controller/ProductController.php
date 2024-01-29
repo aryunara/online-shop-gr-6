@@ -2,6 +2,16 @@
 
 class ProductController
 {
+
+    private Product $product;
+    private UserProduct $userProduct;
+
+    public function __construct()
+    {
+        $this->product = new Product();
+        $this->userProduct = new UserProduct();
+    }
+
     public function getCatalog(): void
     {
         session_start();
@@ -9,8 +19,8 @@ class ProductController
             header('Location: /login');
         } else {
             $user_id = $_SESSION['user_id'];
-            $productModel = new Product();
-            $products = $productModel->getAll();
+
+            $products = $this->product->getAll();
             $productsCount = $this->countProducts($user_id);
 
             require_once './../View/catalog.phtml';
@@ -30,14 +40,12 @@ class ProductController
             $productId = $_POST['product-id'];
             $quantity = $_POST['quantity'];
 
-            $userProductModel = new UserProduct();
-            $userProductModel->create($userId, $productId, $quantity);
+            $this->userProduct->create($userId, $productId, $quantity);
 
             header('Location: /main');
         } else {
 
-            $productModel = new Product();
-            $products = $productModel->getAll();
+            $products = $this->product->getAll();
             $productsCount = $this->countProducts($_SESSION['user_id']);
 
             require_once './../View/catalog.phtml';
@@ -75,8 +83,7 @@ class ProductController
         } else {
             $user_id = $_SESSION['user_id'];
 
-            $userProductModel = new UserProduct();
-            $cart = $userProductModel->getCart($user_id);
+            $cart = $this->userProduct->getCart($user_id);
             $i = 0;
             $total = 0;
             $productCount = count($cart);
@@ -91,8 +98,7 @@ class ProductController
 
     public function countProducts($user_id): int
     {
-        $userProductModel = new UserProduct();
-        $cart = $userProductModel->getCart($user_id);
+        $cart = $this->userProduct->getCart($user_id);
         return count($cart);
     }
 

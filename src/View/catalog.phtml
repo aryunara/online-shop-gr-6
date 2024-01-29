@@ -17,13 +17,13 @@
     <h3>Product Catalog</h3>
 
 
-<!--    <button id="plus">+1</button>-->
+    <!--    <button id="plus">+1</button>-->
 
-<!--    <div id="controls">-->
-<!--        <p>Add to cart</p>-->
-<!--        <button id="btnAdd" class="buttons">+</button>-->
-<!--        <button id="btnRemove" class="buttons">-</button>-->
-<!--    </div>-->
+    <!--    <div id="controls">-->
+    <!--        <p>Add to cart</p>-->
+    <!--        <button id="btnAdd" class="buttons">+</button>-->
+    <!--        <button id="btnRemove" class="buttons">-</button>-->
+    <!--    </div>-->
 
 
     <?php if (isset($errorsQuantity['quantity'])): ?>
@@ -36,9 +36,6 @@
             <form action="/add-product" method="POST">
                 <div class="card text-center">
                     <a href="#">
-                        <div class="card-header">
-                            Hit!
-                        </div>
                         <img class="card-img-top" src="<?php echo $product['img_url']; ?>" alt="Card image"  width="250"
                              height="190">
                         <div class="card-body">
