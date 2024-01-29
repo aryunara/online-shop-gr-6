@@ -3,30 +3,11 @@
 $requestUri = $_SERVER['REQUEST_URI'];
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 
-$controllerAutloader = function (string $class)
-{
-    $path = "./../Controller/$class.php";
-    if (file_exists($path)) {
-        require_once $path;
+require_once "./../App/Autoloader.php";
+use Controller\ProductController as ProductController;
+use Controller\UserController as UserController;
 
-        return true;
-    }
-    return false;
-};
-
-$modelAutloader = function (string $class)
-{
-    $path = "./../Model/$class.php";
-    if (file_exists($path)) {
-        require_once $path;
-
-        return true;
-    }
-    return false;
-};
-
-spl_autoload_register($controllerAutloader);
-spl_autoload_register($modelAutloader);
+Autoloader::registrate();
 
 if ($requestUri === '/login') {
     if ($requestMethod === 'GET') {
