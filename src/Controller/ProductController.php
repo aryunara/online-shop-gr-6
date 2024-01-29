@@ -69,13 +69,14 @@ class ProductController
     {
         session_start();
         if (!isset($_SESSION['user_id'])) {
-            header('Location: /main');
+            header('Location: /login');
         } else {
             $user_id = $_SESSION['user_id'];
 
             $userProductModel = new UserProduct();
             $cart = $userProductModel->getCart($user_id);
             $i = 0;
+            $total = 0;
 
             foreach ($cart as $productInCart) {
                 $userProductModel = new UserProduct();

@@ -1,4 +1,4 @@
-<h1>Shopping Cart</h1>
+<h1><?php echo $_SESSION['user_name']; ?>'s Shopping Cart</h1>
 
 <div class="shopping-cart">
 
@@ -12,7 +12,10 @@
     </div>
 
 
-        <?php foreach ($productsInCartInfo as $productInCartInfo) :?>
+    <?php if (empty($productsInCartInfo)) { ?>
+            <h2>It's empty here! Please add some products.</h2>
+            <?php } else {
+        foreach ($productsInCartInfo as $productInCartInfo) :?>
     <div class="product">
         <div class="product-image">
             <img src="<?php echo $productInCartInfo[0]['img_url']; ?>" width="150" height="90">
@@ -23,35 +26,39 @@
         </div>
         <div class="product-price"><?php echo "{$productInCartInfo[0]['price']} руб."; ?></div>
         <div class="product-quantity">
-            <?php echo $cart[$i]['quantity']; $i++;?>
+            <?php echo $cart[$i]['quantity']; ?>
         </div>
         <div class="product-removal">
             <button class="remove-product">
                 Remove
             </button>
         </div>
-        <div class="product-line-price">25.98</div>
+        <div class="product-line-price"><?php $total += $productInCartInfo[0]['price'] * $cart[$i]['quantity'];
+            echo $productInCartInfo[0]['price'] * $cart[$i]['quantity']; echo ' руб.'; ?></div>
     </div>
-    <?php endforeach; ?>
+            <?php $i++;
+            endforeach; }?>
 
     <div class="totals">
         <div class="totals-item">
             <label>Subtotal</label>
-            <div class="totals-value" id="cart-subtotal">71.97</div>
+            <div class="totals-value" id="cart-subtotal"><?php echo "$total руб."; ?></div>
         </div>
-        <div class="totals-item">
-            <label>Tax (5%)</label>
-            <div class="totals-value" id="cart-tax">3.60</div>
-        </div>
-        <div class="totals-item">
-            <label>Shipping</label>
-            <div class="totals-value" id="cart-shipping">15.00</div>
-        </div>
-        <div class="totals-item totals-item-total">
-            <label>Grand Total</label>
-            <div class="totals-value" id="cart-total">90.57</div>
-        </div>
+<!--        <div class="totals-item">-->
+<!--            <label>Tax (5%)</label>-->
+<!--            <div class="totals-value" id="cart-tax">3.60</div>-->
+<!--        </div>-->
+<!--        <div class="totals-item">-->
+<!--            <label>Shipping</label>-->
+<!--            <div class="totals-value" id="cart-shipping">15.00</div>-->
+<!--        </div>-->
+<!--        <div class="totals-item totals-item-total">-->
+<!--            <label>Grand Total</label>-->
+<!--            <div class="totals-value" id="cart-total">90.57</div>-->
+<!--        </div>-->
     </div>
+
+    <a href="/main" class="goback">Return</a>
 
     <button class="checkout">Checkout</button>
 
@@ -225,6 +232,21 @@
     }
 
     .checkout:hover {
+        background-color: #494;
+    }
+
+    .goback {
+        float: left;
+        border: 0;
+        margin-top: 20px;
+        padding: 6px 25px;
+        background-color: #6b6;
+        color: #fff;
+        font-size: 25px;
+        border-radius: 3px;
+    }
+
+    .goback:hover {
         background-color: #494;
     }
 
