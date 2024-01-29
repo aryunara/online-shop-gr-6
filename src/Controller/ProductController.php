@@ -8,9 +8,10 @@ class ProductController
         if (!isset($_SESSION['user_id'])) {
             header('Location: /login');
         } else {
-
+            $user_id = $_SESSION['user_id'];
             $productModel = new Product();
             $products = $productModel->getAll();
+            $productsCount = $this->countProducts($user_id);
 
             require_once './../View/catalog.phtml';
         }
@@ -37,6 +38,7 @@ class ProductController
 
             $productModel = new Product();
             $products = $productModel->getAll();
+            $productsCount = $this->countProducts($_SESSION['user_id']);
 
             require_once './../View/catalog.phtml';
         }
@@ -77,6 +79,7 @@ class ProductController
             $cart = $userProductModel->getCart($user_id);
             $i = 0;
             $total = 0;
+            $productCount = count($cart);
 
             foreach ($cart as $productInCart) {
                 $userProductModel = new UserProduct();
@@ -85,5 +88,13 @@ class ProductController
         }
         require_once './../View/cart.phtml';
     }
+
+    public function countProducts($user_id): int
+    {
+        $userProductModel = new UserProduct();
+        $cart = $userProductModel->getCart($user_id);
+        return count($cart);
+    }
+
 }
 
