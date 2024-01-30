@@ -39,7 +39,11 @@
                     </a>
 
                     <div id="controls">
-                        <p>Количество: <?php echo $quantity; ?></p>
+                        <p>Количество: <?php $quantity = $this->userProduct->getQuantity($product['id'], $_SESSION['user_id']);
+                        if (empty($quantity)) {
+                            echo 0;
+                        } else {
+                        echo $quantity = $quantity['quantity']; } ?></p>
                         <form action="/add-product" method="POST">
                             <input type="hidden" value="<?php echo $quantity; ?>" name="plus" required>
                             <input type="hidden" value="<?php echo "{$product['id']}"; ?>" placeholder="Enter product id" name="product-id" id="product-id" required>

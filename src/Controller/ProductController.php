@@ -61,9 +61,6 @@ class ProductController
             $products = $this->product->getAll();
             $productsCount = $this->countProducts($_SESSION['user_id']);
 
-            $quantity = $this->userProduct->getQuantity($productId, $userId);
-            $quantity = $quantity['quantity'];
-
             require_once './../View/catalog.phtml';
         }
 
@@ -113,6 +110,7 @@ class ProductController
     {
         if (isset($_POST['plus'])) {
             $quantity = $_POST['plus'];
+            $quantity = (int)$quantity;
             $quantity++;
             return $quantity;
         } else {
@@ -124,6 +122,7 @@ class ProductController
     {
         if (isset($_POST['minus'])) {
             $quantity = $_POST['minus'];
+            $quantity = (int)$quantity;
             $quantity--;
             return $quantity;
         } else {
