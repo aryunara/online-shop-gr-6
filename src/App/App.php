@@ -10,6 +10,7 @@ class App
 
         $requestUri = $_SERVER['REQUEST_URI'];
         $requestMethod = $_SERVER['REQUEST_METHOD'];
+
         if ($requestUri === '/login') {
             if ($requestMethod === 'GET') {
                 $obj = new UserController();

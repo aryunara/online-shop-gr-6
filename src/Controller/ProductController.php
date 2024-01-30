@@ -130,5 +130,17 @@ class ProductController
         }
     }
 
+    public function getProductQuantity($product)
+    {
+        $productId = $product['id'];
+        $userId = $_SESSION['user_id'];
+        $quantity = $this->userProduct->getQuantity($productId, $userId);
+        if (empty($quantity)) {
+            return 0;
+        } else {
+            return $quantity['quantity'];
+        }
+    }
+
 }
 
