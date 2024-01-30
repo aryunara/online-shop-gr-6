@@ -23,4 +23,17 @@ class UserProduct extends Model
         return $stmt->fetchAll();
     }
 
+    public function deleteProduct($productId, $userId)
+    {
+        $stmt = $this->pdo->prepare('DELETE FROM user_products WHERE product_id = :productId AND user_id = :userId');
+        $stmt->execute(['productId' => $productId, 'userId' => $userId]);
+    }
+
+    public function getQuantity($productId, $userId)
+    {
+        $stmt = $this->pdo->prepare('SELECT quantity FROM user_products WHERE product_id = :productId AND user_id = :userId');
+        $stmt->execute(['productId' => $productId, 'userId' => $userId]);
+        return $stmt->fetch();
+    }
+
 }

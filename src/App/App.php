@@ -47,6 +47,16 @@ class App
             $obj->getCartProducts();
         }
 
+        elseif ($requestUri === '/plus') {
+            $obj = new ProductController();
+            $obj->getCatalog();
+        }
+
+        elseif ($requestUri === '/minus') {
+            $obj = new ProductController();
+            $obj->getCatalog();
+        }
+
         else {
             require_once './../View/404.html';
         }

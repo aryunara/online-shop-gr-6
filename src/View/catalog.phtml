@@ -17,15 +17,6 @@
     <h3>Product Catalog</h3>
 
 
-    <!--    <button id="plus">+1</button>-->
-
-    <!--    <div id="controls">-->
-    <!--        <p>Add to cart</p>-->
-    <!--        <button id="btnAdd" class="buttons">+</button>-->
-    <!--        <button id="btnRemove" class="buttons">-</button>-->
-    <!--    </div>-->
-
-
     <?php if (isset($errorsQuantity['quantity'])): ?>
         <label style="color: red"><?php echo $errorsQuantity['quantity']; ?></label>
     <?php endif; ?>
@@ -33,7 +24,7 @@
     <br>
     <div class="card-deck">
         <?php foreach ($products as $product) : ?>
-            <form action="/add-product" method="POST">
+
                 <div class="card text-center">
                     <a href="#">
                         <img class="card-img-top" src="<?php echo $product['img_url']; ?>" alt="Card image"  width="250"
@@ -46,15 +37,26 @@
                             </div>
                         </div>
                     </a>
-                    <input type="hidden" value="<?php echo "{$product['id']}"; ?>" placeholder="Enter product id" name="product-id" id="product-id" required>
-                    <br>
-                    <input type="text" placeholder="Enter quantity" name="quantity" id="quantity" required>
-                    <br>
-                    <button type="submit" class="registerbtn">Add products</button>
+
+                    <div id="controls">
+                        <p>Количество: <?php echo $quantity; ?></p>
+                        <form action="/add-product" method="POST">
+                            <input type="hidden" value="<?php echo $quantity; ?>" name="plus" required>
+                            <input type="hidden" value="<?php echo "{$product['id']}"; ?>" placeholder="Enter product id" name="product-id" id="product-id" required>
+                            <input type="hidden" value="<?php echo $quantity; ?>" placeholder="Enter quantity" name="quantity" id="quantity" required>
+                        <button type="submit" class="buttons">+</button>
+                            </form>
+                        <form action="/add-product" method="POST">
+                            <input type="hidden" value="<?php echo $quantity; ?>" name="minus" required>
+                            <input type="hidden" value="<?php echo "{$product['id']}"; ?>" placeholder="Enter product id" name="product-id" id="product-id" required>
+                            <input type="hidden" value="<?php echo $quantity; ?>" placeholder="Enter quantity" name="quantity" id="quantity" required>
+                            <button type="submit" class="buttons">-</button>
+                            </form>
+                    </div>
                 </div>
                 <br>
                 <br>
-            </form>
+
         <?php endforeach; ?>
     </div>
 </div>

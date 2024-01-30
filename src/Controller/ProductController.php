@@ -23,6 +23,7 @@ class ProductController
             header('Location: /login');
         } else {
             $user_id = $_SESSION['user_id'];
+            $quantity = 0;
 
             $products = $this->product->getAll();
             $productsCount = $this->countProducts($user_id);
@@ -37,41 +38,43 @@ class ProductController
         if (!isset($_SESSION['user_id'])) {
             header('Location: /login');
         }
-        $errorsQuantity = $this->validateQuantity($_POST);
+        $quantity = $this->minusProduct($_POST) + $this->plusProduct($_POST);
+        $errorsQuantity = $this->validateQuantity($quantity);
+
+        $userId = $_SESSION['user_id'];
+        $productId = $_POST['product-id'];
+        $cart = $this->userProduct->getCart($userId);
 
         if (empty($errorsQuantity)) {
-            $userId = $_SESSION['user_id'];
-            $productId = $_POST['product-id'];
-            $quantity = $_POST['quantity'];
+
+            foreach ($cart as $productInCart) {
+                if ($productInCart['product_id'] = $productId) {
+                    $this->userProduct->deleteProduct($productId, $userId);
+                    $productInCart['quantity'] = $quantity;
+                }
+                $quantity = $productInCart['quantity'];
+            }
 
             $this->userProduct->create($userId, $productId, $quantity);
-
-            header('Location: /main');
-        } else {
+        }
 
             $products = $this->product->getAll();
             $productsCount = $this->countProducts($_SESSION['user_id']);
 
+            $quantity = $this->userProduct->getQuantity($productId, $userId);
+            $quantity = $quantity['quantity'];
+
             require_once './../View/catalog.phtml';
         }
-    }
 
-    private function validateQuantity(): array
+    private function validateQuantity($quantity): array
     {
         $errorsQuantity = [];
 
-        if (isset($_POST['quantity'])) {
-            $quantity = $_POST['quantity'];
-            $quantity = (float)$quantity;
+        if (isset($quantity)) {
 
-            if (empty($quantity)) {
-                $errorsQuantity['quantity'] = 'Укажите количество';
-            }
             if ($quantity < 1) {
                 $errorsQuantity['quantity'] = 'Количество должно быть больше 0';
-            }
-            if (floor($quantity) !== $quantity) {
-                $errorsQuantity['quantity'] = 'Укажите целое число';
             }
         } else {
             $errorsQuantity['quantity'] = 'Поле quantity не указано';
@@ -104,6 +107,28 @@ class ProductController
     {
         $cart = $this->userProduct->getCart($user_id);
         return count($cart);
+    }
+
+    public function plusProduct()
+    {
+        if (isset($_POST['plus'])) {
+            $quantity = $_POST['plus'];
+            $quantity++;
+            return $quantity;
+        } else {
+            return 0;
+        }
+    }
+
+    public function minusProduct()
+    {
+        if (isset($_POST['minus'])) {
+            $quantity = $_POST['minus'];
+            $quantity--;
+            return $quantity;
+        } else {
+            return 0;
+        }
     }
 
 }
