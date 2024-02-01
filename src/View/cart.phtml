@@ -29,9 +29,13 @@
             <?php echo $cart[$i]['quantity']; ?>
         </div>
         <div class="product-removal">
-            <button class="remove-product">
-                Remove
-            </button>
+            <form action="/remove-product" method="POST">
+                <input type="hidden" value="<?php echo $_SESSION['user_id']; ?>" name="user-id" required>
+                <input type="hidden" value="<?php echo $productInCartInfo[0]['id']; ?>" placeholder="Enter product id" name="product-id" id="product-id" required>
+                <button type="submit" class="remove-product">Remove</button>
+            </form>
+
+
         </div>
         <div class="product-line-price"><?php $total += $productInCartInfo[0]['price'] * $cart[$i]['quantity'];
             echo $productInCartInfo[0]['price'] * $cart[$i]['quantity']; echo ' руб.'; ?></div>

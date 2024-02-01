@@ -142,5 +142,13 @@ class ProductController
         }
     }
 
+    public function removeProductFromCart(): void
+    {
+        $userId = $_POST['user-id'];
+        $productId = $_POST['product-id'];
+        $this->userProduct->deleteProduct($productId, $userId);
+        header('Location: /cart');
+    }
+
 }
 

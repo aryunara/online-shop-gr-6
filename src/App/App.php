@@ -117,6 +117,11 @@ class App
             $obj->logout();
         }
 
+        elseif ($requestUri === '/remove-product') {
+            $obj = new ProductController();
+            $obj->removeProductFromCart();
+        }
+
         else {
             require_once './../View/404.html';
         }
