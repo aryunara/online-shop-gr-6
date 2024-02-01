@@ -6,70 +6,22 @@ use Controller\UserController;
 class App
 {
 
-    private array $routes = [
-        '/registrate' => [
-            'GET' => [
-                'class' => UserController::class,
-                'method' => 'getRegistrate',
-            ],
-            'POST' => [
-                'class' => UserController::class,
-                'method' => 'postRegistrate',
-            ],
-        ],
-        '/login' => [
-            'GET' => [
-                'class' => UserController::class,
-                'method' => 'getLogin',
-            ],
-            'POST' => [
-                'class' => UserController::class,
-                'method' => 'postLogin',
-            ],
-        ],
-        '/main' => [
-            'GET' => [
-                'class' => ProductController::class,
-                'method' => 'getCatalog',
-            ],
-        ],
-        '/add-product' => [
-            'POST' => [
-                'class' => ProductController::class,
-                'method' => 'addProduct',
-            ],
-        ],
-        '/cart' => [
-            'GET' => [
-                'class' => ProductController::class,
-                'method' => 'getCartProducts',
-            ],
-        ],
-        '/plus' => [
-            'POST' => [
-                'class' => ProductController::class,
-                'method' => 'getCatalog',
-            ],
-        ],
-        '/minus' => [
-            'POST' => [
-                'class' => ProductController::class,
-                'method' => 'getCatalog',
-            ],
-        ],
-        '/logout' => [
-            'POST' => [
-                'class' => UserController::class,
-                'method' => 'logout',
-            ],
-        ],
-        '/remove-product' => [
-            'POST' => [
-                'class' => ProductController::class,
-                'method' => 'removeProductFromCart',
-            ],
-        ],
-    ];
+    private array $routes = [];
+
+    public function get(string $url, string $class, string $handler): void {
+        $this->routes[$url]['GET'] = [
+            'class' => $class,
+            'method' => $handler,
+        ];
+    }
+
+    public function post(string $url, string $class, string $handler) : void
+    {
+        $this->routes[$url]['POST'] = [
+            'class' => $class,
+            'method' => $handler,
+        ];
+    }
 
     public function run(): void
     {
