@@ -6,10 +6,8 @@ use Model\User;
 
 class UserController
 {
-    private User $user;
     public function __construct()
     {
-        $this->user = new User();
     }
     public function getRegistrate(): void
     {
@@ -29,7 +27,7 @@ class UserController
             $hash = password_hash($password, PASSWORD_DEFAULT);
             try {
 
-                $this->user->insertData($name, $email, $hash);
+                User::insertData($name, $email, $hash);
 
                 header('Location: /login');
             } catch (PDOException){
@@ -116,16 +114,16 @@ class UserController
             $password = $_POST['psw'];
         }
 
-        $userInfo = $this->user->getData($email);
+        $user = User::getOneByEmail($email);
 
-        if (empty($userInfo)) {
+        if (empty($user)) {
             $errors['email'] = 'Неверный email';
         } else {
-            if (password_verify($password, $userInfo['password'])) {
+            if (password_verify($password, $user->getPassword())) {
                 session_start();
-                $_SESSION['user_name'] = $userInfo['name'];
-                $_SESSION['user_email'] = $userInfo['email'];
-                $_SESSION['user_id'] = $userInfo['id'];
+                $_SESSION['user_name'] = $user->getName();
+                $_SESSION['user_email'] = $user->getEmail();
+                $_SESSION['user_id'] = $user->getId();
                 header('Location: /main');
             } else {
                 $errors['psw'] = "Неверный пароль";

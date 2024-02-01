@@ -94,7 +94,7 @@ class ProductController
 
             foreach ($cart as $productInCart) {
                 $productInCartId = $productInCart['product_id'];
-                $productsFromCartInfo[] = $this->userProduct->getProductFromCartInfo($productInCartId);
+                $productsFromCartInfo[] = $this->product->getProductFromCartInfo($productInCartId);
             }
         }
         require_once './../View/cart.phtml';
