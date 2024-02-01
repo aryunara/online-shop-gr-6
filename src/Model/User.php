@@ -48,6 +48,10 @@ class User extends Model
         $stmt->execute(['email' => $email]);
         $data = $stmt->fetch();
 
+        if (empty($data)) {
+            return null;
+        }
+
         return new User($data['id'], $data['name'], $data['email'], $data['password']);
     }
 }

@@ -18,27 +18,27 @@
         foreach ($productsFromCartInfo as $productFromCartInfo) :?>
     <div class="product">
         <div class="product-image">
-            <img src="<?php echo $productFromCartInfo['img_url']; ?>" width="150" height="90">
+            <img src="<?php echo $productFromCartInfo->getImgUrl(); ?>" width="150" height="90">
         </div>
         <div class="product-details">
-            <div class="product-title"><?php echo $productFromCartInfo['name']; ?></div>
-            <p class="product-description"><?php echo $productFromCartInfo['description']; ?></p>
+            <div class="product-title"><?php echo $productFromCartInfo->getName(); ?></div>
+            <p class="product-description"><?php echo $productFromCartInfo->getDescription(); ?></p>
         </div>
-        <div class="product-price"><?php echo "{$productFromCartInfo['price']} руб."; ?></div>
+        <div class="product-price"><?php echo $productFromCartInfo->getPrice() . " руб."; ?></div>
         <div class="product-quantity">
             <?php echo $cart[$i]['quantity']; ?>
         </div>
         <div class="product-removal">
             <form action="/remove-product" method="POST">
                 <input type="hidden" value="<?php echo $_SESSION['user_id']; ?>" name="user-id" required>
-                <input type="hidden" value="<?php echo $productFromCartInfo['id']; ?>" placeholder="Enter product id" name="product-id" id="product-id" required>
+                <input type="hidden" value="<?php echo $productFromCartInfo->getId(); ?>" placeholder="Enter product id" name="product-id" id="product-id" required>
                 <button type="submit" class="remove-product">Remove</button>
             </form>
 
 
         </div>
-        <div class="product-line-price"><?php $total += $productFromCartInfo['price'] * $cart[$i]['quantity'];
-            echo $productFromCartInfo['price'] * $cart[$i]['quantity']; echo ' руб.'; ?></div>
+        <div class="product-line-price"><?php $total += $productFromCartInfo->getPrice() * $cart[$i]['quantity'];
+            echo $productFromCartInfo->getPrice() * $cart[$i]['quantity']; echo ' руб.'; ?></div>
     </div>
             <?php $i++;
             endforeach; }?>

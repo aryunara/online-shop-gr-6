@@ -7,14 +7,6 @@ use Model\UserProduct;
 
 class ProductController
 {
-    private Product $product;
-    private UserProduct $userProduct;
-
-    public function __construct()
-    {
-        $this->product = new Product();
-        $this->userProduct = new UserProduct();
-    }
 
     public function getCatalog(): void
     {
@@ -25,7 +17,7 @@ class ProductController
             $user_id = $_SESSION['user_id'];
             $quantity = 0;
 
-            $products = $this->product->getAll();
+            $products = Product::getAll();
             $productsCount = $this->countProducts($user_id);
 
             require_once './../View/catalog.phtml';
@@ -43,22 +35,22 @@ class ProductController
 
         $userId = $_SESSION['user_id'];
         $productId = $_POST['product-id'];
-        $cart = $this->userProduct->getCart($userId);
+        $cart = UserProduct::getCart($userId);
 
         if (empty($errorsQuantity)) {
 
             foreach ($cart as $productInCart) {
                 if ($productInCart['product_id'] = $productId) {
-                    $this->userProduct->deleteProduct($productId, $userId);
+                    UserProduct::deleteProduct($productId, $userId);
                     $productInCart['quantity'] = $quantity;
                 }
                 $quantity = $productInCart['quantity'];
             }
 
-            $this->userProduct->create($userId, $productId, $quantity);
+            UserProduct::create($userId, $productId, $quantity);
         }
 
-            $products = $this->product->getAll();
+            $products = Product::getAll();
             $productsCount = $this->countProducts($_SESSION['user_id']);
 
             header('Location: /main');
@@ -87,22 +79,24 @@ class ProductController
         } else {
             $user_id = $_SESSION['user_id'];
 
-            $cart = $this->userProduct->getCart($user_id);
+            $cart = UserProduct::getCart($user_id);
             $i = 0;
             $total = 0;
             $productCount = count($cart);
 
             foreach ($cart as $productInCart) {
                 $productInCartId = $productInCart['product_id'];
-                $productsFromCartInfo[] = $this->product->getProductFromCartInfo($productInCartId);
+                $productFromCartInfo = Product::getProductFromCartInfo($productInCartId);
+                $productsFromCartInfo[] = $productFromCartInfo;
             }
+            require_once './../View/cart.phtml';
         }
-        require_once './../View/cart.phtml';
+
     }
 
     public function countProducts($user_id): int
     {
-        $cart = $this->userProduct->getCart($user_id);
+        $cart = UserProduct::getCart($user_id);
         return count($cart);
     }
 
@@ -134,11 +128,11 @@ class ProductController
     {
         $productId = $product['id'];
         $userId = $_SESSION['user_id'];
-        $productInCartInfo = $this->userProduct->getProductInCartInfo($productId, $userId);
+        $productInCartInfo = userProduct::getProductInCartInfo($productId, $userId);
         if (empty($productInCartInfo)) {
             return 0;
         } else {
-            return $productInCartInfo['quantity'];
+            return $productInCartInfo->getQuantity();
         }
     }
 
@@ -146,7 +140,7 @@ class ProductController
     {
         $userId = $_POST['user-id'];
         $productId = $_POST['product-id'];
-        $this->userProduct->deleteProduct($productId, $userId);
+        UserProduct::deleteProduct($productId, $userId);
         header('Location: /cart');
     }
 

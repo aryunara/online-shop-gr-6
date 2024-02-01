@@ -6,9 +6,6 @@ use Model\User;
 
 class UserController
 {
-    public function __construct()
-    {
-    }
     public function getRegistrate(): void
     {
         require_once './../View/get_registrate.phtml';
