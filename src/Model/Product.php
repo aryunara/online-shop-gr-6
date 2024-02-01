@@ -45,10 +45,16 @@ class Product extends Model
     }
 
 
-    public static function getAll() : array
+    public static function getAll(): Product|array
     {
         $stmt = self::getPdo()->query('SELECT * FROM products');
-        return $stmt->fetchAll();
+        $products = $stmt->fetchAll();
+
+        foreach ($products as $product) {
+            $data[] = new Product($product['id'], $product['name'], $product['description'], $product['price'], $product['img_url']);
+        }
+
+        return $data;
     }
 
     public static function getProductFromCartInfo($productInCartId)

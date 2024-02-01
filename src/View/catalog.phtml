@@ -31,12 +31,12 @@
 
                 <div class="card text-center">
                     <a href="#">
-                        <img class="card-img-top" src="<?php echo $product['img_url']; ?>" alt="Card image"  width="250" height="190">
+                        <img class="card-img-top" src="<?php echo $product->getImgUrl(); ?>" alt="Card image"  width="250" height="190">
                         <div class="card-body">
-                            <p class="card-text text-muted"><?php echo $product['description']; ?></p>
-                            <a href="#"><h5 class="card-title"><?php echo $product['name']; ?></h5></a>
+                            <p class="card-text text-muted"><?php echo $product->getDescription(); ?></p>
+                            <a href="#"><h5 class="card-title"><?php echo $product->getName(); ?></h5></a>
                             <div class="card-footer">
-                                <?php echo "{$product['price']} руб."; ?>
+                                <?php echo $product->getPrice() . " руб."; ?>
                             </div>
                         </div>
                     </a>
@@ -46,14 +46,14 @@
 
                         <form action="/add-product" method="POST">
                             <input type="hidden" value="<?php echo $quantity; ?>" name="plus" required>
-                            <input type="hidden" value="<?php echo "{$product['id']}"; ?>" placeholder="Enter product id" name="product-id" id="product-id" required>
+                            <input type="hidden" value="<?php echo $product->getId(); ?>" placeholder="Enter product id" name="product-id" id="product-id" required>
                             <input type="hidden" value="<?php echo $quantity; ?>" placeholder="Enter quantity" name="quantity" id="quantity" required>
                             <button type="submit" class="buttons">+</button>
                         </form>
 
                         <form action="/add-product" method="POST">
                             <input type="hidden" value="<?php echo $quantity; ?>" name="minus" required>
-                            <input type="hidden" value="<?php echo "{$product['id']}"; ?>" placeholder="Enter product id" name="product-id" id="product-id" required>
+                            <input type="hidden" value="<?php echo $product->getId(); ?>" placeholder="Enter product id" name="product-id" id="product-id" required>
                             <input type="hidden" value="<?php echo $quantity; ?>" placeholder="Enter quantity" name="quantity" id="quantity" required>
                             <button type="submit" class="buttons">-</button>
                         </form>

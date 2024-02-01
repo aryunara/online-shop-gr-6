@@ -46,7 +46,14 @@ class UserProduct extends Model
     {
         $stmt = self::getPdo()->prepare('SELECT * FROM user_products WHERE user_id = :user_id');
         $stmt->execute(['user_id' => $user_id]);
-        return $stmt->fetchAll();
+        $cart = $stmt->fetchAll();
+//
+//        foreach ($cart as $productInCart) {
+//            $data[] = new UserProduct($productInCart['id'], $productInCart['user_id'], $productInCart['product_id'], $productInCart['quantity']);
+//        }
+//
+//        return $data;
+        return $cart;
     }
 
     public static function deleteProduct($productId, $userId): void

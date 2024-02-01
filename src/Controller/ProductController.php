@@ -126,7 +126,7 @@ class ProductController
 
     public function getProductQuantity($product)
     {
-        $productId = $product['id'];
+        $productId = $product->getId();
         $userId = $_SESSION['user_id'];
         $productInCartInfo = userProduct::getProductInCartInfo($productId, $userId);
         if (empty($productInCartInfo)) {
