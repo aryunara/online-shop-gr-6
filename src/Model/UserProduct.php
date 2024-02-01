@@ -9,29 +9,29 @@ class UserProduct extends Model
         $stmt->execute(['userId' => $userId, 'productId' => $productId, 'quantity' => $quantity]);
     }
 
-    public function getCart($user_id)
+    public function getCart($user_id): false|array
     {
         $stmt = $this->pdo->prepare('SELECT * FROM user_products WHERE user_id = :user_id');
         $stmt->execute(['user_id' => $user_id]);
         return $stmt->fetchAll();
     }
 
-    public function getProductInCartInfo($productInCart)
+    public function getProductFromCartInfo($productInCartId): false|array
     {
-        $stmt = $this->pdo->prepare('SELECT * FROM products WHERE id = :productInCart');
-        $stmt->execute(['productInCart' => $productInCart]);
+        $stmt = $this->pdo->prepare('SELECT * FROM products WHERE id = :productInCartId');
+        $stmt->execute(['productInCartId' => $productInCartId]);
         return $stmt->fetchAll();
     }
 
-    public function deleteProduct($productId, $userId)
+    public function deleteProduct($productId, $userId): void
     {
         $stmt = $this->pdo->prepare('DELETE FROM user_products WHERE product_id = :productId AND user_id = :userId');
         $stmt->execute(['productId' => $productId, 'userId' => $userId]);
     }
 
-    public function getQuantity($productId, $userId)
+    public function getProductInCartInfo($productId, $userId)
     {
-        $stmt = $this->pdo->prepare('SELECT quantity FROM user_products WHERE product_id = :productId AND user_id = :userId');
+        $stmt = $this->pdo->prepare('SELECT * FROM user_products WHERE product_id = :productId AND user_id = :userId');
         $stmt->execute(['productId' => $productId, 'userId' => $userId]);
         return $stmt->fetch();
     }

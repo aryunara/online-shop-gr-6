@@ -61,7 +61,7 @@ class ProductController
             $products = $this->product->getAll();
             $productsCount = $this->countProducts($_SESSION['user_id']);
 
-            require_once './../View/catalog.phtml';
+            header('Location: /main');
         }
 
     private function validateQuantity($quantity): array
@@ -79,7 +79,7 @@ class ProductController
         return $errorsQuantity;
     }
 
-    public function getCartProducts()
+    public function getCartProducts(): void
     {
         session_start();
         if (!isset($_SESSION['user_id'])) {
@@ -93,7 +93,8 @@ class ProductController
             $productCount = count($cart);
 
             foreach ($cart as $productInCart) {
-                $productsInCartInfo[] = $this->userProduct->getProductInCartInfo($productInCart['product_id']);
+                $productInCartId = $productInCart['product_id'];
+                $productsFromCartInfo[] = $this->userProduct->getProductFromCartInfo($productInCartId);
             }
         }
         require_once './../View/cart.phtml';
@@ -105,7 +106,7 @@ class ProductController
         return count($cart);
     }
 
-    public function plusProduct()
+    public function plusProduct(): int
     {
         if (isset($_POST['plus'])) {
             $quantity = $_POST['plus'];
@@ -117,7 +118,7 @@ class ProductController
         }
     }
 
-    public function minusProduct()
+    public function minusProduct(): int
     {
         if (isset($_POST['minus'])) {
             $quantity = $_POST['minus'];
@@ -133,11 +134,11 @@ class ProductController
     {
         $productId = $product['id'];
         $userId = $_SESSION['user_id'];
-        $quantity = $this->userProduct->getQuantity($productId, $userId);
-        if (empty($quantity)) {
+        $productInCartInfo = $this->userProduct->getProductInCartInfo($productId, $userId);
+        if (empty($productInCartInfo)) {
             return 0;
         } else {
-            return $quantity['quantity'];
+            return $productInCartInfo['quantity'];
         }
     }
 

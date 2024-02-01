@@ -12,33 +12,33 @@
     </div>
 
 
-    <?php if (empty($productsInCartInfo)) { ?>
+    <?php if (empty($productsFromCartInfo)) { ?>
             <h2>It's empty here! Please add some products.</h2>
             <?php } else {
-        foreach ($productsInCartInfo as $productInCartInfo) :?>
+        foreach ($productsFromCartInfo as $productFromCartInfo) :?>
     <div class="product">
         <div class="product-image">
-            <img src="<?php echo $productInCartInfo[0]['img_url']; ?>" width="150" height="90">
+            <img src="<?php echo $productFromCartInfo[0]['img_url']; ?>" width="150" height="90">
         </div>
         <div class="product-details">
-            <div class="product-title"><?php echo $productInCartInfo[0]['name']; ?></div>
-            <p class="product-description"><?php echo $productInCartInfo[0]['description']; ?></p>
+            <div class="product-title"><?php echo $productFromCartInfo[0]['name']; ?></div>
+            <p class="product-description"><?php echo $productFromCartInfo[0]['description']; ?></p>
         </div>
-        <div class="product-price"><?php echo "{$productInCartInfo[0]['price']} руб."; ?></div>
+        <div class="product-price"><?php echo "{$productFromCartInfo[0]['price']} руб."; ?></div>
         <div class="product-quantity">
             <?php echo $cart[$i]['quantity']; ?>
         </div>
         <div class="product-removal">
             <form action="/remove-product" method="POST">
                 <input type="hidden" value="<?php echo $_SESSION['user_id']; ?>" name="user-id" required>
-                <input type="hidden" value="<?php echo $productInCartInfo[0]['id']; ?>" placeholder="Enter product id" name="product-id" id="product-id" required>
+                <input type="hidden" value="<?php echo $productFromCartInfo[0]['id']; ?>" placeholder="Enter product id" name="product-id" id="product-id" required>
                 <button type="submit" class="remove-product">Remove</button>
             </form>
 
 
         </div>
-        <div class="product-line-price"><?php $total += $productInCartInfo[0]['price'] * $cart[$i]['quantity'];
-            echo $productInCartInfo[0]['price'] * $cart[$i]['quantity']; echo ' руб.'; ?></div>
+        <div class="product-line-price"><?php $total += $productFromCartInfo[0]['price'] * $cart[$i]['quantity'];
+            echo $productFromCartInfo[0]['price'] * $cart[$i]['quantity']; echo ' руб.'; ?></div>
     </div>
             <?php $i++;
             endforeach; }?>
