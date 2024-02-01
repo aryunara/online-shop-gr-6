@@ -2,13 +2,17 @@
 
     <h3><?php echo "Hello, {$_SESSION['user_name']}!"?></h3>
 
+    <form action="/logout" method="POST">
+        <button type="submit" class="buttons">Log Out</button>
+    </form>
+
     <div class="cart-wrapper">
         <div class="cart-handle">
             <div class="cart-body">
                 <div class="cart-hole1"></div>
                 <div class="cart-hole2"></div>
                 <span class="cart-items">
-        <a href="http://localhost:8081/cart"><?php echo $productsCount; ?></a>
+        <a href="/cart"><?php echo $productsCount; ?></a>
       </span>
             </div>
         </div>

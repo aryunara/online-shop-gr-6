@@ -5,7 +5,61 @@ use Controller\UserController;
 
 class App
 {
-    public function run()
+
+    private array $routes = [
+        '/registrate' => [
+            'GET' => [
+                'class' => UserController::class,
+                'method' => 'getRegistrate',
+                ],
+            'POST' => [
+                'class' => UserController::class,
+                'method' => 'postRegistrate',
+                ],
+            ],
+        '/login' => [
+            'GET' => [
+                'class' => UserController::class,
+                'method' => 'getLogin',
+                ],
+            'POST' => [
+                'class' => UserController::class,
+                'method' => 'postLogin',
+                ],
+            ],
+        '/main' => [
+            'GET' => [
+                'class' => ProductController::class,
+                'method' => 'getCatalog',
+                ],
+            ],
+        '/add-product' => [
+            'POST' => [
+                'class' => ProductController::class,
+                'method' => 'addProduct',
+                ],
+            ],
+        '/cart' => [
+            'GET' => [
+                'class' => ProductController::class,
+                'method' => 'getCartProducts',
+                ],
+            ],
+        '/plus' => [
+            'POST' => [
+                'class' => ProductController::class,
+                'method' => 'getCatalog',
+                ],
+            ],
+        '/minus' => [
+            'POST' => [
+                'class' => ProductController::class,
+                'method' => 'getCatalog',
+                ],
+            ],
+        ];
+
+    public function run(): void
     {
 
         $requestUri = $_SERVER['REQUEST_URI'];
@@ -56,6 +110,11 @@ class App
         elseif ($requestUri === '/minus') {
             $obj = new ProductController();
             $obj->getCatalog();
+        }
+
+        elseif ($requestUri === '/logout') {
+            $obj = new UserController();
+            $obj->logout();
         }
 
         else {

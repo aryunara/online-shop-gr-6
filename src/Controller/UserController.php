@@ -133,4 +133,13 @@ class UserController
         }
         require_once './../View/get_login.phtml';
     }
+
+    public function logout(): void
+    {
+        session_start();
+
+        session_destroy();
+
+        header('Location: /login');
+    }
 }
