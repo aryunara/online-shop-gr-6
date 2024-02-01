@@ -93,8 +93,7 @@ class ProductController
             $productCount = count($cart);
 
             foreach ($cart as $productInCart) {
-                $userProductModel = new UserProduct();
-                $productsInCartInfo[] = $userProductModel->getProductInCartInfo($productInCart['product_id']);
+                $productsInCartInfo[] = $this->userProduct->getProductInCartInfo($productInCart['product_id']);
             }
         }
         require_once './../View/cart.phtml';
