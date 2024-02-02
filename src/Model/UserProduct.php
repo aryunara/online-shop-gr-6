@@ -8,6 +8,11 @@ class UserProduct extends Model
     private int $product_id;
     private int $quantity;
 
+    public function setQuantity(int $quantity): void
+    {
+        $this->quantity = $quantity;
+    }
+
     public function __construct(int $id, int $user_id, int $product_id, int $quantity)
     {
         $this->id = $id;
@@ -31,7 +36,7 @@ class UserProduct extends Model
         return $this->product_id;
     }
 
-    public function getQuantity(): int
+    public function getQuantity(): ?int
     {
         return $this->quantity;
     }
@@ -46,16 +51,16 @@ class UserProduct extends Model
     {
         $stmt = self::getPdo()->prepare('SELECT * FROM user_products WHERE user_id = :user_id');
         $stmt->execute(['user_id' => $user_id]);
-        return $stmt->fetchAll();
-//
-//        foreach ($cart as $productInCart) {
-//            $data[] = new UserProduct($productInCart['id'], $productInCart['user_id'], $productInCart['product_id'], $productInCart['quantity']);
-//        }
-//        if (empty($data)) {
-//            return null;
-//        }
-//
-//        return $data;
+        $cart = $stmt->fetchAll();
+
+        foreach ($cart as $productInCart) {
+            $data[] = new UserProduct($productInCart['id'], $productInCart['user_id'], $productInCart['product_id'], $productInCart['quantity']);
+        }
+        if (empty($data)) {
+            return null;
+        }
+
+        return $data;
     }
 
     public static function deleteProduct($productId, $userId): void
@@ -64,7 +69,7 @@ class UserProduct extends Model
         $stmt->execute(['productId' => $productId, 'userId' => $userId]);
     }
 
-    public static function getProductInCartInfo($productId, $userId)
+    public static function getProductInCartInfo($productId, $userId): ?UserProduct
     {
         $stmt = self::getPdo()->prepare('SELECT * FROM user_products WHERE product_id = :productId AND user_id = :userId');
         $stmt->execute(['productId' => $productId, 'userId' => $userId]);
@@ -75,6 +80,14 @@ class UserProduct extends Model
         }
 
         return new UserProduct($data['id'], $data['user_id'], $data['product_id'], $data['quantity']);
+    }
+
+    public function save($quantity, $productId, $userId): void
+    {
+        $sql = 'UPDATE user_products SET quantity = :quantity WHERE product_id = :productId AND user_id = :userId ';
+
+        $stmt = static::getPdo()->prepare($sql);
+        $stmt->execute(['quantity' => $quantity, 'productId' => $productId, 'userId' => $userId]);
     }
 
 }

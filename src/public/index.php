@@ -19,9 +19,8 @@ $app->get('/cart', ProductController::class, 'getCartProducts');
 $app->post('/registrate',UserController::class,'postRegistrate');
 $app->post('/login', UserController::class, 'postLogin');
 $app->post('/logout', UserController::class, 'logout');
-$app->post('/add-product', ProductController::class, 'addProduct');
-$app->post('/plus', ProductController::class, 'getCatalog');
-$app->post('/minus', ProductController::class, 'getCatalog');
+$app->post('/product-plus', ProductController::class, 'plus');
+$app->post('/product-minus', ProductController::class, 'minus');
 $app->post('/remove-product', ProductController::class, 'removeProductFromCart');
 
 

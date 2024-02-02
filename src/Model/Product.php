@@ -61,10 +61,11 @@ class Product extends Model
         return $data;
     }
 
-    public static function getProductFromCartInfo($productInCartId)
+
+    public static function getOneById($productId): ?Product
     {
-        $stmt = self::getPdo()->prepare('SELECT * FROM products WHERE id = :productInCartId');
-        $stmt->execute(['productInCartId' => $productInCartId]);
+        $stmt = self::getPdo()->prepare('SELECT * FROM products WHERE id = :productId');
+        $stmt->execute(['productId' => $productId]);
         $data = $stmt->fetch();
 
         if (empty($data)) {

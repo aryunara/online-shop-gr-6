@@ -20,11 +20,6 @@
 
     <h3>Product Catalog</h3>
 
-
-    <?php if (isset($errorsQuantity['quantity'])): ?>
-        <label style="color: red"><?php echo $errorsQuantity['quantity']; ?></label>
-    <?php endif; ?>
-    <br>
     <br>
     <div class="card-deck">
         <?php foreach ($products as $product) : ?>
@@ -42,19 +37,15 @@
                     </a>
 
                     <div id="controls">
-                        <p>Количество: <?php echo $quantity = $this->getProductQuantity($product, $_SESSION['user_id']); ?></p>
+                        <p>Количество: <?php echo $this->getProductQuantity($product, $_SESSION['user_id']); ?></p>
 
-                        <form action="/add-product" method="POST">
-                            <input type="hidden" value="<?php echo $quantity; ?>" name="plus" required>
+                        <form action="/product-plus" method="POST">
                             <input type="hidden" value="<?php echo $product->getId(); ?>" placeholder="Enter product id" name="product-id" id="product-id" required>
-                            <input type="hidden" value="<?php echo $quantity; ?>" placeholder="Enter quantity" name="quantity" id="quantity" required>
                             <button type="submit" class="buttons">+</button>
                         </form>
 
-                        <form action="/add-product" method="POST">
-                            <input type="hidden" value="<?php echo $quantity; ?>" name="minus" required>
+                        <form action="/product-minus" method="POST">
                             <input type="hidden" value="<?php echo $product->getId(); ?>" placeholder="Enter product id" name="product-id" id="product-id" required>
-                            <input type="hidden" value="<?php echo $quantity; ?>" placeholder="Enter quantity" name="quantity" id="quantity" required>
                             <button type="submit" class="buttons">-</button>
                         </form>
                     </div>
