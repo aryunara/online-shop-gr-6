@@ -42,7 +42,7 @@ class User extends Model
         $stmt->execute(['name' => $name, 'email' => $email, 'hash' => $hash]);
     }
 
-    public static function getOneByEmail($email)
+    public static function getOneByEmail($email): ?User
     {
         $stmt = self::getPdo()->prepare('SELECT * FROM users WHERE email = :email');
         $stmt->execute(['email' => $email]);

@@ -42,18 +42,20 @@ class UserProduct extends Model
         $stmt->execute(['userId' => $userId, 'productId' => $productId, 'quantity' => $quantity]);
     }
 
-    public static function getCart($user_id): false|array
+    public static function getCart($user_id): ?array
     {
         $stmt = self::getPdo()->prepare('SELECT * FROM user_products WHERE user_id = :user_id');
         $stmt->execute(['user_id' => $user_id]);
-        $cart = $stmt->fetchAll();
+        return $stmt->fetchAll();
 //
 //        foreach ($cart as $productInCart) {
 //            $data[] = new UserProduct($productInCart['id'], $productInCart['user_id'], $productInCart['product_id'], $productInCart['quantity']);
 //        }
+//        if (empty($data)) {
+//            return null;
+//        }
 //
 //        return $data;
-        return $cart;
     }
 
     public static function deleteProduct($productId, $userId): void

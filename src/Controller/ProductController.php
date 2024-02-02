@@ -45,6 +45,11 @@ class ProductController
                     $productInCart['quantity'] = $quantity;
                 }
                 $quantity = $productInCart['quantity'];
+//                if ($productInCart->getProductId() === $productId) {
+//                    UserProduct::deleteProduct($productId, $userId);
+//                    $productInCart->getQuantity() === $quantity;
+//                }
+//                $quantity = $productInCart->getQuantity();
             }
 
             UserProduct::create($userId, $productId, $quantity);
@@ -53,7 +58,7 @@ class ProductController
             $products = Product::getAll();
             $productsCount = $this->countProducts($_SESSION['user_id']);
 
-            header('Location: /main');
+            require_once './../View/catalog.phtml';
         }
 
     private function validateQuantity($quantity): array
@@ -97,6 +102,9 @@ class ProductController
     public function countProducts($user_id): int
     {
         $cart = UserProduct::getCart($user_id);
+        if ($cart === null) {
+            return 0;
+        }
         return count($cart);
     }
 
