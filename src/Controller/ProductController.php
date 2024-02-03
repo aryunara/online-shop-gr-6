@@ -14,11 +14,11 @@ class ProductController
         if (!isset($_SESSION['user_id'])) {
             header('Location: /login');
         } else {
-            $user_id = $_SESSION['user_id'];
+            $userId = $_SESSION['user_id'];
             $quantity = 0;
 
             $products = Product::getAll();
-            $productsCount = $this->countProducts($user_id);
+            $productsCount = $this->countProducts($userId);
 
             require_once './../View/catalog.phtml';
         }
@@ -30,9 +30,9 @@ class ProductController
         if (!isset($_SESSION['user_id'])) {
             header('Location: /login');
         } else {
-            $user_id = $_SESSION['user_id'];
+            $userId = $_SESSION['user_id'];
 
-            $cart = UserProduct::getCart($user_id);
+            $cart = UserProduct::getCart($userId);
             $total = 0;
 
             if (!empty($cart)) {
@@ -46,9 +46,9 @@ class ProductController
         }
     }
 
-    public function countProducts($user_id): int
+    public function countProducts($userId): int
     {
-        $cart = UserProduct::getCart($user_id);
+        $cart = UserProduct::getCart($userId);
         if ($cart === null) {
             return 0;
         }

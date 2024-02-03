@@ -47,10 +47,10 @@ class UserProduct extends Model
         $stmt->execute(['userId' => $userId, 'productId' => $productId, 'quantity' => $quantity]);
     }
 
-    public static function getCart($user_id): ?array
+    public static function getCart($userId): ?array
     {
-        $stmt = self::getPdo()->prepare('SELECT * FROM user_products WHERE user_id = :user_id');
-        $stmt->execute(['user_id' => $user_id]);
+        $stmt = self::getPdo()->prepare('SELECT * FROM user_products WHERE user_id = :userId');
+        $stmt->execute(['userId' => $userId]);
         $cart = $stmt->fetchAll();
 
         foreach ($cart as $productInCart) {
