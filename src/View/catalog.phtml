@@ -1,3 +1,4 @@
+<body>
 <div class="container">
 
     <h3><?php echo "Hello, {$_SESSION['user_name']}!"?></h3>
@@ -37,14 +38,14 @@
                     </a>
 
                     <div id="controls">
-                        <p>Количество: <?php echo $this->getProductQuantity($product, $_SESSION['user_id']); ?></p>
+                        <p>Количество: <?php echo $quantity = $this->getProductQuantity($product, $_SESSION['user_id']); ?></p>
 
-                        <form action="/product-plus" method="POST">
+                        <form method="POST" onsubmit="return false" class="plusProductForm">
                             <input type="hidden" value="<?php echo $product->getId(); ?>" placeholder="Enter product id" name="product-id" id="product-id" required>
                             <button type="submit" class="buttons">+</button>
                         </form>
 
-                        <form action="/product-minus" method="POST">
+                        <form method="POST" onsubmit="return false" class="minusProductForm">
                             <input type="hidden" value="<?php echo $product->getId(); ?>" placeholder="Enter product id" name="product-id" id="product-id" required>
                             <button type="submit" class="buttons">-</button>
                         </form>
@@ -56,6 +57,42 @@
         <?php endforeach; ?>
     </div>
 </div>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script>
+    $("document").ready(function() {
+        $('.plusProductForm').submit(function() {
+            $.ajax({
+                type: "POST",
+                url: "/product-plus",
+                // dataType: 'html',
+                data: $(this).serialize(),
+                success: function() {
+                    console.log('done');
+                    $('input.product-id').val("");
+                }
+            })
+        });
+
+        $("document").ready(function() {
+            $('.minusProductForm').submit(function() {
+                $.ajax({
+                    type: "POST",
+                    url: "/product-minus",
+                    // dataType: 'html',
+                    data: $(this).serialize(),
+                    success: function() {
+                        console.log('done');
+                        $('input.product-id').val("");
+                    }
+                })
+            });
+        });
+    });
+</script>
+<style>
+
 <style>
     body {
         font-style: sans-serif;
