@@ -13,8 +13,8 @@
                 <div class="cart-hole1"></div>
                 <div class="cart-hole2"></div>
                 <span class="cart-items">
-        <a href="/cart"><?php echo $productsCount; ?></a>
-      </span>
+                        <a href="/cart"><?php echo $productsCount; ?></a>
+                    </span>
             </div>
         </div>
     </div>
@@ -25,34 +25,36 @@
     <div class="card-deck">
         <?php foreach ($products as $product) : ?>
 
-                <div class="card text-center">
-                    <a href="#">
-                        <img class="card-img-top" src="<?php echo $product->getImgUrl(); ?>" alt="Card image"  width="250" height="190">
-                        <div class="card-body">
-                            <p class="card-text text-muted"><?php echo $product->getDescription(); ?></p>
-                            <a href="#"><h5 class="card-title"><?php echo $product->getName(); ?></h5></a>
-                            <div class="card-footer">
-                                <?php echo $product->getPrice() . " руб."; ?>
-                            </div>
+            <div class="card text-center">
+                <a href="#">
+                    <img class="card-img-top" src="<?php echo $product->getImgUrl(); ?>" alt="Card image" width="250" height="190">
+                    <div class="card-body">
+                        <p class="card-text text-muted"><?php echo $product->getDescription(); ?></p>
+                        <a href="#"><h5 class="card-title"><?php echo $product->getName(); ?></h5></a>
+                        <div class="card-footer">
+                            <?php echo $product->getPrice() . " руб."; ?>
                         </div>
-                    </a>
-
-                    <div id="controls">
-                        <p>Количество: <?php echo $quantity = $this->getProductQuantity($product, $_SESSION['user_id']); ?></p>
-
-                        <form method="POST" onsubmit="return false" class="plusProductForm">
-                            <input type="hidden" value="<?php echo $product->getId(); ?>" placeholder="Enter product id" name="product-id" id="product-id" required>
-                            <button type="submit" class="buttons">+</button>
-                        </form>
-
-                        <form method="POST" onsubmit="return false" class="minusProductForm">
-                            <input type="hidden" value="<?php echo $product->getId(); ?>" placeholder="Enter product id" name="product-id" id="product-id" required>
-                            <button type="submit" class="buttons">-</button>
-                        </form>
                     </div>
+                </a>
+
+                <div id="controls">
+                    <div> Количество: <span id="product-quantity-<?php echo $product->getId(); ?>"><?php echo $this->getProductQuantity($product, $_SESSION['user_id']); ?></span></div>
+
+                    <form method="POST" onsubmit="return false" class="plusProductForm" data-product-id="<?php echo $product->getId(); ?>">
+                        <input type="hidden" value="<?php echo $product->getId(); ?>" placeholder="Enter product id" name="product-id" id="product-id" required>
+                        <input type="hidden" value="<?php echo $this->getProductQuantity($product, $_SESSION['user_id']); ?>" name="quantity" class="quantity" required>
+                        <button type="submit" class="buttons">+</button>
+                    </form>
+
+                    <form method="POST" onsubmit="return false" class="minusProductForm" data-product-id="<?php echo $product->getId(); ?>">
+                        <input type="hidden" value="<?php echo $product->getId(); ?>" placeholder="Enter product id" name="product-id" id="product-id" required>
+                        <input type="hidden" value="<?php echo $this->getProductQuantity($product, $_SESSION['user_id']); ?>" name="quantity" class="quantity" required>
+                        <button type="submit" class="buttons">-</button>
+                    </form>
                 </div>
-                <br>
-                <br>
+            </div>
+            <br>
+            <br>
 
         <?php endforeach; ?>
     </div>
@@ -62,38 +64,47 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script>
     $("document").ready(function() {
-        $('.plusProductForm').submit(function() {
+        $('.plusProductForm').submit(function(event) {
+            event.preventDefault();
+
+            var currentQuantity = parseInt($('#product-quantity-' + $(this).data('product-id')).text());
+            var newQuantity = currentQuantity + 1;
+            var productId = $(this).data('product-id');
             $.ajax({
                 type: "POST",
                 url: "/product-plus",
-                // dataType: 'html',
-                data: $(this).serialize(),
+                data: { 'product-id': productId },
                 success: function() {
                     console.log('done');
-                    $('input.product-id').val("");
+                    $('#product-quantity-' + productId).text(newQuantity);
                 }
             })
         });
 
-        $("document").ready(function() {
-            $('.minusProductForm').submit(function() {
-                $.ajax({
-                    type: "POST",
-                    url: "/product-minus",
-                    // dataType: 'html',
-                    data: $(this).serialize(),
-                    success: function() {
-                        console.log('done');
-                        $('input.product-id').val("");
-                    }
-                })
-            });
+        $('.minusProductForm').submit(function(event) {
+            event.preventDefault();
+
+            var currentQuantity = parseInt($('#product-quantity-' + $(this).data('product-id')).text());
+            var newQuantity = Math.max(currentQuantity - 1, 0);
+            var productId = $(this).data('product-id');
+            $.ajax({
+                type: "POST",
+                url: "/product-minus",
+                data: { 'product-id': productId },
+                success: function() {
+                    console.log('done');
+                    $('#product-quantity-' + productId).text(newQuantity);
+                }
+            })
         });
     });
 </script>
-<style>
+
+
 
 <style>
+
+    <style>
     body {
         font-style: sans-serif;
     }
