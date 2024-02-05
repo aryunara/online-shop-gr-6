@@ -3,6 +3,9 @@
 namespace Controller;
 
 use Model\User;
+use Request\LoginRequest;
+use Request\RegistrateRequest;
+use Request\Request;
 
 class UserController
 {
@@ -11,15 +14,15 @@ class UserController
         require_once './../View/get_registrate.phtml';
     }
 
-    public function postRegistrate(): void
+    public function postRegistrate(RegistrateRequest $request): void
     {
-        $errors = $this->validate($_POST);
+        $errors = $request->validate();
 
         if (empty($errors)) {
-            $name = $_POST['name'];
-            $email = $_POST['email'];
-            $password = $_POST['psw'];
-            $passwordRep = $_POST['psw-repeat'];
+            $name = $request->getName();
+            $email = $request->getEmail();
+            $password = $request->getPassword();
+            $passwordRep = $request->getPassword();
 
             $hash = password_hash($password, PASSWORD_DEFAULT);
             try {
@@ -34,82 +37,26 @@ class UserController
         }
         require_once './../View/get_registrate.phtml';
     }
-    private function validate(array $userInfo) : array
-    {
-        $errors = [];
-
-        if (isset($userInfo['name'])) {
-            $name = $userInfo['name'];
-            if (empty($name)) {
-                $errors['name'] = 'Имя должно быть заполнено';
-            }
-            if (strlen($name) < 2) {
-                $errors['name'] = 'Имя должно содержать 2 или более символов';
-            }
-        } else {
-            $errors['name'] = 'Поле name не указано';
-        }
-
-        if (isset($userInfo['email'])) {
-            $email = $userInfo['email'];
-            if (empty($email)) {
-                $errors['email'] = 'Почта должна быть заполнена';
-            }
-            $flag = false;
-            for ($i = 0; $i < strlen($email); $i++) {
-                if ($email[$i] === '@') {
-                    $flag = true;
-                }
-            }
-            if ($flag === false) {
-                $errors['email'] = 'Почта должна содержать "@"';
-            }
-        } else {
-            $errors['email'] = 'Поле email не указано';
-        }
-
-        if (isset($userInfo['psw'])) {
-            $password = $userInfo['psw'];
-            if (empty($password)) {
-                $errors['psw'] = 'Пароль должен быть заполнен';
-            }
-            if (strlen($password) < 3) {
-                $errors['psw'] = 'Пароль слишком короткий';
-            }
-        } else {
-            $errors['psw'] = 'Поле password не указано';
-        }
-
-        if (isset($userInfo['psw-repeat'])) {
-            $passwordRep = $userInfo['psw-repeat'];
-            if (empty($passwordRep)) {
-                $errors['psw-repeat'] = 'Повторите пароль';
-            }
-            if ($password !== $passwordRep) {
-                $errors['psw-repeat'] = 'Пароли должны совпадать';
-            }
-        } else {
-            $errors['psw-repeat'] = 'Поле repeat password не указано';
-        }
-        return $errors;
-    }
 
     public function getLogin(): void
     {
         require_once './../View/get_login.phtml';
     }
 
-    public function postLogin(): void
+    public function postLogin(LoginRequest $request): void
     {
 
         $errors = [];
 
-        if (isset($_POST['email'])) {
-            $email = $_POST['email'];
+        if (isset($this->body['email'])) {
+            $email = $this->body['email'];
         }
-        if (isset($_POST['psw'])) {
-            $password = $_POST['psw'];
+        if (isset($this->body['psw'])) {
+            $password = $this->body['psw'];
         }
+
+        $email = $request->getEmail();
+        $password = $request->getPassword();
 
         $user = User::getOneByEmail($email);
 
