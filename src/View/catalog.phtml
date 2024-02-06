@@ -12,9 +12,7 @@
             <div class="cart-body">
                 <div class="cart-hole1"></div>
                 <div class="cart-hole2"></div>
-                <span class="cart-items">
-                        <a href="/cart"><?php echo $productsCount; ?></a>
-                    </span>
+                <a href="/cart"><span class="cart-items"><?php echo $this->countProducts($_SESSION['user_id']); ?></span></a>
             </div>
         </div>
     </div>
@@ -77,6 +75,7 @@
                 success: function() {
                     console.log('done');
                     $('#product-quantity-' + productId).text(newQuantity);
+                    updateProductsCount(+1);
                 }
             })
         });
@@ -94,9 +93,15 @@
                 success: function() {
                     console.log('done');
                     $('#product-quantity-' + productId).text(newQuantity);
+                    updateProductsCount(-1);
                 }
             })
         });
+        function updateProductsCount(change) {
+            var currentCount = parseInt($('.cart-items').text());
+            var newCount = currentCount + change;
+            $('.cart-items').text(newCount); // Обновление количества продуктов в корзине
+        }
     });
 </script>
 

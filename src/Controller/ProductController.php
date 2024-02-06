@@ -52,10 +52,15 @@ class ProductController
     public function countProducts($userId): int
     {
         $cart = UserProduct::getCart($userId);
-        if ($cart === null) {
+        if (empty($cart)) {
             return 0;
+        } else {
+            $sum = 0;
+            foreach ($cart as $productInCart) {
+                $sum += $productInCart->getQuantity();
+            }
+            return $sum;
         }
-        return count($cart);
     }
 
     public function plus(PlusProductRequest $request)

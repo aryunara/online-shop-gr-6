@@ -15,6 +15,7 @@ $app->get('/registrate', UserController::class,'getRegistrate');
 $app->get('/login', UserController::class, 'getLogin');
 $app->get('/main',ProductController::class,'getCatalog');
 $app->get('/cart', ProductController::class, 'getCartProducts');
+$app->get('/countProducts', ProductController::class, 'countProducts');
 
 $app->post('/registrate',UserController::class,'postRegistrate', \Request\RegistrateRequest::class);
 $app->post('/login', UserController::class, 'postLogin', \Request\LoginRequest::class);
