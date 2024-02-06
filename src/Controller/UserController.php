@@ -22,7 +22,6 @@ class UserController
             $name = $request->getName();
             $email = $request->getEmail();
             $password = $request->getPassword();
-            $passwordRep = $request->getPassword();
 
             $hash = password_hash($password, PASSWORD_DEFAULT);
             try {

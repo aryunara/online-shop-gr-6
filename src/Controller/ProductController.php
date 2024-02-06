@@ -4,6 +4,9 @@ namespace Controller;
 
 use Model\Product;
 use Model\UserProduct;
+use Request\MinusProductRequest;
+use Request\PlusProductRequest;
+use Request\RemoveProductRequest;
 
 class ProductController
 {
@@ -55,13 +58,13 @@ class ProductController
         return count($cart);
     }
 
-    public function plus()
+    public function plus(PlusProductRequest $request)
     {
         session_start();
         if (!isset($_SESSION['user_id'])) {
             header('Location: /login');
         }
-        $productId = $_POST['product-id'];
+        $productId = $request->getId();
         $userId = $_SESSION['user_id'];
 
         $product = UserProduct::getProductInCartInfo($productId, $userId);
@@ -77,13 +80,13 @@ class ProductController
         header('Location: /main');
     }
 
-    public function minus()
+    public function minus(MinusProductRequest $request)
     {
         session_start();
         if (!isset($_SESSION['user_id'])) {
             header('Location: /login');
         }
-        $productId = $_POST['product-id'];
+        $productId = $request->getId();
         $userId = $_SESSION['user_id'];
 
         $product = UserProduct::getProductInCartInfo($productId, $userId);
@@ -112,10 +115,10 @@ class ProductController
         }
     }
 
-    public function removeProductFromCart(): void
+    public function removeProductFromCart(RemoveProductRequest $request): void
     {
-        $userId = $_POST['user-id'];
-        $productId = $_POST['product-id'];
+        $userId = $request->getUserId();
+        $productId = $request->getProductId();
 
         UserProduct::deleteProduct($productId, $userId);
 
