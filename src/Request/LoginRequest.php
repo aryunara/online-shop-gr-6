@@ -20,4 +20,22 @@ class LoginRequest extends Request
         return $this->body['psw'];
     }
 
+    public function validate()
+    {
+        $errors = [];
+
+        if (isset($this->body['email'])) {
+            $email = $this->body['email'];
+        } else {
+            $errors['email'] = 'Поле email не указано';
+        }
+        if (isset($this->body['psw'])) {
+            $password = $this->body['psw'];
+        } else {
+            $errors['psw'] = 'Поле password не указано';
+        }
+
+        return $errors;
+    }
+
 }

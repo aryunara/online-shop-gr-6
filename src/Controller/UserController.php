@@ -46,34 +46,30 @@ class UserController
     public function postLogin(LoginRequest $request): void
     {
 
-        $errors = [];
+        $errors = $request->validate();
 
-        if (isset($this->body['email'])) {
-            $email = $this->body['email'];
-        }
-        if (isset($this->body['psw'])) {
-            $password = $this->body['psw'];
-        }
+        if (empty($errors)) {
 
-        $email = $request->getEmail();
-        $password = $request->getPassword();
+            $email = $request->getEmail();
+            $password = $request->getPassword();
 
-        $user = User::getOneByEmail($email);
+            $user = User::getOneByEmail($email);
 
-        if (empty($user)) {
-            $errors['email'] = 'Неверный email';
-        } else {
-            if (password_verify($password, $user->getPassword())) {
-                session_start();
-                $_SESSION['user_name'] = $user->getName();
-                $_SESSION['user_email'] = $user->getEmail();
-                $_SESSION['user_id'] = $user->getId();
-                header('Location: /main');
+            if (empty($user)) {
+                $errors['email'] = 'Неверный email';
             } else {
-                $errors['psw'] = "Неверный пароль";
+                if (password_verify($password, $user->getPassword())) {
+                    session_start();
+                    $_SESSION['user_name'] = $user->getName();
+                    $_SESSION['user_email'] = $user->getEmail();
+                    $_SESSION['user_id'] = $user->getId();
+                    header('Location: /main');
+                } else {
+                    $errors['psw'] = "Неверный пароль";
+                }
             }
+            require_once './../View/get_login.phtml';
         }
-        require_once './../View/get_login.phtml';
     }
 
     public function logout(): void
