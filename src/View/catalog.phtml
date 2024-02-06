@@ -35,19 +35,17 @@
                     </div>
                 </a>
 
-                <div id="controls">
-                    <div> Количество: <span id="product-quantity-<?php echo $product->getId(); ?>"><?php echo $this->getProductQuantity($product, $_SESSION['user_id']); ?></span></div>
+                <div class="controls">
+                    <div> Количество: <span class="product-quantity"><?php echo $quantity = $this->getProductQuantity($product, $_SESSION['user_id']); ?></span></div>
 
-                    <form method="POST" onsubmit="return false" class="plusProductForm" data-product-id="<?php echo $product->getId(); ?>">
-                        <input type="hidden" value="<?php echo $product->getId(); ?>" placeholder="Enter product id" name="product-id" id="product-id" required>
-                        <input type="hidden" value="<?php echo $this->getProductQuantity($product, $_SESSION['user_id']); ?>" name="quantity" class="quantity" required>
-                        <button type="submit" class="buttons">+</button>
+                    <form method="POST" class="plusProductForm">
+                        <input type="hidden" value="<?php echo $product->getId(); ?>" name="product-id">
+                        <button type="button" class="buttons plus">+</button>
                     </form>
 
-                    <form method="POST" onsubmit="return false" class="minusProductForm" data-product-id="<?php echo $product->getId(); ?>">
-                        <input type="hidden" value="<?php echo $product->getId(); ?>" placeholder="Enter product id" name="product-id" id="product-id" required>
-                        <input type="hidden" value="<?php echo $this->getProductQuantity($product, $_SESSION['user_id']); ?>" name="quantity" class="quantity" required>
-                        <button type="submit" class="buttons">-</button>
+                    <form method="POST" class="minusProductForm">
+                        <input type="hidden" value="<?php echo $product->getId(); ?>" name="product-id">
+                        <button type="button" class="buttons minus">-</button>
                     </form>
                 </div>
             </div>
@@ -65,47 +63,51 @@
         $('.plusProductForm').on('click', function(event) {
             event.preventDefault();
 
-            var currentQuantity = parseInt($('#product-quantity-' + $(this).data('product-id')).text());
-            var newQuantity = currentQuantity + 1;
-            var productId = $(this).data('product-id');
+            var form = $(this);
+            var productId = form.find("input[name='product-id']").val();
+
             $.ajax({
                 type: "POST",
                 url: "/product-plus",
                 data: { 'product-id': productId },
-                success: function() {
+                success: function(response) {
                     console.log('done');
-                    $('#product-quantity-' + productId).text(newQuantity);
+                    updateQuantity(form, +1);
                     updateProductsCount(+1);
                 }
-            })
+            });
         });
 
-        $('.minusProductForm').on('click', function(event) {
+        $(".minusProductForm").on("click", function(event) {
             event.preventDefault();
 
-            var currentQuantity = parseInt($('#product-quantity-' + $(this).data('product-id')).text());
-            var newQuantity = Math.max(currentQuantity - 1, 0);
-            var productId = $(this).data('product-id');
+            var form = $(this);
+            var productId = form.find("input[name='product-id']").val();
             $.ajax({
                 type: "POST",
                 url: "/product-minus",
                 data: { 'product-id': productId },
-                success: function() {
+                success: function(response) {
                     console.log('done');
-                    $('#product-quantity-' + productId).text(newQuantity);
+                    updateQuantity(form, -1);
                     updateProductsCount(-1);
                 }
-            })
+            });
         });
+
+        function updateQuantity(form, change) {
+            var currentQuantity = parseInt(form.closest('.card').find(".product-quantity").text());
+            var newQuantity = Math.max(currentQuantity + change, 0);
+            form.closest('.card').find(".product-quantity").text(newQuantity);
+        }
+
         function updateProductsCount(change) {
             var currentCount = parseInt($('.cart-items').text());
-            var newCount = currentCount + change;
-            $('.cart-items').text(newCount); // Обновление количества продуктов в корзине
+            var newCount = Math.max(currentCount + change, 0);
+            $('.cart-items').text(newCount);
         }
     });
 </script>
-
-
 
 <style>
 
