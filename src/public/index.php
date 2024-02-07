@@ -1,6 +1,7 @@
 <?php
 
 
+use Controller\OrderController;
 use Controller\ProductController;
 use Controller\UserController;
 
@@ -16,6 +17,7 @@ $app->get('/login', UserController::class, 'getLogin');
 $app->get('/main',ProductController::class,'getCatalog');
 $app->get('/cart', ProductController::class, 'getCartProducts');
 $app->get('/countProducts', ProductController::class, 'countProducts');
+$app->get('/order', OrderController::class, 'getOrderPage');
 
 $app->post('/registrate',UserController::class,'postRegistrate', \Request\RegistrateRequest::class);
 $app->post('/login', UserController::class, 'postLogin', \Request\LoginRequest::class);

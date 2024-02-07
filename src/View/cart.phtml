@@ -37,8 +37,8 @@
 
 
         </div>
-        <div class="product-line-price"><?php $total += $productInfo->getPrice() * $this->getProductQuantity($productInfo, $_SESSION['user_id']);;
-            echo $productInfo->getPrice() * $this->getProductQuantity($productInfo, $_SESSION['user_id']); echo ' руб.'; ?></div>
+        <div class="product-line-price"><?php $total += $productInfo->getPrice() * $this->getProductQuantity($productInfo);
+            echo $productInfo->getPrice() * $this->getProductQuantity($productInfo) . ' руб.'; ?></div>
     </div>
     <?php endforeach; } ?>
 
@@ -51,7 +51,7 @@
 
     <a href="/main" class="goback">Return</a>
 
-    <button class="checkout">Checkout</button>
+    <a href="/order"><button class="checkout">Order</button>
 
 </div>
 <style>
