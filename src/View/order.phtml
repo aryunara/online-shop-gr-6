@@ -7,15 +7,17 @@
             <div class="block_products col-12 col-md-12 col-sm-12 col-lg-12">
                 <div class="title">Данные о платеже</div>
                 <div class="product_parent">
-                    <?php if (empty($cart)) { ?>
+                    <?php use Model\UserProduct;
+
+                    if (empty($cart)) { ?>
                         <h2>It's empty here! Please add some products.</h2>
                     <?php } else {
                     foreach ($productsInfo as $productInfo) :?>
                     <div class="product">
                         <div class="image_product"><img src="<?php echo $productInfo->getImgUrl(); ?>" alt=""></div>
-                        <div class="name_product"><?php echo $productInfo->getName(); ?><br /><span class="quantity"><?php echo $this->getProductQuantity($productInfo). " шт."?></span></div>
-                        <div class="price_product"><?php $total += $productInfo->getPrice() * $this->getProductQuantity($productInfo);
-                        echo $productInfo->getPrice() * $this->getProductQuantity($productInfo) . ' руб.';?></div>
+                        <div class="name_product"><?php echo $productInfo->getName(); ?><br /><span class="quantity"><?php echo UserProduct::getUserProductQuantity($productInfo->getId(), $user->getId()) . " шт."?></span></div>
+                        <div class="price_product"><?php $total += $productInfo->getPrice() * UserProduct::getUserProductQuantity($productInfo->getId(), $user->getId());
+                        echo $productInfo->getPrice() * UserProduct::getUserProductQuantity($productInfo->getId(), $user->getId()) . ' руб.';?></div>
                         <a href="#" class="close-btn"><i class="fas fa-times"></i></a>
                     </div>
                     <?php endforeach; } ?>

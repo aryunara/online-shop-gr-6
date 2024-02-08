@@ -35,32 +35,6 @@ class ProductController
         }
     }
 
-    public function getCartProducts(): void
-    {
-        session_start();
-        if (!($this->sessionAuthenticationService->check())) {
-            header('Location: /login');
-        } else {
-            $user = $this->sessionAuthenticationService->getCurrentUser();
-            if (!$user) {
-                header('Location: /login');
-            }
-            $userId = $user->getId();
-
-            $cart = UserProduct::getCart($userId);
-            $total = 0;
-
-            if (!empty($cart)) {
-                foreach ($cart as $productInCart) {
-                    $productId = $productInCart->getProductId();
-                    $productInfo = Product::getOneById($productId);
-                    $productsInfo[] = $productInfo;
-                }
-            }
-            require_once './../View/cart.phtml';
-        }
-    }
-
     public function countProducts($userId): int
     {
         $cart = UserProduct::getCart($userId);
@@ -75,7 +49,7 @@ class ProductController
         }
     }
 
-    public function plus(PlusProductRequest $request)
+    public function plus(PlusProductRequest $request): void
     {
         if (!($this->sessionAuthenticationService->check())) {
             header('Location: /login');
@@ -88,12 +62,12 @@ class ProductController
         }
         $userId = $user->getId();
 
-        $product = UserProduct::getProductInCartInfo($productId, $userId);
+        $userProductInfo = UserProduct::getUserProductInfo($productId, $userId);
 
-        if (isset($product)) {
-            $product->setQuantity($product->getQuantity() + 1);
-            $quantity = $product->getQuantity();
-            $product->save($quantity, $productId, $userId);
+        if (isset($userProductInfo)) {
+            $userProductInfo->setQuantity($userProductInfo->getQuantity() + 1);
+            $quantity = $userProductInfo->getQuantity();
+            $userProductInfo->save($quantity, $productId, $userId);
         } else {
             $quantity = 1;
             UserProduct::create($userId, $productId, $quantity);
@@ -101,7 +75,7 @@ class ProductController
         header('Location: /main');
     }
 
-    public function minus(MinusProductRequest $request)
+    public function minus(MinusProductRequest $request): void
     {
         if (!($this->sessionAuthenticationService->check())) {
             header('Location: /login');
@@ -114,46 +88,18 @@ class ProductController
         }
         $userId = $user->getId();
 
-        $product = UserProduct::getProductInCartInfo($productId, $userId);
+        $userProductInfo = UserProduct::getUserProductInfo($productId, $userId);
 
-        if (isset($product)) {
-            $product->setQuantity($product->getQuantity() - 1);
-            if ($product->getQuantity() < 1) {
+        if (isset($userProductInfo)) {
+            $userProductInfo->setQuantity($userProductInfo->getQuantity() - 1);
+            if ($userProductInfo->getQuantity() < 1) {
                 UserProduct::deleteProduct($productId, $userId);
             } else {
-            $quantity = $product->getQuantity();
-            $product->save($quantity, $productId, $userId);
+            $quantity = $userProductInfo->getQuantity();
+            $userProductInfo->save($quantity, $productId, $userId);
             }
         }
         header('Location: /main');
-    }
-
-    public function getProductQuantity($productInfo)
-    {
-        $productId = $productInfo->getId();
-
-        $user = $this->sessionAuthenticationService->getCurrentUser();
-        if (!$user) {
-            header('Location: /login');
-        }
-        $userId = $user->getId();
-
-        $productInCartInfo = userProduct::getProductInCartInfo($productId, $userId);
-        if (empty($productInCartInfo)) {
-            return 0;
-        } else {
-            return $productInCartInfo->getQuantity();
-        }
-    }
-
-    public function removeProductFromCart(RemoveProductRequest $request): void
-    {
-        $userId = $request->getUserId();
-        $productId = $request->getProductId();
-
-        UserProduct::deleteProduct($productId, $userId);
-
-        header('Location: /cart');
     }
 
 }

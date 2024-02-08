@@ -1,4 +1,6 @@
-<h1><?php echo $user->getName(); ?>'s Shopping Cart</h1>
+<h1><?php use Model\UserProduct;
+
+    echo $user->getName(); ?>'s Shopping Cart</h1>
 
 <div class="shopping-cart">
 
@@ -26,7 +28,7 @@
         </div>
         <div class="product-price"><?php echo $productInfo->getPrice() . " руб."; ?></div>
         <div class="product-quantity">
-            <?php echo $this->getProductQuantity($productInfo, $_SESSION['user_id']); ?>
+            <?php echo UserProduct::getUserProductQuantity($productInfo->getId(), $user->getId()); ?>
         </div>
         <div class="product-removal">
             <form action="/remove-product" method="POST">
@@ -37,8 +39,8 @@
 
 
         </div>
-        <div class="product-line-price"><?php $total += $productInfo->getPrice() * $this->getProductQuantity($productInfo);
-            echo $productInfo->getPrice() * $this->getProductQuantity($productInfo) . ' руб.'; ?></div>
+        <div class="product-line-price"><?php $total += $productInfo->getPrice() * UserProduct::getUserProductQuantity($productInfo->getId(), $user->getId());
+            echo $productInfo->getPrice() * UserProduct::getUserProductQuantity($productInfo->getId(), $user->getId()) . ' руб.'; ?></div>
     </div>
     <?php endforeach; } ?>
 

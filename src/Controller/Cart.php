@@ -4,18 +4,19 @@ namespace Controller;
 
 use Model\Product;
 use Model\UserProduct;
+use Request\RemoveProductRequest;
 use Service\SessionAuthenticationService;
 
-class OrderController
+class Cart
 {
     private SessionAuthenticationService $sessionAuthenticationService;
     public function __construct(SessionAuthenticationService $sessionAuthenticationService)
     {
         $this->sessionAuthenticationService = $sessionAuthenticationService;
     }
-
-    public function getOrderPage(): void
+    public function getCartProducts(): void
     {
+        session_start();
         if (!($this->sessionAuthenticationService->check())) {
             header('Location: /login');
         } else {
@@ -35,8 +36,17 @@ class OrderController
                     $productsInfo[] = $productInfo;
                 }
             }
-            require_once './../View/order.phtml';
+            require_once './../View/cart.phtml';
         }
     }
 
+    public function removeProductFromCart(RemoveProductRequest $request): void
+    {
+        $userId = $request->getUserId();
+        $productId = $request->getProductId();
+
+        UserProduct::deleteProduct($productId, $userId);
+
+        header('Location: /cart');
+    }
 }

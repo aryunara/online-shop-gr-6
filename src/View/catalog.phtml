@@ -1,7 +1,9 @@
 <body>
 <div class="container">
 
-    <h3><?php echo "Hello, {$user->getName()}!"?></h3>
+    <h3><?php use Model\UserProduct;
+
+        echo "Hello, {$user->getName()}!"?></h3>
 
     <form action="/logout" method="POST">
         <button type="submit" class="buttons">Log Out</button>
@@ -36,7 +38,7 @@
                 </a>
 
                 <div class="controls">
-                    <div> Количество: <span class="product-quantity"><?php echo $quantity = $this->getProductQuantity($product, $_SESSION['user_id']); ?></span></div>
+                    <div> Количество: <span class="product-quantity"><?php echo UserProduct::getUserProductQuantity($product->getId(), $user->getId()); ?></span></div>
 
                     <form method="POST" class="plusProductForm">
                         <input type="hidden" value="<?php echo $product->getId(); ?>" name="product-id">

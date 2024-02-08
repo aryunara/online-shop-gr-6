@@ -41,12 +41,6 @@ class UserProduct extends Model
         return $this->quantity;
     }
 
-    public static function create(int $userId, int $productId, int $quantity) : void
-    {
-        $stmt = self::getPdo()->prepare("INSERT INTO user_products (user_id, product_id, quantity) VALUES (:userId, :productId, :quantity)");
-        $stmt->execute(['userId' => $userId, 'productId' => $productId, 'quantity' => $quantity]);
-    }
-
     public static function getCart($userId): ?array
     {
         $stmt = self::getPdo()->prepare('SELECT * FROM user_products WHERE user_id = :userId');
@@ -63,13 +57,7 @@ class UserProduct extends Model
         return $data;
     }
 
-    public static function deleteProduct($productId, $userId): void
-    {
-        $stmt = self::getPdo()->prepare('DELETE FROM user_products WHERE product_id = :productId AND user_id = :userId');
-        $stmt->execute(['productId' => $productId, 'userId' => $userId]);
-    }
-
-    public static function getProductInCartInfo($productId, $userId): ?UserProduct
+    public static function getUserProductInfo($productId, $userId): ?UserProduct
     {
         $stmt = self::getPdo()->prepare('SELECT * FROM user_products WHERE product_id = :productId AND user_id = :userId');
         $stmt->execute(['productId' => $productId, 'userId' => $userId]);
@@ -81,6 +69,32 @@ class UserProduct extends Model
 
         return new UserProduct($data['id'], $data['user_id'], $data['product_id'], $data['quantity']);
     }
+
+    public static function getUserProductQuantity($productId, $userId)
+    {
+        $stmt = self::getPdo()->prepare('SELECT quantity FROM user_products WHERE product_id = :productId AND user_id = :userId');
+        $stmt->execute(['productId' => $productId, 'userId' => $userId]);
+        $data = $stmt->fetch();
+
+        if (empty($data)) {
+            return null;
+        }
+
+        return $data['quantity'];
+    }
+
+    public static function create(int $userId, int $productId, int $quantity) : void
+    {
+        $stmt = self::getPdo()->prepare("INSERT INTO user_products (user_id, product_id, quantity) VALUES (:userId, :productId, :quantity)");
+        $stmt->execute(['userId' => $userId, 'productId' => $productId, 'quantity' => $quantity]);
+    }
+
+    public static function deleteProduct($productId, $userId): void
+    {
+        $stmt = self::getPdo()->prepare('DELETE FROM user_products WHERE product_id = :productId AND user_id = :userId');
+        $stmt->execute(['productId' => $productId, 'userId' => $userId]);
+    }
+
 
     public function save($quantity, $productId, $userId): void
     {
