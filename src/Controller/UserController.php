@@ -6,9 +6,15 @@ use Model\User;
 use Request\LoginRequest;
 use Request\RegistrateRequest;
 use Request\Request;
+use Service\SessionAuthenticationService;
 
 class UserController
 {
+    private SessionAuthenticationService $sessionAuthenticationService;
+    public function __construct(SessionAuthenticationService $sessionAuthenticationService)
+    {
+        $this->sessionAuthenticationService = $sessionAuthenticationService;
+    }
     public function getRegistrate(): void
     {
         require_once './../View/get_registrate.phtml';
@@ -25,7 +31,6 @@ class UserController
 
             $hash = password_hash($password, PASSWORD_DEFAULT);
             try {
-
                 User::insertData($name, $email, $hash);
 
                 header('Location: /login');
@@ -44,7 +49,6 @@ class UserController
 
     public function postLogin(LoginRequest $request): void
     {
-
         $errors = $request->validate();
 
         if (empty($errors)) {
@@ -52,30 +56,20 @@ class UserController
             $email = $request->getEmail();
             $password = $request->getPassword();
 
-            $user = User::getOneByEmail($email);
+            $result = $this->sessionAuthenticationService->login($email, $password);
 
-            if (empty($user)) {
-                $errors['email'] = 'Неверный email';
+            if ($result) {
+                header('Location: /main');
             } else {
-                if (password_verify($password, $user->getPassword())) {
-                    session_start();
-                    $_SESSION['user_name'] = $user->getName();
-                    $_SESSION['user_email'] = $user->getEmail();
-                    $_SESSION['user_id'] = $user->getId();
-                    header('Location: /main');
-                } else {
-                    $errors['psw'] = "Неверный пароль";
-                }
+                $errors['email'] = "Неверный пароль или email";
             }
-            require_once './../View/get_login.phtml';
         }
+        require_once './../View/get_login.phtml';
     }
 
     public function logout(): void
     {
-        session_start();
-
-        session_destroy();
+        $this->sessionAuthenticationService->logout();
 
         header('Location: /login');
     }

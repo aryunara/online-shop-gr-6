@@ -7,18 +7,26 @@ use Model\UserProduct;
 use Request\MinusProductRequest;
 use Request\PlusProductRequest;
 use Request\RemoveProductRequest;
+use Service\SessionAuthenticationService;
 
 class ProductController
 {
+    private SessionAuthenticationService $sessionAuthenticationService;
+    public function __construct(SessionAuthenticationService $sessionAuthenticationService)
+    {
+        $this->sessionAuthenticationService = $sessionAuthenticationService;
+    }
 
     public function getCatalog(): void
     {
-        session_start();
-        if (!isset($_SESSION['user_id'])) {
+        if (!($this->sessionAuthenticationService->check())) {
             header('Location: /login');
         } else {
-            $userId = $_SESSION['user_id'];
-            $quantity = 0;
+            $user = $this->sessionAuthenticationService->getCurrentUser();
+            if (!$user) {
+                header('Location: /login');
+            }
+            $userId = $user->getId();
 
             $products = Product::getAll();
             $productsCount = $this->countProducts($userId);
@@ -30,10 +38,14 @@ class ProductController
     public function getCartProducts(): void
     {
         session_start();
-        if (!isset($_SESSION['user_id'])) {
+        if (!($this->sessionAuthenticationService->check())) {
             header('Location: /login');
         } else {
-            $userId = $_SESSION['user_id'];
+            $user = $this->sessionAuthenticationService->getCurrentUser();
+            if (!$user) {
+                header('Location: /login');
+            }
+            $userId = $user->getId();
 
             $cart = UserProduct::getCart($userId);
             $total = 0;
@@ -65,16 +77,20 @@ class ProductController
 
     public function plus(PlusProductRequest $request)
     {
-        session_start();
-        if (!isset($_SESSION['user_id'])) {
+        if (!($this->sessionAuthenticationService->check())) {
             header('Location: /login');
         }
         $productId = $request->getId();
-        $userId = $_SESSION['user_id'];
+
+        $user = $this->sessionAuthenticationService->getCurrentUser();
+        if (!$user) {
+            header('Location: /login');
+        }
+        $userId = $user->getId();
 
         $product = UserProduct::getProductInCartInfo($productId, $userId);
-        if (isset($product)) {
 
+        if (isset($product)) {
             $product->setQuantity($product->getQuantity() + 1);
             $quantity = $product->getQuantity();
             $product->save($quantity, $productId, $userId);
@@ -87,14 +103,19 @@ class ProductController
 
     public function minus(MinusProductRequest $request)
     {
-        session_start();
-        if (!isset($_SESSION['user_id'])) {
+        if (!($this->sessionAuthenticationService->check())) {
             header('Location: /login');
         }
         $productId = $request->getId();
-        $userId = $_SESSION['user_id'];
+
+        $user = $this->sessionAuthenticationService->getCurrentUser();
+        if (!$user) {
+            header('Location: /login');
+        }
+        $userId = $user->getId();
 
         $product = UserProduct::getProductInCartInfo($productId, $userId);
+
         if (isset($product)) {
             $product->setQuantity($product->getQuantity() - 1);
             if ($product->getQuantity() < 1) {
@@ -110,7 +131,12 @@ class ProductController
     public function getProductQuantity($productInfo)
     {
         $productId = $productInfo->getId();
-        $userId = $_SESSION['user_id'];
+
+        $user = $this->sessionAuthenticationService->getCurrentUser();
+        if (!$user) {
+            header('Location: /login');
+        }
+        $userId = $user->getId();
 
         $productInCartInfo = userProduct::getProductInCartInfo($productId, $userId);
         if (empty($productInCartInfo)) {

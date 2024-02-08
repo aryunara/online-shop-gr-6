@@ -1,7 +1,7 @@
 <body>
 <div class="container">
 
-    <h3><?php echo "Hello, {$_SESSION['user_name']}!"?></h3>
+    <h3><?php echo "Hello, {$user->getName()}!"?></h3>
 
     <form action="/logout" method="POST">
         <button type="submit" class="buttons">Log Out</button>
