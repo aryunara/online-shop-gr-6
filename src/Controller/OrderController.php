@@ -16,6 +16,7 @@ class OrderController
 
     public function getOrderPage(): void
     {
+        session_start();
         if (!($this->sessionAuthenticationService->check())) {
             header('Location: /login');
         } else {
@@ -25,15 +26,15 @@ class OrderController
             }
             $userId = $user->getId();
 
-            $cart = UserProduct::getCart($userId);
+            $userProducts = UserProduct::getCart($userId);
             $total = 0;
 
-            if (!empty($cart)) {
-                foreach ($cart as $productInCart) {
-                    $productId = $productInCart->getProductId();
-                    $productInfo = Product::getOneById($productId);
-                    $productsInfo[] = $productInfo;
+            if (!empty($userProducts)) {
+                foreach ($userProducts as $userProduct) {
+                    $productIds[] = $userProduct->getProductId();
                 }
+
+                $products = Product::getAllByIds($productIds);
             }
             require_once './../View/order.phtml';
         }

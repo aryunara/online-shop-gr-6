@@ -17,7 +17,7 @@ class SessionAuthenticationService
     {
         self::startSession();
 
-        $_SESSION['user_id'] = null;
+        session_destroy();
     }
 
     public function login(string $email, string $password) : bool

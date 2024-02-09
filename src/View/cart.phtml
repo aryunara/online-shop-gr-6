@@ -1,6 +1,4 @@
-<h1><?php use Model\UserProduct;
-
-    echo $user->getName(); ?>'s Shopping Cart</h1>
+<h1><?php echo $user->getName(); ?>'s Shopping Cart</h1>
 
 <div class="shopping-cart">
 
@@ -29,19 +27,19 @@
         </div>
         <div class="product-price"><?php echo $product->getPrice() . " руб."; ?></div>
         <div class="product-quantity">
-            <?php echo UserProduct::getUserProductQuantity($product->getId(), $user->getId()); ?>
+            <?php echo $userProduct->getQuantity(); ?>
         </div>
         <div class="product-removal">
             <form action="/remove-product" method="POST">
-                <input type="hidden" value="<?php echo $_SESSION['user_id']; ?>" name="user-id" required>
+                <input type="hidden" value="<?php echo $user->getId(); ?>" name="user-id" required>
                 <input type="hidden" value="<?php echo $product->getId(); ?>" placeholder="Enter product id" name="product-id" id="product-id" required>
                 <button type="submit" class="remove-product">Remove</button>
             </form>
 
 
         </div>
-        <div class="product-line-price"><?php $total += $product->getPrice() * UserProduct::getUserProductQuantity($product->getId(), $user->getId());
-            echo $product->getPrice() * UserProduct::getUserProductQuantity($product->getId(), $user->getId()) . ' руб.'; ?></div>
+        <div class="product-line-price"><?php $total += $product->getPrice() * $userProduct->getQuantity();
+            echo $product->getPrice() * $userProduct->getQuantity() . ' руб.'; ?></div>
     </div>
     <?php endforeach; } ?>
 
@@ -52,7 +50,7 @@
         </div>
     </div>
 
-    <a href="/main" class="goback">Return</a>
+    <a href="/main"><button class="goback">Return</button>
 
     <a href="/order"><button class="checkout">Order</button>
 

@@ -7,17 +7,16 @@
             <div class="block_products col-12 col-md-12 col-sm-12 col-lg-12">
                 <div class="title">Данные о платеже</div>
                 <div class="product_parent">
-                    <?php use Model\UserProduct;
-
-                    if (empty($cart)) { ?>
+                    <?php if (empty($userProducts)) { ?>
                         <h2>It's empty here! Please add some products.</h2>
                     <?php } else {
-                    foreach ($productsInfo as $productInfo) :?>
+                        foreach ($userProducts as $userProduct) : ?>
+                            <?php $product = $products[$userProduct->getProductId()]; ?>
                     <div class="product">
-                        <div class="image_product"><img src="<?php echo $productInfo->getImgUrl(); ?>" alt=""></div>
-                        <div class="name_product"><?php echo $productInfo->getName(); ?><br /><span class="quantity"><?php echo UserProduct::getUserProductQuantity($productInfo->getId(), $user->getId()) . " шт."?></span></div>
-                        <div class="price_product"><?php $total += $productInfo->getPrice() * UserProduct::getUserProductQuantity($productInfo->getId(), $user->getId());
-                        echo $productInfo->getPrice() * UserProduct::getUserProductQuantity($productInfo->getId(), $user->getId()) . ' руб.';?></div>
+                        <div class="image_product"><img src="<?php echo $product->getImgUrl(); ?>" alt=""></div>
+                        <div class="name_product"><?php echo $product->getName(); ?><br /><span class="quantity"><?php echo $userProduct->getQuantity() . ' шт.'?></span></div>
+                        <div class="price_product"><?php $total += $product->getPrice() * $userProduct->getQuantity();
+                        echo $product->getPrice() * $userProduct->getQuantity() . ' руб.';?></div>
                         <a href="#" class="close-btn"><i class="fas fa-times"></i></a>
                     </div>
                     <?php endforeach; } ?>
@@ -29,6 +28,8 @@
                     <span class="price"><?php echo $total; ?><sup> руб.</sup></span>
                 </div>
             </div>
+        <br>
+        <a href="/cart"><button class="btn-return">Вернуться</button>
 
             <div class="block_contact col-12 col-md-12 col-sm-12 col-lg-12">
                 <div class="title">Ваши контактные данные</div>
@@ -61,7 +62,7 @@
                     </div>
 
                 </div>
-                <div class="btn-block"><a href="#" class="btn-order">Заказ подтверждаю</a></div>
+                    <a href="/thanks"><div class="btn-block"><button class="btn-order">Заказ подтверждаю</button></div>
                 <div class="specialist"><span class="mark">*</span> После оплаты с вами обязательно свяжется специалист для подтверждения заказа</div>
             </div>
             <div class="block_secure col-12 col-md-12 col-sm-12 col-lg-12">
@@ -119,6 +120,17 @@
     .total-price .text{margin-right:20px;}
     .total-price .price{font-weight:bold;font-size:18px;color:#e74c3c;}
 
+    .goback {
+        float: left;
+        border: 0;
+        margin-top: 20px;
+        padding: 6px 25px;
+        background-color: #6b6;
+        color: #fff;
+        font-size: 25px;
+        border-radius: 3px;
+    }
+
 
     /* БЛОК ВАШИ КОНТАКТНЫЕ ДАННЫЕ */
     .block_contact{margin:30px 0;}
@@ -160,7 +172,7 @@
     .block_contact .btn-block{margin:15px 0 0 31%;text-align:left;}
     .block_contact .btn-order{font-size:16px;display:inline-block;color:white;vertical-align:middle;padding:7px 20px;font-weight:500;background: -webkit-linear-gradient(top,#79d670,#4bbe3f);box-shadow: 3px 3px 7px 0 rgba(105,206,95,.5), inset 0 -3px 0 0 #3a9731;    text-shadow: 0 -1px 0 rgba(0, 0, 0, .3);border-radius:5px;text-align:center;transition:.5s;border:none !important;cursor:pointer !Important;}
     .block_contact .btn-order:hover{text-decoration:none !important;background:-webkit-linear-gradient(top,#69f95b,#1fc80d);}
-
+    .btn-return{font-size:16px;display:inline-block;color:white;vertical-align:middle;padding:7px 20px;font-weight:500;background: -webkit-linear-gradient(top,#79d670,#4bbe3f);box-shadow: 3px 3px 7px 0 rgba(105,206,95,.5), inset 0 -3px 0 0 #3a9731;    text-shadow: 0 -1px 0 rgba(0, 0, 0, .3);border-radius:5px;text-align:center;transition:.5s;border:none !important;cursor:pointer !Important;}
 
     /* БЛОК О СПЕЦИАЛИСТЕ */
     .block_contact .specialist{text-align:left;font-size:12px;margin: 5px 0px 0px 31%;color:#333;}
