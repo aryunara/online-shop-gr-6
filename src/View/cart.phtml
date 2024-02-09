@@ -14,33 +14,34 @@
     </div>
 
 
-    <?php if (empty($cart)) { ?>
+    <?php if (empty($userProducts)) { ?>
             <h2>It's empty here! Please add some products.</h2>
             <?php } else {
-        foreach ($productsInfo as $productInfo) :?>
+        foreach ($userProducts as $userProduct) : ?>
+            <?php $product = $products[$userProduct->getProductId()]; ?>
     <div class="product">
         <div class="product-image">
-            <img src="<?php echo $productInfo->getImgUrl(); ?>" width="150" height="90">
+            <img src="<?php echo $product->getImgUrl(); ?>" width="150" height="90">
         </div>
         <div class="product-details">
-            <div class="product-title"><?php echo $productInfo->getName(); ?></div>
-            <p class="product-description"><?php echo $productInfo->getDescription(); ?></p>
+            <div class="product-title"><?php echo $product->getName(); ?></div>
+            <p class="product-description"><?php echo $product->getDescription(); ?></p>
         </div>
-        <div class="product-price"><?php echo $productInfo->getPrice() . " руб."; ?></div>
+        <div class="product-price"><?php echo $product->getPrice() . " руб."; ?></div>
         <div class="product-quantity">
-            <?php echo UserProduct::getUserProductQuantity($productInfo->getId(), $user->getId()); ?>
+            <?php echo UserProduct::getUserProductQuantity($product->getId(), $user->getId()); ?>
         </div>
         <div class="product-removal">
             <form action="/remove-product" method="POST">
                 <input type="hidden" value="<?php echo $_SESSION['user_id']; ?>" name="user-id" required>
-                <input type="hidden" value="<?php echo $productInfo->getId(); ?>" placeholder="Enter product id" name="product-id" id="product-id" required>
+                <input type="hidden" value="<?php echo $product->getId(); ?>" placeholder="Enter product id" name="product-id" id="product-id" required>
                 <button type="submit" class="remove-product">Remove</button>
             </form>
 
 
         </div>
-        <div class="product-line-price"><?php $total += $productInfo->getPrice() * UserProduct::getUserProductQuantity($productInfo->getId(), $user->getId());
-            echo $productInfo->getPrice() * UserProduct::getUserProductQuantity($productInfo->getId(), $user->getId()) . ' руб.'; ?></div>
+        <div class="product-line-price"><?php $total += $product->getPrice() * UserProduct::getUserProductQuantity($product->getId(), $user->getId());
+            echo $product->getPrice() * UserProduct::getUserProductQuantity($product->getId(), $user->getId()) . ' руб.'; ?></div>
     </div>
     <?php endforeach; } ?>
 

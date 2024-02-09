@@ -61,7 +61,6 @@ class Product extends Model
         return $data;
     }
 
-
     public static function getOneById($productId): ?Product
     {
         $stmt = self::getPdo()->prepare('SELECT * FROM products WHERE id = :productId');
@@ -73,6 +72,23 @@ class Product extends Model
         }
 
         return new Product ($data['id'], $data['name'], $data['description'], $data['price'], $data['img_url']);
+    }
+
+    public static function getAllByIds(array $productIds) :? array
+    {
+        $string = implode(", ", $productIds);
+        $stmt = self::getPdo()->query("SELECT * FROM products WHERE id IN ($string)");
+        $products = $stmt->fetchAll();
+
+        foreach ($products as $product) {
+            $data[$product['id']] = new Product($product['id'], $product['name'], $product['description'], $product['price'], $product['img_url']);
+        }
+
+        if (empty($data)) {
+            return null;
+        }
+
+        return $data;
     }
 
 }

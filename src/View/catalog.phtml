@@ -38,7 +38,7 @@
                 </a>
 
                 <div class="controls">
-                    <div> Количество: <span class="product-quantity"><?php echo UserProduct::getUserProductQuantity($product->getId(), $user->getId()); ?></span></div>
+                    <div> Количество: <span class="product-quantity"><?php echo UserProduct::getUserProductQuantity($product->getId(), $user->getId()) ?? 0; ?></span></div>
 
                     <form method="POST" class="plusProductForm">
                         <input type="hidden" value="<?php echo $product->getId(); ?>" name="product-id">
@@ -72,7 +72,7 @@
                 type: "POST",
                 url: "/product-plus",
                 data: { 'product-id': productId },
-                success: function(response) {
+                success: function() {
                     console.log('done');
                     updateQuantity(form, +1);
                     updateProductsCount(+1);
@@ -89,7 +89,7 @@
                 type: "POST",
                 url: "/product-minus",
                 data: { 'product-id': productId },
-                success: function(response) {
+                success: function() {
                     console.log('done');
                     updateQuantity(form, -1);
                     updateProductsCount(-1);
