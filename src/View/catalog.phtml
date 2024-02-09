@@ -14,7 +14,7 @@
             <div class="cart-body">
                 <div class="cart-hole1"></div>
                 <div class="cart-hole2"></div>
-                <a href="/cart"><span class="cart-items"><?php echo $this->countProducts($_SESSION['user_id']); ?></span></a>
+                <a href="/cart"><span class="cart-items"><?php echo $this->countProducts($user->getId()); ?></span></a>
             </div>
         </div>
     </div>
@@ -74,8 +74,7 @@
                 data: { 'product-id': productId },
                 success: function() {
                     console.log('done');
-                    updateQuantity(form, +1);
-                    updateProductsCount(+1);
+                    updateQuantityAndCount(form, +1);
                 }
             });
         });
@@ -91,15 +90,19 @@
                 data: { 'product-id': productId },
                 success: function() {
                     console.log('done');
-                    updateQuantity(form, -1);
-                    updateProductsCount(-1);
+                    updateQuantityAndCount(form, -1);
                 }
             });
         });
 
-        function updateQuantity(form, change) {
+        function updateQuantityAndCount(form, change) {
             var currentQuantity = parseInt(form.closest('.card').find(".product-quantity").text());
-            var newQuantity = Math.max(currentQuantity + change, 0);
+            if (currentQuantity + change < 0) {
+                var newQuantity = 0;
+            } else {
+                var newQuantity = currentQuantity + change;
+                updateProductsCount(change);
+            }
             form.closest('.card').find(".product-quantity").text(newQuantity);
         }
 
@@ -115,7 +118,7 @@
 
     <style>
     body {
-        font-style: sans-serif;
+        font-family: sans-serif;
     }
 
     a {
