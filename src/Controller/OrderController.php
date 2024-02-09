@@ -2,8 +2,11 @@
 
 namespace Controller;
 
+use Model\Order;
+use Model\OrderedProduct;
 use Model\Product;
 use Model\UserProduct;
+use Request\OrderRequest;
 use Service\SessionAuthenticationService;
 
 class OrderController
@@ -25,9 +28,9 @@ class OrderController
                 header('Location: /login');
             }
             $userId = $user->getId();
+            $total = 0;
 
             $userProducts = UserProduct::getCart($userId);
-            $total = 0;
 
             if (!empty($userProducts)) {
                 foreach ($userProducts as $userProduct) {
@@ -39,5 +42,31 @@ class OrderController
             require_once './../View/order.phtml';
         }
     }
+
+    public function postOrderPage(OrderRequest $request): void
+    {
+        $errors = $request->validate();
+
+        if (empty($errors)) {
+            $user = $this->sessionAuthenticationService->getCurrentUser();
+            if (!$user) {
+                header('Location: /login');
+            }
+            $userId = $user->getId();
+            $name = $request->getName();
+            $phone = $request->getPhone();
+            $email = $request->getEmail();
+            $address = $request->getAddress();
+            $comment = $request->getComment();
+
+            Order::insertData($userId, $name, $phone, $email, $address, $comment);
+//            OrderedProduct::create();
+
+            header('Location: /main');
+        }
+        require_once './../View/order.phtml';
+    }
+
+
 
 }

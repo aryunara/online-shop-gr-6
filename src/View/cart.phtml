@@ -46,7 +46,7 @@
     <div class="totals">
         <div class="totals-item">
             <label>Subtotal</label>
-            <div class="totals-value" id="cart-subtotal"><?php echo "$total руб."; ?></div>
+            <div class="totals-value" id="cart-subtotal"><?php echo $total ?? 0 . " руб."; ?></div>
         </div>
     </div>
 

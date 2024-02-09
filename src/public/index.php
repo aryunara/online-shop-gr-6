@@ -27,6 +27,7 @@ $app->post('/logout', UserController::class, 'logout');
 $app->post('/product-plus', ProductController::class, 'plus', \Request\PlusProductRequest::class);
 $app->post('/product-minus', ProductController::class, 'minus', \Request\MinusProductRequest::class);
 $app->post('/remove-product', Cart::class, 'removeProductFromCart', RemoveProductRequest::class);
+$app->post('/order', OrderController::class, 'postOrderPage', \Request\OrderRequest::class);
 
 
 $app->run();

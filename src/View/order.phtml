@@ -25,35 +25,56 @@
                 </div>
                 <div class="total-price">
                     <span class="text">Итого к оплате:</span>
-                    <span class="price"><?php echo $total; ?><sup> руб.</sup></span>
+                    <span class="price"><?php echo $total ?? 0; ?><sup> руб.</sup></span>
+                    <br>
+                    <br>
+                    <a href="/cart"><button class="btn-return">Вернуться</button></a>
                 </div>
             </div>
-        <br>
-        <a href="/cart"><button class="btn-return">Вернуться</button>
 
             <div class="block_contact col-12 col-md-12 col-sm-12 col-lg-12">
                 <div class="title">Ваши контактные данные</div>
-                <div class="input_block">
 
-                    <label for="name_input"><i class="fas fa-user"></i> Имя и фамилия:</label>
-                    <input id="name_input" type="text" required>
+                <form action="/order" method="POST">
+                <div class="input_block">
+                    <label for="name_input"><i class="fas fa-user"></i> Имя и фамилия: <span class="mark">*</span></label>
+                    <input id="name_input" name="name_input" type="text" required>
+                    <?php if (isset($errors['name_input'])): ?>
+                        <label style="color: red"><?php echo $errors['name_input']; ?></label>
+                    <?php endif; ?>
                 </div>
 
                 <div class="input_block">
-
-                    <label for="phone_input"><i class="fas fa-phone"></i> Мобильный телефон:</label>
-                    <input id="phone_input" type="text" required>
+                    <label for="phone_input"><i class="fas fa-phone"></i> Мобильный телефон: <span class="mark">*</span></label>
+                    <input id="phone_input" name="phone_input" type="text" required>
+                    <?php if (isset($errors['phone_input'])): ?>
+                        <label style="color: red"><?php echo $errors['phone_input']; ?></label>
+                    <?php endif; ?>
                 </div>
+
                 <div class="input_block">
-
-                    <label for="email_input"><i class="fas fa-envelope"></i> Электронная почта:</label>
-                    <input id="email_input" type="text" required>
+                    <label for="email_input"><i class="fas fa-envelope"></i> Электронная почта: </label>
+                    <input id="email_input" name="email_input" type="text" required>
+                    <?php if (isset($errors['email_input'])): ?>
+                        <label style="color: red"><?php echo $errors['email_input']; ?></label>
+                    <?php endif; ?>
                 </div>
+
                 <div class="input_block">
-
-                    <label for="phone_input">Адрес доставки:</label>
-                    <input id="phone_input" placeholder="Город и отделение новой почты" type="text" required>
+                    <label for="address_input">Адрес доставки: <span class="mark">*</span></label>
+                    <input id="address_input" name="address_input" placeholder="Город, улица, дом, квартира" type="text" required>
+                    <?php if (isset($errors['address_input'])): ?>
+                        <label style="color: red"><?php echo $errors['address_input']; ?></label>
+                    <?php endif; ?>
                 </div>
+
+                <div class="input_block">
+                    <label for="comment_input">Комментарий:</label>
+                    <input id="comment_input" name="comment_input" placeholder="Ваш комментарий" type="text">
+                </div>
+
+                <div class="specialist"><span class="mark">*</span> Обязательные для заполнения поля</div>
+
                 <div class="payment_block">
                     <div class="method">Способ оплаты:</div>
                     <div class="check-f-i-field">
@@ -62,8 +83,9 @@
                     </div>
 
                 </div>
-                    <a href="/thanks"><div class="btn-block"><button class="btn-order">Заказ подтверждаю</button></div>
-                <div class="specialist"><span class="mark">*</span> После оплаты с вами обязательно свяжется специалист для подтверждения заказа</div>
+
+                    <div class="btn-block"><button type="submit" class="btn-order">Заказ подтверждаю</button></div>
+                </form>
             </div>
             <div class="block_secure col-12 col-md-12 col-sm-12 col-lg-12">
                 Конфиденциальная информация о номере Вашей карточки, CVV2 коде и другие ее реквизиты передаются на наш сайт в зашифрованном состоянии. Для обмена информацией с Вами применяется промышленный стандарт SSL-шифрования с использованием стойкой криптографии (длина ключа 128 бит). <br /><img src="https://prizolove.com/images/visa-secure.PNG">
@@ -119,17 +141,8 @@
     .total-price{font-weight:500;margin:15px 15px 0 15px;font-size:18px;}
     .total-price .text{margin-right:20px;}
     .total-price .price{font-weight:bold;font-size:18px;color:#e74c3c;}
+    .total-price .btn-return{font-size:16px;display:inline-block;color:white;vertical-align:middle;padding:7px 20px;font-weight:500;background: -webkit-linear-gradient(top,#79d670,#4bbe3f);box-shadow: 3px 3px 7px 0 rgba(105,206,95,.5), inset 0 -3px 0 0 #3a9731;    text-shadow: 0 -1px 0 rgba(0, 0, 0, .3);border-radius:5px;text-align:center;transition:.5s;border:none !important;cursor:pointer !Important;}
 
-    .goback {
-        float: left;
-        border: 0;
-        margin-top: 20px;
-        padding: 6px 25px;
-        background-color: #6b6;
-        color: #fff;
-        font-size: 25px;
-        border-radius: 3px;
-    }
 
 
     /* БЛОК ВАШИ КОНТАКТНЫЕ ДАННЫЕ */
@@ -172,11 +185,10 @@
     .block_contact .btn-block{margin:15px 0 0 31%;text-align:left;}
     .block_contact .btn-order{font-size:16px;display:inline-block;color:white;vertical-align:middle;padding:7px 20px;font-weight:500;background: -webkit-linear-gradient(top,#79d670,#4bbe3f);box-shadow: 3px 3px 7px 0 rgba(105,206,95,.5), inset 0 -3px 0 0 #3a9731;    text-shadow: 0 -1px 0 rgba(0, 0, 0, .3);border-radius:5px;text-align:center;transition:.5s;border:none !important;cursor:pointer !Important;}
     .block_contact .btn-order:hover{text-decoration:none !important;background:-webkit-linear-gradient(top,#69f95b,#1fc80d);}
-    .btn-return{font-size:16px;display:inline-block;color:white;vertical-align:middle;padding:7px 20px;font-weight:500;background: -webkit-linear-gradient(top,#79d670,#4bbe3f);box-shadow: 3px 3px 7px 0 rgba(105,206,95,.5), inset 0 -3px 0 0 #3a9731;    text-shadow: 0 -1px 0 rgba(0, 0, 0, .3);border-radius:5px;text-align:center;transition:.5s;border:none !important;cursor:pointer !Important;}
 
     /* БЛОК О СПЕЦИАЛИСТЕ */
     .block_contact .specialist{text-align:left;font-size:12px;margin: 5px 0px 0px 31%;color:#333;}
-    .block_contact .specialist .mark{background:white;color:#e74c3c;}
+    .mark{background:white;color:#e74c3c;}
 
 
     /* БЛОК СЕКЬЮРНОСТИ */
