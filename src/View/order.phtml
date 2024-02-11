@@ -7,7 +7,7 @@
             <div class="block_products col-12 col-md-12 col-sm-12 col-lg-12">
                 <div class="title">Данные о платеже</div>
                 <div class="product_parent">
-                    <?php if (empty($userProducts)) { ?>
+                    <?php $total = 0; if (empty($userProducts)) { ?>
                         <h2>It's empty here! Please add some products.</h2>
                     <?php } else {
                         foreach ($userProducts as $userProduct) : ?>
@@ -53,7 +53,7 @@
                 </div>
 
                 <div class="input_block">
-                    <label for="email_input"><i class="fas fa-envelope"></i> Электронная почта: </label>
+                    <label for="email_input"><i class="fas fa-envelope"></i> Электронная почта: <span class="mark">*</span></label>
                     <input id="email_input" name="email_input" type="text" required>
                     <?php if (isset($errors['email_input'])): ?>
                         <label style="color: red"><?php echo $errors['email_input']; ?></label>

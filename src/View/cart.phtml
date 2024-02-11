@@ -12,7 +12,7 @@
     </div>
 
 
-    <?php if (empty($userProducts)) { ?>
+    <?php $total = 0; if (empty($userProducts)) { ?>
             <h2>It's empty here! Please add some products.</h2>
             <?php } else {
         foreach ($userProducts as $userProduct) : ?>
@@ -46,7 +46,7 @@
     <div class="totals">
         <div class="totals-item">
             <label>Subtotal</label>
-            <div class="totals-value" id="cart-subtotal"><?php echo $total ?? 0 . " руб."; ?></div>
+            <div class="totals-value" id="cart-subtotal"><?php echo $total . " руб."; ?></div>
         </div>
     </div>
 
