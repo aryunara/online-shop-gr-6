@@ -21,18 +21,18 @@ class ProductController
     {
         if (!($this->sessionAuthenticationService->check())) {
             header('Location: /login');
-        } else {
-            $user = $this->sessionAuthenticationService->getCurrentUser();
-            if (!$user) {
-                header('Location: /login');
-            }
-            $userId = $user->getId();
-
-            $products = Product::getAll();
-            $productsCount = $this->countProducts($userId);
-
-            require_once './../View/catalog.phtml';
         }
+
+        $user = $this->sessionAuthenticationService->getCurrentUser();
+        if (!$user) {
+            header('Location: /login');
+        }
+
+        $userId = $user->getId();
+        $products = Product::getAll();
+        $productsCount = $this->countProducts($userId);
+
+        require_once './../View/catalog.phtml';
     }
 
     public function countProducts($userId): int
@@ -54,14 +54,14 @@ class ProductController
         if (!($this->sessionAuthenticationService->check())) {
             header('Location: /login');
         }
-        $productId = $request->getId();
 
         $user = $this->sessionAuthenticationService->getCurrentUser();
         if (!$user) {
             header('Location: /login');
         }
-        $userId = $user->getId();
 
+        $userId = $user->getId();
+        $productId = $request->getId();
         $userProductInfo = UserProduct::getUserProductInfo($productId, $userId);
 
         if (isset($userProductInfo)) {
@@ -80,14 +80,14 @@ class ProductController
         if (!($this->sessionAuthenticationService->check())) {
             header('Location: /login');
         }
-        $productId = $request->getId();
 
         $user = $this->sessionAuthenticationService->getCurrentUser();
         if (!$user) {
             header('Location: /login');
         }
-        $userId = $user->getId();
 
+        $userId = $user->getId();
+        $productId = $request->getId();
         $userProductInfo = UserProduct::getUserProductInfo($productId, $userId);
 
         if (isset($userProductInfo)) {

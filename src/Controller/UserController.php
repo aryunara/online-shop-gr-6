@@ -31,7 +31,7 @@ class UserController
 
             $hash = password_hash($password, PASSWORD_DEFAULT);
             try {
-                User::insertData($name, $email, $hash);
+                User::create($name, $email, $hash);
 
                 header('Location: /login');
             } catch (PDOException){

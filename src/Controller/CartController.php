@@ -7,25 +7,27 @@ use Model\UserProduct;
 use Request\RemoveProductRequest;
 use Service\SessionAuthenticationService;
 
-class Cart
+class CartController
 {
     private SessionAuthenticationService $sessionAuthenticationService;
+
     public function __construct(SessionAuthenticationService $sessionAuthenticationService)
     {
         $this->sessionAuthenticationService = $sessionAuthenticationService;
     }
+
     public function getCartProducts(): void
     {
-        session_start();
-        if (!($this->sessionAuthenticationService->check())) {
+        if (!$this->sessionAuthenticationService->check()) {
             header('Location: /login');
         }
+
         $user = $this->sessionAuthenticationService->getCurrentUser();
         if (!$user) {
             header('Location: /login');
         }
-        $userId = $user->getId();
 
+        $userId = $user->getId();
         $userProducts = UserProduct::getCart($userId);
 
         if (!empty($userProducts)) {

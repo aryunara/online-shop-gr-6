@@ -36,13 +36,13 @@ class User extends Model
         return $this->password;
     }
 
-    public static function insertData(string $name, string $email, string $hash) : void
+    public static function create(string $name, string $email, string $hash) : void
     {
         $stmt = self::getPdo()->prepare("INSERT INTO users (name, email, password) VALUES (:name, :email, :hash)");
         $stmt->execute(['name' => $name, 'email' => $email, 'hash' => $hash]);
     }
 
-    public static function getOneByEmail($email): ?User
+    public static function getOneByEmail(string $email): ?User
     {
         $stmt = self::getPdo()->prepare('SELECT * FROM users WHERE email = :email');
         $stmt->execute(['email' => $email]);
@@ -55,7 +55,7 @@ class User extends Model
         return new User($data['id'], $data['name'], $data['email'], $data['password']);
     }
 
-    public static function getOneById($userId): ?User
+    public static function getOneById(int $userId): ?User
     {
         $stmt = self::getPdo()->prepare('SELECT * FROM users WHERE id = :userId');
         $stmt->execute(['userId' => $userId]);

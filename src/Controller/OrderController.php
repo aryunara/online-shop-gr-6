@@ -18,52 +18,37 @@ class OrderController
         $this->sessionAuthenticationService = $sessionAuthenticationService;
     }
 
-    public function getOrderedProducts($userId): ?array
-    {
-        $userProducts = UserProduct::getCart($userId);
-        if (!empty($userProducts)) {
-            foreach ($userProducts as $userProduct) {
-                $productIds[] = $userProduct->getProductId();
-            }
-
-            $products = Product::getAllByIds($productIds);
-        }
-        return $products ?? null;
-    }
-
     public function getOrderPage(): void
     {
-        session_start();
-        if (!($this->sessionAuthenticationService->check())) {
-            header('Location: /login');
-        } else {
-            $user = $this->sessionAuthenticationService->getCurrentUser();
-            if (!$user) {
-                header('Location: /login');
-            }
-            $userId = $user->getId();
-
-            $userProducts = UserProduct::getCart($userId);
-            $products = $this->getOrderedProducts($userId);
-
-            require_once './../View/order.phtml';
-        }
-    }
-
-    public function postOrderPage(OrderRequest $request): void
-    {
-        session_start();
         if (!($this->sessionAuthenticationService->check())) {
             header('Location: /login');
         }
+
         $user = $this->sessionAuthenticationService->getCurrentUser();
         if (!$user) {
             header('Location: /login');
         }
+
         $userId = $user->getId();
+        $userProducts = UserProduct::getCart($userId);
+        $products = $this->getOrderedProducts($userId);
 
+        require_once './../View/order.phtml';
+    }
+
+    public function postOrderPage(OrderRequest $request): void
+    {
+        if (!($this->sessionAuthenticationService->check())) {
+            header('Location: /login');
+        }
+
+        $user = $this->sessionAuthenticationService->getCurrentUser();
+        if (!$user) {
+            header('Location: /login');
+        }
+
+        $userId = $user->getId();
         $errors = $request->validate();
-
         $userProducts = UserProduct::getCart($userId);
 
         if (empty($errors)) {
@@ -75,15 +60,17 @@ class OrderController
                 $address = $request->getAddress();
                 $comment = $request->getComment();
 
-                Order::insertData($userId, $name, $phone, $email, $address, $comment);
+                Order::create($userId, $name, $phone, $email, $address, $comment);
 
                 //Сохраняем продукты в таблицу заказанных продуктов
                 $orderId = Order::getLastByUserId($userId)->getOrderId();
 
+                $products = $this->getOrderedProducts($userId);
+
                 foreach ($userProducts as $userProduct) {
-                    $productId = $userProduct->getProductId();
+                    $product = $products[$userProduct->getProductId()];
+                    $productId = $product->getId();
                     $quantity = $userProduct->getQuantity();
-                    $product = Product::getOneById($productId);
                     $total = $product->getPrice() * $userProduct->getQuantity();
 
                     OrderedProduct::create($orderId, $productId, $quantity, $total);
@@ -97,5 +84,18 @@ class OrderController
 
             require_once './../View/order.phtml';
         }
+    }
+
+    private function getOrderedProducts($userId): ?array
+    {
+        $userProducts = UserProduct::getCart($userId);
+        if (!empty($userProducts)) {
+            foreach ($userProducts as $userProduct) {
+                $productIds[] = $userProduct->getProductId();
+            }
+            $products = Product::getAllByIds($productIds);
+        }
+
+        return $products ?? null;
     }
 }

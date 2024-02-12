@@ -61,7 +61,7 @@ class Product extends Model
         return $data;
     }
 
-    public static function getOneById($productId): ?Product
+    public static function getOneById(int $productId): ?Product
     {
         $stmt = self::getPdo()->prepare('SELECT * FROM products WHERE id = :productId');
         $stmt->execute(['productId' => $productId]);
