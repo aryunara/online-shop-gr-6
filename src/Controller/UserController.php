@@ -3,9 +3,9 @@
 namespace Controller;
 
 use Model\User;
+use PDOException;
 use Request\LoginRequest;
 use Request\RegistrateRequest;
-use Request\Request;
 use Service\SessionAuthenticationService;
 
 class UserController

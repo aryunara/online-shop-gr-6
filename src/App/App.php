@@ -3,6 +3,8 @@
 use Controller\ProductController;
 use Controller\UserController;
 use Request\Request;
+use Service\CartService;
+use Service\OrderService;
 use Service\SessionAuthenticationService;
 
 class App
@@ -44,8 +46,10 @@ class App
                 $request = $handler['request'];
 
                 $service = new SessionAuthenticationService();
+                $cartService = new CartService();
+                $orderService = new OrderService($cartService);
 
-                $obj = new $class($service);
+                $obj = new $class($service, $cartService, $orderService);
 
                 if (isset($request)) {
                     $request = new $handler['request']($requestMethod, $requestUri, headers_list(), $_REQUEST);

@@ -57,7 +57,7 @@ class UserProduct extends Model
         return $data;
     }
 
-    public static function getUserProductInfo(int $productId, int $userId): ?UserProduct
+    public static function getUserProduct(int $productId, int $userId): ?UserProduct
     {
         $stmt = self::getPdo()->prepare('SELECT * FROM user_products WHERE product_id = :productId AND user_id = :userId');
         $stmt->execute(['productId' => $productId, 'userId' => $userId]);
@@ -95,12 +95,12 @@ class UserProduct extends Model
         $stmt->execute(['productId' => $productId, 'userId' => $userId]);
     }
 
-    public function save(int $quantity, int $productId, int $userId): void
+    public function save(): void
     {
         $sql = 'UPDATE user_products SET quantity = :quantity WHERE product_id = :productId AND user_id = :userId ';
 
         $stmt = static::getPdo()->prepare($sql);
-        $stmt->execute(['quantity' => $quantity, 'productId' => $productId, 'userId' => $userId]);
+        $stmt->execute(['quantity' => $this->quantity, 'productId' => $this->productId, 'userId' => $this->userId]);
     }
 
 }
