@@ -3,8 +3,8 @@
 namespace Controller;
 
 use Model\Product;
+use Service\Authentication\SessionAuthenticationService;
 use Service\CartService;
-use Service\SessionAuthenticationService;
 
 class ProductController
 {
@@ -30,7 +30,7 @@ class ProductController
 
         $userId = $user->getId();
         $products = Product::getAll();
-        $productsCount = $this->cartService->countProducts($userId);
+        $productsCount = $this->cartService->getCount($userId);
 
         require_once './../View/catalog.phtml';
     }

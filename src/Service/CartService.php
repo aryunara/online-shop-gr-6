@@ -49,7 +49,7 @@ class CartService
         return $products ?? null;
     }
 
-    public function countProducts($userId): int
+    public function getCount($userId): int
     {
         $cart = UserProduct::getCart($userId);
         if (empty($cart)) {

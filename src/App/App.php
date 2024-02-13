@@ -1,11 +1,9 @@
 <?php
 
-use Controller\ProductController;
-use Controller\UserController;
 use Request\Request;
+use Service\Authentication\SessionAuthenticationService;
 use Service\CartService;
 use Service\OrderService;
-use Service\SessionAuthenticationService;
 
 class App
 {

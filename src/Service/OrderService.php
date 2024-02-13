@@ -17,9 +17,8 @@ class OrderService
 
     public function create(int $userId, string $name, string $phone, string $email, string $address, string $comment, array $userProducts): void
     {
-        Order::create($userId, $name, $phone, $email, $address, $comment);
+        $orderId = Order::create($userId, $name, $phone, $email, $address, $comment);
 
-        $orderId = Order::getLastByUserId($userId)->getOrderId();
         $products = $this->cartService->getProducts($userId);
 
         foreach ($userProducts as $userProduct) {

@@ -4,9 +4,9 @@ namespace Controller;
 
 use Model\UserProduct;
 use Request\OrderRequest;
+use Service\Authentication\SessionAuthenticationService;
 use Service\CartService;
 use Service\OrderService;
-use Service\SessionAuthenticationService;
 
 class OrderController
 {

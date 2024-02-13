@@ -1,23 +1,26 @@
 <?php
 
-namespace Service;
+namespace Service\Authentication;
 
 use Model\User;
-class SessionAuthenticationService
+
+class SessionAuthenticationService implements AuthenticationServiceInterface
 {
     private User $user;
+
+    public function startSession() : void
+    {
+        if (session_status() !== PHP_SESSION_ACTIVE)
+        {
+            session_start();
+        }
+    }
+
     public function check(): bool
     {
         self::startSession();
 
         return isset($_SESSION['user_id']);
-    }
-
-    public function logout() : void
-    {
-        self::startSession();
-
-        session_destroy();
     }
 
     public function login(string $email, string $password) : bool
@@ -32,10 +35,17 @@ class SessionAuthenticationService
             return false;
         }
 
-        $this->startSession();
+        self::startSession();
         $_SESSION['user_id'] = $user->getId();
 
         return true;
+    }
+
+    public function logout() : void
+    {
+        self::startSession();
+
+        session_destroy();
     }
 
     public function getCurrentUser() : ?User
@@ -47,19 +57,11 @@ class SessionAuthenticationService
         if (!$this->check()) {
             return null;
         }
-        $this->startSession();
+        self::startSession();
         $userId = $_SESSION['user_id'];
 
         $this->user = User::getOneById($userId);
         return $this->user;
-    }
-
-    public function startSession() : void
-    {
-        if (session_status() !== PHP_SESSION_ACTIVE)
-        {
-            session_start();
-        }
     }
 
 }

@@ -2,13 +2,12 @@
 
 namespace Controller;
 
-use Model\Product;
 use Model\UserProduct;
 use Request\MinusProductRequest;
 use Request\PlusProductRequest;
 use Request\RemoveProductRequest;
+use Service\Authentication\SessionAuthenticationService;
 use Service\CartService;
-use Service\SessionAuthenticationService;
 
 class CartController
 {

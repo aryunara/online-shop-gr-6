@@ -59,10 +59,11 @@ class Order extends Model
         return $this->comment;
     }
 
-    public static function create(int $userId, string $name, string $phone, string $email, string $address, string $comment = null): void
+    public static function create(int $userId, string $name, string $phone, string $email, string $address, string $comment = null) : int
     {
-        $stmt = self::getPdo()->prepare("INSERT INTO orders (user_id, user_name, phone, email, address, comment) VALUES (:userId, :name, :phone, :email, :address, :comment)");
+        $stmt = self::getPdo()->prepare('INSERT INTO orders (user_id, user_name, phone, email, address, comment) VALUES (:userId, :name, :phone, :email, :address, :comment) RETURNING order_id');
         $stmt->execute(['userId' => $userId, 'name' => $name, 'phone' => $phone, 'email' => $email, 'address' => $address, 'comment' => $comment]);
+        return $stmt->fetchColumn();
     }
 
     public static function getLastByUserId(int $userId): ?Order

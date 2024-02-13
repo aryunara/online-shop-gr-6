@@ -6,7 +6,7 @@ use Model\User;
 use PDOException;
 use Request\LoginRequest;
 use Request\RegistrateRequest;
-use Service\SessionAuthenticationService;
+use Service\Authentication\SessionAuthenticationService;
 
 class UserController
 {
