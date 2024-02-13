@@ -48,17 +48,13 @@ class Product extends Model
     public static function getAll(): ?array
     {
         $stmt = self::getPdo()->query('SELECT * FROM products');
-        $products = $stmt->fetchAll();
-
-        foreach ($products as $product) {
-            $data[] = new Product($product['id'], $product['name'], $product['description'], $product['price'], $product['img_url']);
-        }
+        $data = $stmt->fetchAll();
 
         if (empty($data)) {
             return null;
         }
 
-        return $data;
+        return static::hydrateAll($data);
     }
 
     public static function getOneById(int $productId): ?Product
@@ -78,17 +74,22 @@ class Product extends Model
     {
         $string = implode(", ", $productIds);
         $stmt = self::getPdo()->query("SELECT * FROM products WHERE id IN ($string)");
-        $products = $stmt->fetchAll();
-
-        foreach ($products as $product) {
-            $data[$product['id']] = new Product($product['id'], $product['name'], $product['description'], $product['price'], $product['img_url']);
-        }
+        $data = $stmt->fetchAll();
 
         if (empty($data)) {
             return null;
         }
 
-        return $data;
+        return static::hydrateAll($data);
     }
 
+    private static function hydrateAll(array $data) : array
+    {
+        $result = [];
+        foreach ($data as $product) {
+            $result[$product['id']] = new Product($product['id'], $product['name'], $product['description'], $product['price'], $product['img_url']);
+        }
+
+        return $result;
+    }
 }
