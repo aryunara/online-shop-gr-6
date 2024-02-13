@@ -6,14 +6,15 @@ use Model\User;
 use PDOException;
 use Request\LoginRequest;
 use Request\RegistrateRequest;
+use Service\Authentication\AuthenticationServiceInterface;
 use Service\Authentication\SessionAuthenticationService;
 
 class UserController
 {
-    private SessionAuthenticationService $sessionAuthenticationService;
-    public function __construct(SessionAuthenticationService $sessionAuthenticationService)
+    private AuthenticationServiceInterface $authenticationService;
+    public function __construct(AuthenticationServiceInterface $authenticationService)
     {
-        $this->sessionAuthenticationService = $sessionAuthenticationService;
+        $this->authenticationService = $authenticationService;
     }
     public function getRegistrate(): void
     {
@@ -56,7 +57,7 @@ class UserController
             $email = $request->getEmail();
             $password = $request->getPassword();
 
-            $result = $this->sessionAuthenticationService->login($email, $password);
+            $result = $this->authenticationService->login($email, $password);
 
             if ($result) {
                 header('Location: /main');
@@ -69,7 +70,7 @@ class UserController
 
     public function logout(): void
     {
-        $this->sessionAuthenticationService->logout();
+        $this->authenticationService->logout();
 
         header('Location: /login');
     }

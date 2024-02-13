@@ -4,30 +4,31 @@ namespace Controller;
 
 use Model\UserProduct;
 use Request\OrderRequest;
+use Service\Authentication\AuthenticationServiceInterface;
 use Service\Authentication\SessionAuthenticationService;
 use Service\CartService;
 use Service\OrderService;
 
 class OrderController
 {
-    private SessionAuthenticationService $sessionAuthenticationService;
+    private AuthenticationServiceInterface $authenticationService;
     private CartService $cartService;
     private OrderService $orderService;
 
-    public function __construct(SessionAuthenticationService $sessionAuthenticationService, CartService $cartService, OrderService $orderService)
+    public function __construct(AuthenticationServiceInterface $authenticationService, CartService $cartService, OrderService $orderService)
     {
-        $this->sessionAuthenticationService = $sessionAuthenticationService;
+        $this->authenticationService = $authenticationService;
         $this->cartService = $cartService;
         $this->orderService = $orderService;
     }
 
     public function getOrderPage(): void
     {
-        if (!$this->sessionAuthenticationService->check()) {
+        if (!$this->authenticationService->check()) {
             header('Location: /login');
         }
 
-        $user = $this->sessionAuthenticationService->getCurrentUser();
+        $user = $this->authenticationService->getCurrentUser();
         if (!$user) {
             header('Location: /login');
         }
@@ -41,11 +42,11 @@ class OrderController
 
     public function postOrderPage(OrderRequest $request): void
     {
-        if (!$this->sessionAuthenticationService->check()) {
+        if (!$this->authenticationService->check()) {
             header('Location: /login');
         }
 
-        $user = $this->sessionAuthenticationService->getCurrentUser();
+        $user = $this->authenticationService->getCurrentUser();
         if (!$user) {
             header('Location: /login');
         }

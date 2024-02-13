@@ -6,27 +6,28 @@ use Model\UserProduct;
 use Request\MinusProductRequest;
 use Request\PlusProductRequest;
 use Request\RemoveProductRequest;
+use Service\Authentication\AuthenticationServiceInterface;
 use Service\Authentication\SessionAuthenticationService;
 use Service\CartService;
 
 class CartController
 {
-    private SessionAuthenticationService $sessionAuthenticationService;
+    private AuthenticationServiceInterface $authenticationService;
     private CartService $cartService;
 
-    public function __construct(SessionAuthenticationService $sessionAuthenticationService, CartService $cartService)
+    public function __construct(AuthenticationServiceInterface $authenticationService, CartService $cartService)
     {
-        $this->sessionAuthenticationService = $sessionAuthenticationService;
+        $this->authenticationService = $authenticationService;
         $this->cartService = $cartService;
     }
 
     public function getCartProducts(): void
     {
-        if (!$this->sessionAuthenticationService->check()) {
+        if (!$this->authenticationService->check()) {
             header('Location: /login');
         }
 
-        $user = $this->sessionAuthenticationService->getCurrentUser();
+        $user = $this->authenticationService->getCurrentUser();
         if (!$user) {
             header('Location: /login');
         }
@@ -41,11 +42,11 @@ class CartController
 
     public function plus(PlusProductRequest $request): void
     {
-        if (!$this->sessionAuthenticationService->check()) {
+        if (!$this->authenticationService->check()) {
             header('Location: /login');
         }
 
-        $user = $this->sessionAuthenticationService->getCurrentUser();
+        $user = $this->authenticationService->getCurrentUser();
         if (!$user) {
             header('Location: /login');
         }
@@ -57,11 +58,11 @@ class CartController
 
     public function minus(MinusProductRequest $request): void
     {
-        if (!$this->sessionAuthenticationService->check()) {
+        if (!$this->authenticationService->check()) {
             header('Location: /login');
         }
 
-        $user = $this->sessionAuthenticationService->getCurrentUser();
+        $user = $this->authenticationService->getCurrentUser();
         if (!$user) {
             header('Location: /login');
         }

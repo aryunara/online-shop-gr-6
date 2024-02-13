@@ -3,27 +3,28 @@
 namespace Controller;
 
 use Model\Product;
+use Service\Authentication\AuthenticationServiceInterface;
 use Service\Authentication\SessionAuthenticationService;
 use Service\CartService;
 
 class ProductController
 {
-    private SessionAuthenticationService $sessionAuthenticationService;
+    private AuthenticationServiceInterface $authenticationService;
     private CartService $cartService;
 
-    public function __construct(SessionAuthenticationService $sessionAuthenticationService, CartService $cartService)
+    public function __construct(AuthenticationServiceInterface $authenticationService, CartService $cartService)
     {
-        $this->sessionAuthenticationService = $sessionAuthenticationService;
+        $this->authenticationService = $authenticationService;
         $this->cartService = $cartService;
     }
 
     public function getCatalog(): void
     {
-        if (!$this->sessionAuthenticationService->check()) {
+        if (!$this->authenticationService->check()) {
             header('Location: /login');
         }
 
-        $user = $this->sessionAuthenticationService->getCurrentUser();
+        $user = $this->authenticationService->getCurrentUser();
         if (!$user) {
             header('Location: /login');
         }
