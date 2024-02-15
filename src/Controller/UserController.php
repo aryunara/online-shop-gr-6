@@ -7,7 +7,6 @@ use PDOException;
 use Request\LoginRequest;
 use Request\RegistrateRequest;
 use Service\Authentication\AuthenticationServiceInterface;
-use Service\Authentication\SessionAuthenticationService;
 
 class UserController
 {

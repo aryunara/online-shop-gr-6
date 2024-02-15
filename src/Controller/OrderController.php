@@ -6,7 +6,6 @@ use Model\Product;
 use Model\UserProduct;
 use Request\OrderRequest;
 use Service\Authentication\AuthenticationServiceInterface;
-use Service\CartService;
 use Service\OrderService;
 
 class OrderController
@@ -14,7 +13,7 @@ class OrderController
     private AuthenticationServiceInterface $authenticationService;
     private OrderService $orderService;
 
-    public function __construct(AuthenticationServiceInterface $authenticationService, CartService $cartService, OrderService $orderService)
+    public function __construct(AuthenticationServiceInterface $authenticationService, OrderService $orderService)
     {
         $this->authenticationService = $authenticationService;
         $this->orderService = $orderService;

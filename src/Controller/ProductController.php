@@ -2,12 +2,9 @@
 
 namespace Controller;
 
-use Model\Model;
 use Model\Product;
 use Model\UserProduct;
 use Service\Authentication\AuthenticationServiceInterface;
-use Service\Authentication\SessionAuthenticationService;
-use Service\CartService;
 
 class ProductController
 {

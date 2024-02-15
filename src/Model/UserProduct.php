@@ -86,12 +86,6 @@ class UserProduct extends Model
         $stmt->execute(['userId' => $userId, 'productId' => $productId, 'quantity' => $quantity]);
     }
 
-    public static function deleteProduct(int $productId, int $userId): void
-    {
-        $stmt = self::getPdo()->prepare('DELETE FROM user_products WHERE product_id = :productId AND user_id = :userId');
-        $stmt->execute(['productId' => $productId, 'userId' => $userId]);
-    }
-
     public function save(): void
     {
         $sql = 'UPDATE user_products SET quantity = :quantity WHERE product_id = :productId AND user_id = :userId';

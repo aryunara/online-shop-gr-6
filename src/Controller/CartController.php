@@ -8,7 +8,6 @@ use Request\MinusProductRequest;
 use Request\PlusProductRequest;
 use Request\RemoveProductRequest;
 use Service\Authentication\AuthenticationServiceInterface;
-use Service\CartService;
 
 class CartController
 {
@@ -56,8 +55,6 @@ class CartController
             UserProduct::create($user->getId(), $request->getId(), 1);
         }
 
-
-
         header('Location: /main');
     }
 
@@ -80,10 +77,8 @@ class CartController
 
     public function removeProductFromCart(RemoveProductRequest $request): void
     {
-        $userId = $request->getUserId();
-        $productId = $request->getProductId();
-
-        UserProduct::deleteProduct($productId, $userId);
+        $userProduct = UserProduct::getUserProduct($request->getProductId(), $request->getUserId());
+        $userProduct->destroy();
 
         header('Location: /cart');
     }

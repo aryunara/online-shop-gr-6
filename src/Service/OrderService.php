@@ -2,6 +2,7 @@
 
 namespace Service;
 
+use Model\Model;
 use Model\Order;
 use Model\OrderedProduct;
 use Model\Product;
@@ -11,17 +12,24 @@ class OrderService
 {
     public function create(int $userId, string $name, string $phone, string $email, string $address, string $comment): void
     {
-        $orderId = Order::create($userId, $name, $phone, $email, $address, $comment);
-        $products = Product::getProducts($userId);
-        $userProducts = UserProduct::getCart($userId);
+        $pdo = Model::getPdo();
+        $pdo->beginTransaction();
 
-        foreach ($userProducts as $userProduct) {
-            $product = $products[$userProduct->getId()];
-            $productId = $userProduct->getProductId();
-            $quantity = $userProduct->getQuantity();
-            $total = $product->getPrice() * $userProduct->getQuantity();
+        try {
+            $orderId = Order::create($userId, $name, $phone, $email, $address, $comment);
+            $products = Product::getProducts($userId);
+            $userProducts = UserProduct::getCart($userId);
 
-            OrderedProduct::create($orderId, $productId, $quantity, $total);
+            foreach ($userProducts as $userProduct) {
+                $product = $products[$userProduct->getId()];
+                $productId = $userProduct->getProductId();
+                $quantity = $userProduct->getQuantity();
+                $total = $product->getPrice() * $userProduct->getQuantity();
+
+                OrderedProduct::create($orderId, $productId, $quantity, $total);
+            }
+        } catch (\PDOException $exception) {
+            $pdo->rollBack();
         }
     }
 }
