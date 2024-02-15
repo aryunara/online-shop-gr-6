@@ -6,6 +6,7 @@ class Order extends Model
 {
 
     private int $orderId;
+    private int $orderNumber;
     private int $userId;
     private string $userName;
     private string $phone;

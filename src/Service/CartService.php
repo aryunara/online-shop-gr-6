@@ -35,19 +35,4 @@ class CartService
             }
         }
     }
-
-    public function getCount($userId): int
-    {
-        $userProducts = UserProduct::getCart($userId);
-        if (empty($userProducts)) {
-            return 0;
-        }
-
-        $sum = 0;
-        foreach ($userProducts as $userProduct) {
-            $sum += $userProduct->getQuantity();
-        }
-
-        return $sum;
-    }
 }

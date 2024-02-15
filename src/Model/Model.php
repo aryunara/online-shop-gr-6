@@ -14,4 +14,19 @@ class Model
         return self::$pdo;
     }
 
+    protected static function prepareExecute(string $sql, array $data): false|\PDOStatement
+    {
+        $stmt = self::getPDO()->prepare($sql);
+
+        foreach ($data as $param => $value)
+        {
+            $stmt->bindValue(":$param", $value);
+
+        }
+        $stmt->execute();
+
+        return $stmt;
+
+    }
+
 }

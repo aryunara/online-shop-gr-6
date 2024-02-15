@@ -84,20 +84,6 @@ class Product extends Model
         return static::hydrateAll($data);
     }
 
-    protected static function prepareExecute(string $sql, array $data): false|\PDOStatement
-    {
-        $stmt = self::getPDO()->prepare($sql);
-
-        foreach ($data as $param => $value)
-        {
-            $stmt->bindValue(":$param", $value);
-
-        }
-        $stmt->execute();
-
-        return $stmt;
-
-    }
     private static function hydrateAll(array $data) : array
     {
         $result = [];

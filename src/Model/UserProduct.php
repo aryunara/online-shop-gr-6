@@ -105,6 +105,15 @@ class UserProduct extends Model
         $stmt->execute(['id' => $this->id]);
     }
 
+    public static function getCount(int $userId) : int
+    {
+        $stmt = self::getPdo()->prepare('SELECT SUM(user_products.quantity) FROM user_products WHERE user_products.user_id = :userId');
+        $stmt->execute(['userId' => $userId]);
+        $result = $stmt->fetch();
+
+        return $result['sum'] ?? 0;
+    }
+
     private static function hydrateAll(array $data) : array
     {
         $result = [];
