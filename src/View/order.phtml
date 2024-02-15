@@ -11,7 +11,7 @@
                         <h2>It's empty here! Please add some products.</h2>
                     <?php } else {
                         foreach ($userProducts as $userProduct) : ?>
-                            <?php $product = $products[$userProduct->getProductId()]; ?>
+                            <?php $product = $products[$userProduct->getId()]; ?>
                     <div class="product">
                         <div class="image_product"><img src="<?php echo $product->getImgUrl(); ?>" alt=""></div>
                         <div class="name_product"><?php echo $product->getName(); ?><br /><span class="quantity"><?php echo $userProduct->getQuantity() . ' шт.'?></span></div>

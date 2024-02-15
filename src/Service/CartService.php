@@ -29,37 +29,25 @@ class CartService
         if (isset($userProduct)) {
             $userProduct->setQuantity($userProduct->getQuantity() - 1);
             if ($userProduct->getQuantity() < 1) {
-                UserProduct::deleteProduct($productId, $userId);
+                $userProduct->destroy();
             } else {
                 $userProduct->save();
             }
         }
     }
 
-    public function getProducts(int $userId): ?array
-    {
-        $userProducts = UserProduct::getCart($userId);
-        if (!empty($userProducts)) {
-            foreach ($userProducts as $userProduct) {
-                $productIds[] = $userProduct->getProductId();
-            }
-            $products = Product::getAllByIds($productIds);
-        }
-
-        return $products ?? null;
-    }
-
     public function getCount($userId): int
     {
-        $cart = UserProduct::getCart($userId);
-        if (empty($cart)) {
+        $userProducts = UserProduct::getCart($userId);
+        if (empty($userProducts)) {
             return 0;
-        } else {
-            $sum = 0;
-            foreach ($cart as $productInCart) {
-                $sum += $productInCart->getQuantity();
-            }
-            return $sum;
         }
+
+        $sum = 0;
+        foreach ($userProducts as $userProduct) {
+            $sum += $userProduct->getQuantity();
+        }
+
+        return $sum;
     }
 }

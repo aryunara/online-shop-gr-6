@@ -70,10 +70,11 @@ class Product extends Model
         return new Product ($data['id'], $data['name'], $data['description'], $data['price'], $data['img_url']);
     }
 
-    public static function getAllByIds(array $productIds) :? array
+    public static function getProducts(int $userId) :? array
     {
-        $string = implode(", ", $productIds);
-        $stmt = self::getPdo()->query("SELECT * FROM products WHERE id IN ($string)");
+        $sql = "SELECT * FROM products INNER JOIN user_products ON products.id = user_products.product_id WHERE user_products.user_id = :userId";
+        $data = ['userId' => $userId];
+        $stmt = self::prepareExecute($sql, $data);
         $data = $stmt->fetchAll();
 
         if (empty($data)) {
@@ -83,6 +84,20 @@ class Product extends Model
         return static::hydrateAll($data);
     }
 
+    protected static function prepareExecute(string $sql, array $data): false|\PDOStatement
+    {
+        $stmt = self::getPDO()->prepare($sql);
+
+        foreach ($data as $param => $value)
+        {
+            $stmt->bindValue(":$param", $value);
+
+        }
+        $stmt->execute();
+
+        return $stmt;
+
+    }
     private static function hydrateAll(array $data) : array
     {
         $result = [];

@@ -99,6 +99,12 @@ class UserProduct extends Model
         $stmt->execute(['quantity' => $this->quantity, 'productId' => $this->productId, 'userId' => $this->userId]);
     }
 
+    public function destroy() : void
+    {
+        $stmt = self::getPdo()->prepare('DELETE FROM user_products WHERE id = :id');
+        $stmt->execute(['id' => $this->id]);
+    }
+
     private static function hydrateAll(array $data) : array
     {
         $result = [];

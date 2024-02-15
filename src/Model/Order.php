@@ -59,10 +59,10 @@ class Order extends Model
         return $this->comment;
     }
 
-    public static function create(int $userId, string $name, string $phone, string $email, string $address, string $comment = null) : int
+    public static function create(int $userId, string $name, string $phone, string $email, string $address, string $comment = null) : string
     {
         $orderNumber = mt_rand();
-        $stmt = self::getPdo()->prepare('INSERT INTO orders (order_number, user_id, user_name, phone, email, address, comment) VALUES (:orderNumber, :userId, :name, :phone, :email, :address, :comment) RETURNING id');
+        $stmt = self::getPdo()->prepare('INSERT INTO orders (order_number, user_id, contact_name, phone, email, address, comment) VALUES (:orderNumber, :userId, :name, :phone, :email, :address, :comment) RETURNING id');
         $stmt->execute(['orderNumber' => $orderNumber, 'userId' => $userId, 'name' => $name, 'phone' => $phone, 'email' => $email, 'address' => $address, 'comment' => $comment]);
 
         return $stmt->fetchColumn();

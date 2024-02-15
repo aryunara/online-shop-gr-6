@@ -16,7 +16,7 @@
             <h2>It's empty here! Please add some products.</h2>
             <?php } else {
         foreach ($userProducts as $userProduct) : ?>
-            <?php $product = $products[$userProduct->getProductId()]; ?>
+            <?php $product = $products[$userProduct->getId()]; ?>
     <div class="product">
         <div class="product-image">
             <img src="<?php echo $product->getImgUrl(); ?>" width="150" height="90">
@@ -32,7 +32,7 @@
         <div class="product-removal">
             <form action="/remove-product" method="POST">
                 <input type="hidden" value="<?php echo $user->getId(); ?>" name="user-id" required>
-                <input type="hidden" value="<?php echo $product->getId(); ?>" placeholder="Enter product id" name="product-id" id="product-id" required>
+                <input type="hidden" value="<?php echo $userProduct->getProductId(); ?>" name="product-id" id="product-id" required>
                 <button type="submit" class="remove-product">Remove</button>
             </form>
 

@@ -45,7 +45,7 @@ class App
 
                 $service = new SessionAuthenticationService();
                 $cartService = new CartService();
-                $orderService = new OrderService($cartService);
+                $orderService = new OrderService();
 
                 $obj = new $class($service, $cartService, $orderService);
 

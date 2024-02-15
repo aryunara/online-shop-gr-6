@@ -2,23 +2,21 @@
 
 namespace Controller;
 
+use Model\Product;
 use Model\UserProduct;
 use Request\OrderRequest;
 use Service\Authentication\AuthenticationServiceInterface;
-use Service\Authentication\SessionAuthenticationService;
 use Service\CartService;
 use Service\OrderService;
 
 class OrderController
 {
     private AuthenticationServiceInterface $authenticationService;
-    private CartService $cartService;
     private OrderService $orderService;
 
     public function __construct(AuthenticationServiceInterface $authenticationService, CartService $cartService, OrderService $orderService)
     {
         $this->authenticationService = $authenticationService;
-        $this->cartService = $cartService;
         $this->orderService = $orderService;
     }
 
@@ -35,7 +33,7 @@ class OrderController
 
         $userId = $user->getId();
         $userProducts = UserProduct::getCart($userId);
-        $products = $this->cartService->getProducts($userId);
+        $products = Product::getProducts($userId);
 
         require_once './../View/order.phtml';
     }
@@ -57,14 +55,14 @@ class OrderController
 
         if (empty($errors)) {
             if (!empty($userProducts)) {
-                $this->orderService->create($userId, $request->getName(), $request->getPhone(), $request->getEmail(), $request->getAddress(), $request->getComment(), $userProducts);
+                $this->orderService->create($userId, $request->getName(), $request->getPhone(), $request->getEmail(), $request->getAddress(), $request->getComment());
 
                 header('Location: /main');
             } else {
                 header('Location: /cart');
             }
         } else {
-            $products = $this->cartService->getProducts($userId);
+            $products = Product::getProducts($userId);
 
             require_once './../View/order.phtml';
         }

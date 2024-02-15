@@ -2,12 +2,12 @@
 
 namespace Controller;
 
+use Model\Product;
 use Model\UserProduct;
 use Request\MinusProductRequest;
 use Request\PlusProductRequest;
 use Request\RemoveProductRequest;
 use Service\Authentication\AuthenticationServiceInterface;
-use Service\Authentication\SessionAuthenticationService;
 use Service\CartService;
 
 class CartController
@@ -35,7 +35,7 @@ class CartController
         $userId = $user->getId();
         $userProducts = UserProduct::getCart($userId);
 
-        $products = $this->cartService->getProducts($userId);
+        $products = Product::getProducts($userId);
 
         require_once './../View/cart.phtml';
     }
