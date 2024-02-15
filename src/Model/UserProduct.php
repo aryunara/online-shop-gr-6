@@ -114,6 +114,24 @@ class UserProduct extends Model
         return $result['sum'] ?? 0;
     }
 
+    public function incrementQuantity() : void
+    {
+        if ($this->getQuantity() > 0) {
+            $this->quantity++;
+            $this->save();
+        }
+    }
+
+    public function decrementQuantity() : void
+    {
+        if ($this->getQuantity() === 1) {
+            $this->destroy();
+        } else {
+            $this->quantity--;
+            $this->save();
+        }
+    }
+
     private static function hydrateAll(array $data) : array
     {
         $result = [];

@@ -44,10 +44,9 @@ class App
                 $request = $handler['request'];
 
                 $service = new SessionAuthenticationService();
-                $cartService = new CartService();
                 $orderService = new OrderService();
 
-                $obj = new $class($service, $cartService, $orderService);
+                $obj = new $class($service, $orderService);
 
                 if (isset($request)) {
                     $request = new $handler['request']($requestMethod, $requestUri, headers_list(), $_REQUEST);

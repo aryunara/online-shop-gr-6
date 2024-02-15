@@ -12,12 +12,10 @@ use Service\CartService;
 class ProductController
 {
     private AuthenticationServiceInterface $authenticationService;
-    private CartService $cartService;
 
-    public function __construct(AuthenticationServiceInterface $authenticationService, CartService $cartService)
+    public function __construct(AuthenticationServiceInterface $authenticationService)
     {
         $this->authenticationService = $authenticationService;
-        $this->cartService = $cartService;
     }
 
     public function getCatalog(): void

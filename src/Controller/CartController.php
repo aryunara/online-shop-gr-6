@@ -13,12 +13,10 @@ use Service\CartService;
 class CartController
 {
     private AuthenticationServiceInterface $authenticationService;
-    private CartService $cartService;
 
-    public function __construct(AuthenticationServiceInterface $authenticationService, CartService $cartService)
+    public function __construct(AuthenticationServiceInterface $authenticationService)
     {
         $this->authenticationService = $authenticationService;
-        $this->cartService = $cartService;
     }
 
     public function getCartProducts(): void
@@ -51,7 +49,14 @@ class CartController
             header('Location: /login');
         }
 
-        $this->cartService->plus($request->getId(), $user);
+        $userProduct = UserProduct::getUserProduct($request->getId(), $user->getId());
+        if (isset($userProduct)) {
+            $userProduct->incrementQuantity();
+        } else {
+            UserProduct::create($user->getId(), $request->getId(), 1);
+        }
+
+
 
         header('Location: /main');
     }
@@ -67,7 +72,8 @@ class CartController
             header('Location: /login');
         }
 
-        $this->cartService->minus($request->getId(), $user);
+        $userProduct = UserProduct::getUserProduct($request->getId(), $user->getId());
+        $userProduct->decrementQuantity();
 
         header('Location: /main');
     }
