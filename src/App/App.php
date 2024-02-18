@@ -2,7 +2,6 @@
 
 use Request\Request;
 use Service\Authentication\SessionAuthenticationService;
-use Service\CartService;
 use Service\OrderService;
 
 class App
@@ -53,7 +52,12 @@ class App
                 } else {
                     $request = new Request($requestMethod, $requestUri, headers_list(), $_REQUEST);
                 }
-                $obj->$method($request);
+
+                try {
+                    $obj->$method($request);
+                } catch (Throwable $exception) {
+                    require_once './../View/500.html';
+                }
 
             } else {
                 echo "Метод $requestMethod не поддерживается для адреса $requestUri";

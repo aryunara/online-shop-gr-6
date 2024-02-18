@@ -13,12 +13,12 @@ class OrderService
     public function create(int $userId, string $name, string $phone, string $email, string $address, string $comment): void
     {
         $pdo = Model::getPdo();
-        $pdo->beginTransaction();
+        $products = Product::getProducts($userId);
+        $userProducts = UserProduct::getCart($userId);
 
+        $pdo->beginTransaction();
         try {
             $orderId = Order::create($userId, $name, $phone, $email, $address, $comment);
-            $products = Product::getProducts($userId);
-            $userProducts = UserProduct::getCart($userId);
 
             foreach ($userProducts as $userProduct) {
                 $product = $products[$userProduct->getId()];
@@ -28,8 +28,9 @@ class OrderService
 
                 OrderedProduct::create($orderId, $productId, $quantity, $total);
             }
-        } catch (\PDOException $exception) {
+        } catch (\Throwable $exception) {
             $pdo->rollBack();
+            require_once './../View/500.html';
         }
     }
 }
