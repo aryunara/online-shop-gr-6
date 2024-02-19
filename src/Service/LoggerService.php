@@ -13,7 +13,7 @@ class LoggerService
         $message = $exception->getMessage();
 
         $filename = self::filepath . 'error.txt';
-        $content = "Date: {$date}\n File: {$file}\n Line: {$line}\n Message: {$message}\n\n";
+        $content = "Date: {$date}\nFile: {$file}\nLine: {$line}\nMessage: {$message}\n\n";
 
         file_put_contents($filename, $content, FILE_APPEND);
     }

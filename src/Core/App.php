@@ -1,5 +1,6 @@
 <?php
 
+use Core\Container;
 use Request\Request;
 use Service\Authentication\SessionAuthenticationService;
 use Service\LoggerService;
@@ -9,6 +10,13 @@ class App
 {
 
     private array $routes = [];
+
+    private Container $container;
+
+    public function __construct(Container $container)
+    {
+        $this->container = $container;
+    }
 
     public function get(string $url, string $class, string $handler, string $request = null): void
     {
@@ -43,10 +51,7 @@ class App
                 $method = $handler['method'];
                 $request = $handler['request'];
 
-                $service = new SessionAuthenticationService();
-                $orderService = new OrderService();
-
-                $obj = new $class($service, $orderService);
+                $obj = $this->container->get($class);
 
                 if (isset($request)) {
                     $request = new $handler['request']($requestMethod, $requestUri, headers_list(), $_REQUEST);

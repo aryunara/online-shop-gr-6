@@ -44,3 +44,13 @@ Date: 2024-02-19 12:17:59
  Line: 58
  Message: Call to undefined method Controller\CartController::getCartProduct()
 
+Date: 2024-02-19 12:22:25
+File: /var/www/html/src/Model/Model.php
+Line: 17
+Message: SQLSTATE[08006] [7] could not translate host name "port=5432" to address: Name or service not known
+
+Date: 2024-02-19 12:22:29
+File: /var/www/html/src/Controller/ProductController.php
+Line: 29
+Message: Call to a member function getId() on null
+
