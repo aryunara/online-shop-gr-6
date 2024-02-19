@@ -30,6 +30,8 @@ class OrderService
             }
         } catch (\Throwable $exception) {
             $pdo->rollBack();
+            LoggerService::error($exception);
+
             require_once './../View/500.html';
         }
     }

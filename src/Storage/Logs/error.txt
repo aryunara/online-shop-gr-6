@@ -1,0 +1,46 @@
+
+Date: 2024-02-19 11:52:20
+ File: /var/www/html/src/Controller/ProductController.php
+ Line: 29
+ Message: Call to a member function getId() on null
+
+Date: 2024-02-19 12:02:46
+ File: /var/www/html/src/Model/Model.php
+ Line: 17
+ Message: SQLSTATE[08006] [7] could not translate host name "port=5432" to address: Name or service not known
+
+Date: 2024-02-19 12:09:52
+ File: /var/www/html/src/Model/Model.php
+ Line: 17
+ Message: SQLSTATE[08006] [7] could not translate host name "port=5432" to address: Name or service not known
+
+Date: 2024-02-19 12:10:26
+ File: /var/www/html/src/Model/Model.php
+ Line: 17
+ Message: SQLSTATE[08006] [7] could not translate host name "port=5432" to address: Name or service not known
+
+Date: 2024-02-19 12:11:17
+ File: /var/www/html/src/Model/Model.php
+ Line: 17
+ Message: SQLSTATE[08006] [7] could not translate host name "port=5432" to address: Name or service not known
+
+Date: 2024-02-19 12:13:12
+ File: /var/www/html/src/Model/Model.php
+ Line: 17
+ Message: SQLSTATE[08006] [7] connection to server at "db" (172.21.0.2), port 5432 failed: fe_sendauth: no password supplied
+
+Date: 2024-02-19 12:14:33
+ File: /var/www/html/src/Model/Model.php
+ Line: 17
+ Message: SQLSTATE[08006] [7] could not translate host name "port=5432" to address: Name or service not known
+
+Date: 2024-02-19 12:15:26
+ File: /var/www/html/src/Model/Model.php
+ Line: 17
+ Message: SQLSTATE[08006] [7] could not translate host name "port=5432" to address: Name or service not known
+
+Date: 2024-02-19 12:17:59
+ File: /var/www/html/src/Core/App.php
+ Line: 58
+ Message: Call to undefined method Controller\CartController::getCartProduct()
+

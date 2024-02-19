@@ -11,12 +11,14 @@ services:
       - './docker/php/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini'
     links:
       - db
+    env_file:
+      - .env
 
 
   nginx:
     image: nginx:latest
     ports:
-      - '8081:80'
+      - '8082:80'
     volumes:
       - '.:/var/www/html'
       - './docker/nginx/conf.d:/etc/nginx/conf.d'
@@ -28,8 +30,9 @@ services:
     volumes:
     - './data:/var/lib/postgresql/data'
     ports:
-      - '5434:5432'
+      - '5433:5432'
     environment:
-      POSTGRES_PASSWORD: "030201"
-      POSTGRES_USER: "aryuna"
-      POSTGRES_DB: "db"
+      POSTGRES_HOST: ${DB_HOST}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_DB: ${DB_DATABASE}

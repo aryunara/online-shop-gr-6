@@ -13,8 +13,8 @@ use Request\PlusProductRequest;
 use Request\RegistrateRequest;
 use Request\RemoveProductRequest;
 
-require_once './../App/Autoloader.php';
-require_once './../App/App.php';
+require_once './../Core/Autoloader.php';
+require_once './../Core/App.php';
 
 Autoloader::registrate();
 

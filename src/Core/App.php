@@ -2,6 +2,7 @@
 
 use Request\Request;
 use Service\Authentication\SessionAuthenticationService;
+use Service\LoggerService;
 use Service\OrderService;
 
 class App
@@ -56,6 +57,8 @@ class App
                 try {
                     $obj->$method($request);
                 } catch (Throwable $exception) {
+                    LoggerService::error($exception);
+
                     require_once './../View/500.html';
                 }
 
