@@ -68,7 +68,14 @@ class App
                 }
 
                 try {
-                    $obj->$method($request);
+                    $response = $obj->$method($request);
+                    $view = $response['view'];
+                    $params = $response['params'];
+
+                    extract($params);
+
+                    require_once "./../View/$view";
+
                 } catch (Throwable $exception) {
                     LoggerService::error($exception);
 

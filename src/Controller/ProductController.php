@@ -15,7 +15,7 @@ class ProductController
         $this->authenticationService = $authenticationService;
     }
 
-    public function getCatalog(): void
+    public function getCatalog(): array
     {
         if (!$this->authenticationService->check()) {
             header('Location: /login');
@@ -30,7 +30,14 @@ class ProductController
         $products = Product::getAll();
         $productsCount = UserProduct::getCount($userId);
 
-        require_once './../View/catalog.phtml';
+        return [
+            'view' => 'catalog.phtml',
+            'params' => [
+                'user' => $user,
+                'products' => $products,
+                'productsCount' => $productsCount,
+            ],
+        ];
     }
 
 }

@@ -15,12 +15,15 @@ class UserController
     {
         $this->authenticationService = $authenticationService;
     }
-    public function getRegistrate(): void
+    public function getRegistrate(): array
     {
-        require_once './../View/get_registrate.phtml';
+        return [
+            'view' => 'get_registrate.phtml',
+            'params' => [],
+        ];
     }
 
-    public function postRegistrate(RegistrateRequest $request): void
+    public function postRegistrate(RegistrateRequest $request): array
     {
         $errors = $request->validate();
 
@@ -37,17 +40,25 @@ class UserController
             } catch (PDOException){
                 $errors['email'] = "Пользователь с таким email уже существует";
             }
-
         }
-        require_once './../View/get_registrate.phtml';
+
+        return [
+            'view' => 'get_registrate.phtml',
+            'params' => [
+                'errors' => $errors,
+            ],
+        ];
     }
 
-    public function getLogin(): void
+    public function getLogin(): array
     {
-        require_once './../View/get_login.phtml';
+        return [
+            'view' => 'get_login.phtml',
+            'params' => [],
+        ];
     }
 
-    public function postLogin(LoginRequest $request): void
+    public function postLogin(LoginRequest $request): array
     {
         $errors = $request->validate();
 
@@ -64,7 +75,13 @@ class UserController
                 $errors['email'] = "Неверный пароль или email";
             }
         }
-        require_once './../View/get_login.phtml';
+
+        return [
+          'view' => 'get_login.phtml',
+          'params' => [
+              'errors' => $errors,
+          ],
+        ];
     }
 
     public function logout(): void

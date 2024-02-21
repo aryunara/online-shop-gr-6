@@ -18,7 +18,7 @@ class CartController
         $this->authenticationService = $authenticationService;
     }
 
-    public function getCartProducts(): void
+    public function getCartProducts(): array
     {
         if (!$this->authenticationService->check()) {
             header('Location: /login');
@@ -34,7 +34,14 @@ class CartController
 
         $products = Product::getProducts($userId);
 
-        require_once './../View/cart.phtml';
+        return [
+            'view' => 'cart.phtml',
+            'params' => [
+                'user' => $user,
+                'userProducts' => $userProducts,
+                'products' => $products,
+            ],
+        ];
     }
 
     public function plus(PlusProductRequest $request): void

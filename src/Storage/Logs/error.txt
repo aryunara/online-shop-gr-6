@@ -179,3 +179,83 @@ File: /var/www/html/src/Model/OrderedProduct.php
 Line: 10
 Message: SQLSTATE[HY093]: Invalid parameter number: :total
 
+Date: 2024-02-21 12:08:59
+File: /var/www/html/src/Model/OrderedProduct.php
+Line: 10
+Message: SQLSTATE[HY093]: Invalid parameter number: :orderId
+
+Date: 2024-02-21 12:43:33
+File: /var/www/html/src/View/catalog.phtml
+Line: 1
+Message: Failed opening required './../View/navigation.phtml' (include_path='.:/usr/local/lib/php')
+
+Date: 2024-02-21 12:44:03
+File: /var/www/html/src/Core/App.php
+Line: 75
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-21 12:44:14
+File: /var/www/html/src/Core/App.php
+Line: 75
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-21 12:44:15
+File: /var/www/html/src/Core/App.php
+Line: 75
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-21 12:46:00
+File: /var/www/html/src/Core/App.php
+Line: 75
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-21 12:47:58
+File: /var/www/html/src/Controller/ProductController.php
+Line: 29
+Message: Call to a member function getId() on null
+
+Date: 2024-02-21 12:47:59
+File: /var/www/html/src/Controller/CartController.php
+Line: 32
+Message: Call to a member function getId() on null
+
+Date: 2024-02-21 12:48:37
+File: /var/www/html/src/Core/App.php
+Line: 75
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-21 12:48:40
+File: /var/www/html/src/Core/App.php
+Line: 75
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-21 12:50:54
+File: /var/www/html/src/View/catalog.phtml
+Line: 6
+Message: Call to a member function getName() on null
+
+Date: 2024-02-21 12:51:25
+File: /var/www/html/src/Core/App.php
+Line: 75
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-21 12:51:26
+File: /var/www/html/src/Core/App.php
+Line: 75
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-21 12:51:26
+File: /var/www/html/src/Core/App.php
+Line: 75
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-21 12:53:21
+File: /var/www/html/src/View/cart.phtml
+Line: 1
+Message: Call to a member function getName() on null
+
+Date: 2024-02-21 12:53:42
+File: /var/www/html/src/Core/App.php
+Line: 75
+Message: extract(): Argument #1 ($array) must be of type array, null given
+

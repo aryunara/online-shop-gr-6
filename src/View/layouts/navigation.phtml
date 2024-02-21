@@ -1,0 +1,196 @@
+<div id="container">
+    <header>
+        <div>
+            <nav role="navigation">
+                <ul>
+                    <li><a href="">Home</a></li>
+                    <li><a href="">About</a></li>
+                    <li><a href="">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <body>
+    {{content}}
+    </body>
+
+    <footer>
+        <p id="copyright">&copy; Van Cleef & Arpels</p>
+    </footer>
+</div>
+
+<style>
+    body, div, h1, h2, h3, h4, p, ul, li, a, img{
+        margin: 0;
+        padding: 0;
+        border: 0;
+    }
+
+    body {
+        font-family: Baskerville;
+    }
+
+    h1, h2, h3, h4, p{
+        font-family: Bodoni;
+
+    }
+
+    img {
+        width: 100%;
+        height: 100%;
+    }
+
+    header {
+        margin:10px 0 40px 0;
+    }
+
+    header img {
+        width: 150px;
+        margin-left: 10px;
+    }
+
+    header nav {
+        float: right;
+        text-align: right;
+        padding: 50px 0 0 0;
+    }
+
+    header a {
+        text-decoration: none;
+    }
+
+    header nav ul {
+        list-style: none;
+    }
+
+    header nav li {
+        float: right;
+        font-size: 17px;
+        width: 200px;
+        margin: 10px 0 0 20px;
+        text-align: center;
+    }
+
+    h2 {
+        padding-left: 30px;
+        font-weight: bold;
+        text-align: center;
+        padding-bottom: 50px;
+    }
+
+    #content {
+        max-width: 960px;
+        margin: 0 auto;
+    }
+
+    #jewelry {
+        width: 100%;
+        display: flex;
+    }
+
+    #catalog {
+        margin: 0 auto;
+    }
+
+    .product {
+        width: 160px;
+        display: inline-block;
+        margin: 20px;
+        font-family: Baskerville;
+        font-weight: lighter;
+        text-align: center;
+        font-size: 16px;
+    }
+
+    .product p {
+        margin-top: 15px;
+    }
+
+    #sidebar .product {
+        width: 120px;
+    }
+
+    .row {
+        display: flex;
+    }
+
+    #container{
+        width: 100%;
+        margin: 0;
+    }
+
+    .row:nth-child(2n+1) > .product:nth-child(2n+1) div {
+        background-color: #f3ede9;
+    }
+
+    .row:nth-child(2n) > .product:nth-child(2n) div {
+        background-color: #f3ede9;
+    }
+
+    #sidebar {
+        text-align: center;
+        background-color: #f9f9f9;
+    }
+
+    #sidebar h3 {
+        font-family: Baskerville;
+        font-weight: 350;
+        padding: 20px 10px;
+    }
+
+    #sidebar hr {
+        width: 60%;
+        border-top: 0.3px solid #ebdfd8;
+        margin-top: 25px;
+        margin-bottom: 0px;
+    }
+
+    #sidebar p{
+        font-size: 14px;
+    }
+
+    #sidebar .img-container img {
+        width: 100%;
+    }
+
+    footer {
+        margin-top: 50px;
+        text-align: center;
+        padding: 20px;
+    }
+
+    @media screen and (max-width: 785px) {
+        #jewelry {
+            flex-direction: column;
+        }
+        .product {
+            width: 160px;
+            font-size: 13px;
+        }
+        #sidebar .product {
+            width: 120px;
+        }
+        #sidebar hr {
+            display: none;
+        }
+    }
+
+    @media screen and (max-width: 524px) {
+        #jewelry {
+            flex-direction: column;
+        }
+        .row {
+            flex-direction: column;
+        }
+        .product {
+            width: 350px;
+        }
+        #sidebar .product {
+            width: 300px;
+        }
+        #sidebar hr {
+            display: block;
+        }
+    }
+</style>

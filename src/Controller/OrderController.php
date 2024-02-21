@@ -19,7 +19,7 @@ class OrderController
         $this->orderService = $orderService;
     }
 
-    public function getOrderPage(): void
+    public function getOrderPage(): array
     {
         if (!$this->authenticationService->check()) {
             header('Location: /login');
@@ -34,10 +34,16 @@ class OrderController
         $userProducts = UserProduct::getCart($userId);
         $products = Product::getProducts($userId);
 
-        require_once './../View/order.phtml';
+        return [
+            'view' => 'order.phtml',
+            'params' => [
+                'userProducts' => $userProducts,
+                'products' => $products,
+            ],
+        ];
     }
 
-    public function postOrderPage(OrderRequest $request): void
+    public function postOrderPage(OrderRequest $request): array
     {
         if (!$this->authenticationService->check()) {
             header('Location: /login');
@@ -54,16 +60,27 @@ class OrderController
 
         if (empty($errors)) {
             if (!empty($userProducts)) {
-                $this->orderService->create($userId, $request->getName(), $request->getPhone(), $request->getEmail(), $request->getAddress(), $request->getComment());
-
-                header('Location: /main');
+                $result = $this->orderService->create($userId, $request->getName(), $request->getPhone(), $request->getEmail(), $request->getAddress(), $request->getComment());
+                if ($result) {
+                    header('Location: /main');
+                }
+                return [
+                    'view' => '500.phtml',
+                    'params' => [],
+                    ];
             } else {
                 header('Location: /cart');
             }
         } else {
             $products = Product::getProducts($userId);
 
-            require_once './../View/order.phtml';
+            return [
+                'view' => 'order.phtml',
+                'params' => [
+                    'userProducts' => $userProducts,
+                    'products' => $products,
+                ],
+            ];
         }
     }
 }
