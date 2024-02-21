@@ -72,10 +72,19 @@ class App
                     $view = $response['view'];
                     $params = $response['params'];
 
+                    ob_start();
+
                     extract($params);
 
                     require_once "./../View/$view";
 
+                    $content = ob_get_contents();
+
+                    $layout = file_get_contents('./../View/layouts/navigation.phtml');
+
+                    $result = str_replace("{{content}}", $content, $layout);
+
+                    echo $result;
                 } catch (Throwable $exception) {
                     LoggerService::error($exception);
 
