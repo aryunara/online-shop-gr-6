@@ -1,6 +1,7 @@
 <?php
 
 use Core\Container;
+use Model\Model;
 use Request\Request;
 use Service\Authentication\SessionAuthenticationService;
 use Service\LoggerService;
@@ -36,9 +37,14 @@ class App
         ];
     }
 
+    public function bootstrap(): void
+    {
+        $pdo = $this->container->get(PDO::class);
+        Model::init($pdo);
+    }
+
     public function run(): void
     {
-
         $requestUri = $_SERVER['REQUEST_URI'];
         $requestMethod = $_SERVER['REQUEST_METHOD'];
 
@@ -46,6 +52,7 @@ class App
             $routeMethods = $this->routes[$requestUri];
             if (isset($routeMethods[$requestMethod])) {
                 $handler = $routeMethods[$requestMethod];
+                $this->bootstrap();
 
                 $class = $handler['class'];
                 $method = $handler['method'];

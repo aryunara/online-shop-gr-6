@@ -7,15 +7,13 @@ class Model
 {
     protected static PDO $pdo;
 
-    public static function getPdo() : PDO
+    public static function init(PDO $pdo): void
     {
-        $host = getenv('DB_HOST', 'db');
-        $db = getenv('DB_DATABASE', 'db');
-        $user = getenv('DB_USER', 'aryuna');
-        $password = getenv('DB_PASSWORD', '030201');
+        static::$pdo = $pdo;
+    }
 
-        self::$pdo = new PDO("pgsql:host=$host; port=5432; dbname=$db", $user, $password);
-
+    public static function getPDO() : PDO
+    {
         return self::$pdo;
     }
 

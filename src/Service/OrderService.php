@@ -7,6 +7,7 @@ use Model\Order;
 use Model\OrderedProduct;
 use Model\Product;
 use Model\UserProduct;
+use Throwable;
 
 class OrderService
 {
@@ -28,11 +29,12 @@ class OrderService
 
                 OrderedProduct::create($orderId, $productId, $quantity, $total);
             }
-        } catch (\Throwable $exception) {
-            $pdo->rollBack();
+
+            $pdo->commit();
+        } catch (Throwable $exception) {
             LoggerService::error($exception);
 
-            require_once './../View/500.html';
+            $pdo->rollBack();
         }
     }
 }

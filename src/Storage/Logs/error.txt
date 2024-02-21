@@ -54,3 +54,128 @@ File: /var/www/html/src/Controller/ProductController.php
 Line: 29
 Message: Call to a member function getId() on null
 
+Date: 2024-02-19 13:08:21
+File: /var/www/html/src/Model/OrderedProduct.php
+Line: 10
+Message: SQLSTATE[HY093]: Invalid parameter number: :total
+
+Date: 2024-02-19 13:12:57
+File: /var/www/html/src/Model/OrderedProduct.php
+Line: 10
+Message: SQLSTATE[HY093]: Invalid parameter number: :total
+
+Date: 2024-02-20 09:32:05
+File: /var/www/html/src/Controller/ProductController.php
+Line: 29
+Message: Call to a member function getId() on null
+
+Date: 2024-02-20 09:32:57
+File: /var/www/html/src/Model/OrderedProduct.php
+Line: 10
+Message: SQLSTATE[HY093]: Invalid parameter number: :total
+
+Date: 2024-02-20 09:46:07
+File: /var/www/html/src/Model/OrderedProduct.php
+Line: 10
+Message: SQLSTATE[HY093]: Invalid parameter number: :total
+
+Date: 2024-02-20 09:58:57
+File: /var/www/html/src/Model/OrderedProduct.php
+Line: 10
+Message: SQLSTATE[HY093]: Invalid parameter number: :total
+
+Date: 2024-02-20 09:59:44
+File: /var/www/html/src/Model/Model.php
+Line: 10
+Message: Too few arguments to function Model\Model::getPdo(), 0 passed in /var/www/html/src/Model/User.php on line 60 and exactly 1 expected
+
+Date: 2024-02-20 09:59:50
+File: /var/www/html/src/Model/Model.php
+Line: 10
+Message: Too few arguments to function Model\Model::getPdo(), 0 passed in /var/www/html/src/Model/User.php on line 60 and exactly 1 expected
+
+Date: 2024-02-20 09:59:51
+File: /var/www/html/src/Model/Model.php
+Line: 10
+Message: Too few arguments to function Model\Model::getPdo(), 0 passed in /var/www/html/src/Model/User.php on line 60 and exactly 1 expected
+
+Date: 2024-02-20 09:59:52
+File: /var/www/html/src/Model/Model.php
+Line: 10
+Message: Too few arguments to function Model\Model::getPdo(), 0 passed in /var/www/html/src/Model/User.php on line 60 and exactly 1 expected
+
+Date: 2024-02-20 10:03:29
+File: /var/www/html/src/Model/OrderedProduct.php
+Line: 10
+Message: SQLSTATE[HY093]: Invalid parameter number: :total
+
+Date: 2024-02-20 10:22:20
+File: /var/www/html/src/Model/OrderedProduct.php
+Line: 10
+Message: SQLSTATE[HY093]: Invalid parameter number: :total
+
+Date: 2024-02-20 10:24:32
+File: /var/www/html/src/Model/OrderedProduct.php
+Line: 10
+Message: SQLSTATE[HY093]: Invalid parameter number: :total
+
+Date: 2024-02-20 11:58:06
+File: /var/www/html/src/Model/Model.php
+Line: 13
+Message: Model\Model::getPdo(): Return value must be of type PDO, none returned
+
+Date: 2024-02-20 11:58:39
+File: /var/www/html/src/Model/User.php
+Line: 60
+Message: Call to undefined method Model\User::getPdo()
+
+Date: 2024-02-20 12:36:06
+File: /var/www/html/src/Model/Model.php
+Line: 16
+Message: Typed static property Model\Model::$pdo must not be accessed before initialization
+
+Date: 2024-02-20 12:38:43
+File: /var/www/html/src/Controller/ProductController.php
+Line: 29
+Message: Call to a member function getId() on null
+
+Date: 2024-02-21 08:19:11
+File: /var/www/html/src/Controller/ProductController.php
+Line: 29
+Message: Call to a member function getId() on null
+
+Date: 2024-02-21 08:20:48
+File: /var/www/html/src/Model/OrderedProduct.php
+Line: 10
+Message: SQLSTATE[HY093]: Invalid parameter number: :total
+
+Date: 2024-02-21 08:31:38
+File: /var/www/html/src/Model/OrderedProduct.php
+Line: 10
+Message: SQLSTATE[HY093]: Invalid parameter number: :total
+
+Date: 2024-02-21 08:47:00
+File: /var/www/html/src/Controller/CartController.php
+Line: 73
+Message: Call to a member function decrementQuantity() on null
+
+Date: 2024-02-21 08:47:00
+File: /var/www/html/src/Controller/CartController.php
+Line: 73
+Message: Call to a member function decrementQuantity() on null
+
+Date: 2024-02-21 08:47:00
+File: /var/www/html/src/Controller/CartController.php
+Line: 73
+Message: Call to a member function decrementQuantity() on null
+
+Date: 2024-02-21 08:47:00
+File: /var/www/html/src/Controller/CartController.php
+Line: 73
+Message: Call to a member function decrementQuantity() on null
+
+Date: 2024-02-21 08:47:35
+File: /var/www/html/src/Model/OrderedProduct.php
+Line: 10
+Message: SQLSTATE[HY093]: Invalid parameter number: :total
+
