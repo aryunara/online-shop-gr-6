@@ -4,7 +4,8 @@ namespace Service;
 
 class LoggerService
 {
-    const string filepath = './../Storage/Logs/';
+    private const string STORAGE_PATH = './../Storage/Logs/';
+
     public static function error(\Throwable $exception): void
     {
         $date = date('Y-m-d H:i:s');
@@ -12,15 +13,20 @@ class LoggerService
         $line = $exception->getLine();
         $message = $exception->getMessage();
 
-        $filename = self::filepath . 'error.txt';
+        $filename = self::STORAGE_PATH . 'error.txt';
         $content = "Date: {$date}\nFile: {$file}\nLine: {$line}\nMessage: {$message}\n\n";
 
         file_put_contents($filename, $content, FILE_APPEND);
     }
 
-    public static function info()
+    public static function info(string $info) : void
     {
-        $filename = self::filepath . 'info.txt';
+        $date = date('Y-m-d H:i:s');
+
+        $filename = self::STORAGE_PATH . 'info.txt';
+        $content = "Date: {$date}\nInfo: {$info}\n\n";
+
+        file_put_contents($filename, $content, FILE_APPEND);
     }
 
 }

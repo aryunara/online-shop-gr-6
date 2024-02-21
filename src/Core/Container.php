@@ -2,16 +2,14 @@
 
 namespace Core;
 
-use PDO;
-
 class Container
 {
     private array $services;
     private array $instances;
 
-    public function set(string $class, callable $callback): void
+    public function __construct(array $services = [])
     {
-        $this->services[$class] = $callback;
+        $this->services = $services;
     }
 
     public function get(string $class) : object

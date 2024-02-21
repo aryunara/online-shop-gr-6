@@ -51,8 +51,9 @@ class App
         if (isset($this->routes[$requestUri])) {
             $routeMethods = $this->routes[$requestUri];
             if (isset($routeMethods[$requestMethod])) {
-                $handler = $routeMethods[$requestMethod];
                 $this->bootstrap();
+
+                $handler = $routeMethods[$requestMethod];
 
                 $class = $handler['class'];
                 $method = $handler['method'];

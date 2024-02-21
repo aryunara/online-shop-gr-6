@@ -13,58 +13,16 @@ use Request\OrderRequest;
 use Request\PlusProductRequest;
 use Request\RegistrateRequest;
 use Request\RemoveProductRequest;
-use Service\Authentication\AuthenticationServiceInterface;
-use Service\Authentication\SessionAuthenticationService;
-use Service\OrderService;
+
 
 require_once './../Core/Autoloader.php';
 require_once './../Core/App.php';
 
 Autoloader::registrate();
 
-$container = new Container();
+$services = include './../Config/services.php';
 
-$container->set(AuthenticationServiceInterface::class, function () {
-    return new SessionAuthenticationService();
-});
-
-$container->set(OrderService::class, function () {
-    return new OrderService();
-});
-
-$container->set(UserController::class, function (Container $container) {
-    $authenticationService = $container->get(AuthenticationServiceInterface::class);
-
-    return new UserController($authenticationService);
-});
-
-$container->set(ProductController::class, function (Container $container) {
-    $authenticationService = $container->get(AuthenticationServiceInterface::class);
-
-    return new ProductController($authenticationService);
-});
-
-$container->set(CartController::class, function (Container $container) {
-    $authenticationService = $container->get(AuthenticationServiceInterface::class);
-
-    return new CartController($authenticationService);
-});
-
-$container->set(OrderController::class, function (Container $container) {
-    $authenticationService = $container->get(AuthenticationServiceInterface::class);
-    $orderService = $container->get(OrderService::class);
-
-    return new OrderController($authenticationService, $orderService);
-});
-
-$container->set(PDO::class, function () {
-    $host = getenv('DB_HOST', 'db');
-    $db = getenv('DB_DATABASE', 'db');
-    $user = getenv('DB_USER', 'aryuna');
-    $password = getenv('DB_PASSWORD', '030201');
-
-    return new PDO("pgsql:host=$host; port=5432; dbname=$db", $user, $password);
-});
+$container = new Container($services);
 
 $app = new App($container);
 
