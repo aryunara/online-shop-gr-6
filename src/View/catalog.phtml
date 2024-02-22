@@ -1,13 +1,7 @@
 <body>
 <div class="container">
 
-    <h3><?php use Model\UserProduct;
-
-        echo "Hello, {$user->getName()}!"?></h3>
-
-    <form action="/logout" method="POST">
-        <button type="submit" class="buttons">Log Out</button>
-    </form>
+    <h3><?php use Model\UserProduct;?></h3>
 
     <div class="cart-wrapper">
         <div class="cart-handle">
@@ -19,7 +13,9 @@
         </div>
     </div>
 
+    <div id="catalog">
     <h3>Product Catalog</h3>
+    </div>
 
     <br>
     <div class="card-deck">
@@ -142,11 +138,6 @@
         transition: 0.2s;
     }
 
-    .card-header {
-        font-size: 13px;
-        color: gray;
-        background-color: white;
-    }
 
     .text-muted {
         font-size: 11px;
@@ -157,6 +148,10 @@
         font-size: 18px;
         background-color: white;
     }
+
+    #catalog {
+        margin: 0 auto;
+    }
     /*ЗДЕСЬ НАЧИНАЕТСЯ*/
 
     .cart-wrapper {
@@ -165,7 +160,7 @@
         width: 100px;
         margin: 0 auto;
         position: absolute;
-        right: 100px;
+        left: 100px;
         top: 20px;
     }
 

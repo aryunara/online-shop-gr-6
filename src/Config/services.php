@@ -5,6 +5,7 @@ use Controller\OrderController;
 use Controller\ProductController;
 use Controller\UserController;
 use Core\Container;
+use Core\ViewRenderer;
 use Service\Authentication\AuthenticationServiceInterface;
 use Service\Authentication\SessionAuthenticationService;
 use Service\OrderService;
@@ -17,26 +18,33 @@ return [
         $pdo = $container->get(PDO::class);
         return new OrderService($pdo);
     },
+    ViewRenderer::class => function () {
+        return new ViewRenderer();
+    },
     UserController::class => function (Container $container) {
         $authenticationService = $container->get(AuthenticationServiceInterface::class);
+        $viewRenderer = $container->get(ViewRenderer::class);
 
-        return new UserController($authenticationService);
+        return new UserController($authenticationService, $viewRenderer);
     },
     ProductController::class => function (Container $container) {
         $authenticationService = $container->get(AuthenticationServiceInterface::class);
+        $viewRenderer = $container->get(ViewRenderer::class);
 
-        return new ProductController($authenticationService);
+        return new ProductController($authenticationService, $viewRenderer);
     },
     CartController::class => function (Container $container) {
         $authenticationService = $container->get(AuthenticationServiceInterface::class);
+        $viewRenderer = $container->get(ViewRenderer::class);
 
-        return new CartController($authenticationService);
+        return new CartController($authenticationService, $viewRenderer);
     },
     OrderController::class => function (Container $container) {
         $authenticationService = $container->get(AuthenticationServiceInterface::class);
         $orderService = $container->get(OrderService::class);
+        $viewRenderer = $container->get(ViewRenderer::class);
 
-        return new OrderController($authenticationService, $orderService);
+        return new OrderController($authenticationService, $orderService, $viewRenderer);
     },
     PDO::class => function () {
         $host = getenv('DB_HOST', 'db');

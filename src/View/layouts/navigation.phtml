@@ -3,20 +3,22 @@
         <div>
             <nav role="navigation">
                 <ul>
-                    <li><a href="">Home</a></li>
-                    <li><a href="">About</a></li>
-                    <li><a href="">Contact</a></li>
+                    <li><a href="">Catalog</a></li>
+                    <li><a href="">Log in</a></li>
+                    <li><a href="/logout">Log Out</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <body>
+    <br><br><br><br>
+
+    <div id="content" role="main">
     {{content}}
-    </body>
+    </div>
 
     <footer>
-        <p id="copyright">&copy; Van Cleef & Arpels</p>
+        <p id="copyright">&copy; Online-shop & Aryuna</p>
     </footer>
 </div>
 
@@ -42,7 +44,7 @@
     }
 
     header {
-        margin:10px 0 40px 0;
+        margin:0 0 0 0;
     }
 
     header img {
@@ -53,7 +55,7 @@
     header nav {
         float: right;
         text-align: right;
-        padding: 50px 0 0 0;
+        padding: 30px 0 0 0;
     }
 
     header a {
@@ -65,7 +67,7 @@
     }
 
     header nav li {
-        float: right;
+        float: left;
         font-size: 17px;
         width: 200px;
         margin: 10px 0 0 20px;
@@ -82,76 +84,6 @@
     #content {
         max-width: 960px;
         margin: 0 auto;
-    }
-
-    #jewelry {
-        width: 100%;
-        display: flex;
-    }
-
-    #catalog {
-        margin: 0 auto;
-    }
-
-    .product {
-        width: 160px;
-        display: inline-block;
-        margin: 20px;
-        font-family: Baskerville;
-        font-weight: lighter;
-        text-align: center;
-        font-size: 16px;
-    }
-
-    .product p {
-        margin-top: 15px;
-    }
-
-    #sidebar .product {
-        width: 120px;
-    }
-
-    .row {
-        display: flex;
-    }
-
-    #container{
-        width: 100%;
-        margin: 0;
-    }
-
-    .row:nth-child(2n+1) > .product:nth-child(2n+1) div {
-        background-color: #f3ede9;
-    }
-
-    .row:nth-child(2n) > .product:nth-child(2n) div {
-        background-color: #f3ede9;
-    }
-
-    #sidebar {
-        text-align: center;
-        background-color: #f9f9f9;
-    }
-
-    #sidebar h3 {
-        font-family: Baskerville;
-        font-weight: 350;
-        padding: 20px 10px;
-    }
-
-    #sidebar hr {
-        width: 60%;
-        border-top: 0.3px solid #ebdfd8;
-        margin-top: 25px;
-        margin-bottom: 0px;
-    }
-
-    #sidebar p{
-        font-size: 14px;
-    }
-
-    #sidebar .img-container img {
-        width: 100%;
     }
 
     footer {

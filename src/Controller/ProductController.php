@@ -2,6 +2,7 @@
 
 namespace Controller;
 
+use Core\ViewRenderer;
 use Model\Product;
 use Model\UserProduct;
 use Service\Authentication\AuthenticationServiceInterface;
@@ -9,13 +10,15 @@ use Service\Authentication\AuthenticationServiceInterface;
 class ProductController
 {
     private AuthenticationServiceInterface $authenticationService;
+    private ViewRenderer $viewRenderer;
 
-    public function __construct(AuthenticationServiceInterface $authenticationService)
+    public function __construct(AuthenticationServiceInterface $authenticationService, ViewRenderer $viewRenderer)
     {
         $this->authenticationService = $authenticationService;
+        $this->viewRenderer = $viewRenderer;
     }
 
-    public function getCatalog(): array
+    public function getCatalog(): string
     {
         if (!$this->authenticationService->check()) {
             header('Location: /login');
@@ -30,14 +33,7 @@ class ProductController
         $products = Product::getAll();
         $productsCount = UserProduct::getCount($userId);
 
-        return [
-            'view' => 'catalog.phtml',
-            'params' => [
-                'user' => $user,
-                'products' => $products,
-                'productsCount' => $productsCount,
-            ],
-        ];
+        return $this->viewRenderer->render('catalog.phtml', ['user' => $user, 'products' => $products, 'productsCount' => $productsCount]);
     }
 
 }

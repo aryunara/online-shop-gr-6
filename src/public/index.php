@@ -31,10 +31,10 @@ $app->get('/login', UserController::class, 'getLogin');
 $app->get('/main',ProductController::class,'getCatalog');
 $app->get('/cart', CartController::class, 'getCartProducts');
 $app->get('/order', OrderController::class, 'getOrderPage');
+$app->get('/logout', UserController::class, 'logout');
 
 $app->post('/registrate',UserController::class,'postRegistrate', RegistrateRequest::class);
 $app->post('/login', UserController::class, 'postLogin', LoginRequest::class);
-$app->post('/logout', UserController::class, 'logout');
 $app->post('/product-plus', CartController::class, 'plus', PlusProductRequest::class);
 $app->post('/product-minus', CartController::class, 'minus', MinusProductRequest::class);
 $app->post('/remove-product', CartController::class, 'removeProductFromCart', RemoveProductRequest::class);

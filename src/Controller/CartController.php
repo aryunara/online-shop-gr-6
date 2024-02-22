@@ -2,6 +2,7 @@
 
 namespace Controller;
 
+use Core\ViewRenderer;
 use Model\Product;
 use Model\UserProduct;
 use Request\MinusProductRequest;
@@ -12,13 +13,15 @@ use Service\Authentication\AuthenticationServiceInterface;
 class CartController
 {
     private AuthenticationServiceInterface $authenticationService;
+    private ViewRenderer $viewRenderer;
 
-    public function __construct(AuthenticationServiceInterface $authenticationService)
+    public function __construct(AuthenticationServiceInterface $authenticationService, ViewRenderer $viewRenderer)
     {
         $this->authenticationService = $authenticationService;
+        $this->viewRenderer = $viewRenderer;
     }
 
-    public function getCartProducts(): array
+    public function getCartProducts(): string
     {
         if (!$this->authenticationService->check()) {
             header('Location: /login');
@@ -34,14 +37,8 @@ class CartController
 
         $products = Product::getProducts($userId);
 
-        return [
-            'view' => 'cart.phtml',
-            'params' => [
-                'user' => $user,
-                'userProducts' => $userProducts,
-                'products' => $products,
-            ],
-        ];
+        return $this->viewRenderer->render('cart.phtml', ['user' => $user, 'userProducts' => $userProducts, 'products' => $products]);
+
     }
 
     public function plus(PlusProductRequest $request): void

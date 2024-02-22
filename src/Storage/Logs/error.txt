@@ -259,3 +259,248 @@ File: /var/www/html/src/Core/App.php
 Line: 75
 Message: extract(): Argument #1 ($array) must be of type array, null given
 
+Date: 2024-02-22 07:55:17
+File: /var/www/html/src/Controller/ProductController.php
+Line: 29
+Message: Call to a member function getId() on null
+
+Date: 2024-02-22 09:00:35
+File: /var/www/html/src/View/catalog.phtml
+Line: 22
+Message: Class "UserProduct" not found
+
+Date: 2024-02-22 09:02:26
+File: /var/www/html/src/View/catalog.phtml
+Line: 22
+Message: Class "UserProduct" not found
+
+Date: 2024-02-22 09:03:05
+File: /var/www/html/src/Core/App.php
+Line: 77
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-22 09:10:12
+File: /var/www/html/src/Core/App.php
+Line: 77
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-22 09:10:12
+File: /var/www/html/src/Core/App.php
+Line: 77
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-22 09:10:13
+File: /var/www/html/src/Core/App.php
+Line: 77
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-22 09:10:13
+File: /var/www/html/src/Core/App.php
+Line: 77
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-22 09:10:13
+File: /var/www/html/src/Core/App.php
+Line: 77
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-22 09:10:14
+File: /var/www/html/src/Core/App.php
+Line: 77
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-22 09:10:14
+File: /var/www/html/src/Core/App.php
+Line: 77
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-22 09:10:14
+File: /var/www/html/src/Core/App.php
+Line: 77
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-22 09:10:14
+File: /var/www/html/src/Controller/CartController.php
+Line: 80
+Message: Call to a member function decrementQuantity() on null
+
+Date: 2024-02-22 09:10:14
+File: /var/www/html/src/Controller/CartController.php
+Line: 80
+Message: Call to a member function decrementQuantity() on null
+
+Date: 2024-02-22 09:10:14
+File: /var/www/html/src/Controller/CartController.php
+Line: 80
+Message: Call to a member function decrementQuantity() on null
+
+Date: 2024-02-22 09:10:15
+File: /var/www/html/src/Controller/CartController.php
+Line: 80
+Message: Call to a member function decrementQuantity() on null
+
+Date: 2024-02-22 09:10:16
+File: /var/www/html/src/Controller/CartController.php
+Line: 80
+Message: Call to a member function decrementQuantity() on null
+
+Date: 2024-02-22 09:10:16
+File: /var/www/html/src/Controller/CartController.php
+Line: 80
+Message: Call to a member function decrementQuantity() on null
+
+Date: 2024-02-22 09:10:16
+File: /var/www/html/src/Controller/CartController.php
+Line: 80
+Message: Call to a member function decrementQuantity() on null
+
+Date: 2024-02-22 09:10:16
+File: /var/www/html/src/Controller/CartController.php
+Line: 80
+Message: Call to a member function decrementQuantity() on null
+
+Date: 2024-02-22 09:10:17
+File: /var/www/html/src/Controller/CartController.php
+Line: 80
+Message: Call to a member function decrementQuantity() on null
+
+Date: 2024-02-22 09:10:17
+File: /var/www/html/src/Controller/CartController.php
+Line: 80
+Message: Call to a member function decrementQuantity() on null
+
+Date: 2024-02-22 09:10:17
+File: /var/www/html/src/Controller/CartController.php
+Line: 80
+Message: Call to a member function decrementQuantity() on null
+
+Date: 2024-02-22 09:39:33
+File: /var/www/html/src/View/catalog.phtml
+Line: 36
+Message: Class "UserProduct" not found
+
+Date: 2024-02-22 10:05:37
+File: /var/www/html/src/Core/App.php
+Line: 77
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-22 10:05:38
+File: /var/www/html/src/Core/App.php
+Line: 77
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-22 10:05:38
+File: /var/www/html/src/Core/App.php
+Line: 77
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-22 10:08:36
+File: /var/www/html/src/Core/App.php
+Line: 77
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-22 10:08:36
+File: /var/www/html/src/Core/App.php
+Line: 77
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-22 10:08:38
+File: /var/www/html/src/Core/App.php
+Line: 77
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-22 10:08:38
+File: /var/www/html/src/Core/App.php
+Line: 77
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-22 10:09:03
+File: /var/www/html/src/Core/App.php
+Line: 77
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-22 10:09:03
+File: /var/www/html/src/Core/App.php
+Line: 77
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-22 10:09:07
+File: /var/www/html/src/Core/App.php
+Line: 77
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-22 10:09:08
+File: /var/www/html/src/Core/App.php
+Line: 77
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-22 10:09:08
+File: /var/www/html/src/Core/App.php
+Line: 77
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-22 10:09:08
+File: /var/www/html/src/Core/App.php
+Line: 77
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-22 10:09:08
+File: /var/www/html/src/Core/App.php
+Line: 77
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-22 10:09:27
+File: /var/www/html/src/Core/App.php
+Line: 77
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-22 10:09:27
+File: /var/www/html/src/Core/App.php
+Line: 77
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-22 10:09:27
+File: /var/www/html/src/Core/App.php
+Line: 77
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-22 10:10:08
+File: /var/www/html/src/Core/App.php
+Line: 77
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-22 10:10:08
+File: /var/www/html/src/Core/App.php
+Line: 77
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-22 10:12:37
+File: /var/www/html/src/Core/App.php
+Line: 77
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-22 10:12:38
+File: /var/www/html/src/Core/App.php
+Line: 77
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-22 10:16:03
+File: /var/www/html/src/Core/App.php
+Line: 77
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-22 10:16:03
+File: /var/www/html/src/Core/App.php
+Line: 77
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-22 10:16:03
+File: /var/www/html/src/Core/App.php
+Line: 77
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-02-22 10:53:32
+File: /var/www/html/src/Controller/ProductController.php
+Line: 32
+Message: Call to a member function getId() on null
+

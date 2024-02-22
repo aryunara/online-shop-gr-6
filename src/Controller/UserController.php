@@ -2,6 +2,7 @@
 
 namespace Controller;
 
+use Core\ViewRenderer;
 use Model\User;
 use PDOException;
 use Request\LoginRequest;
@@ -11,19 +12,20 @@ use Service\Authentication\AuthenticationServiceInterface;
 class UserController
 {
     private AuthenticationServiceInterface $authenticationService;
-    public function __construct(AuthenticationServiceInterface $authenticationService)
+    private ViewRenderer $viewRenderer;
+
+    public function __construct(AuthenticationServiceInterface $authenticationService, ViewRenderer $viewRenderer)
     {
         $this->authenticationService = $authenticationService;
-    }
-    public function getRegistrate(): array
-    {
-        return [
-            'view' => 'get_registrate.phtml',
-            'params' => [],
-        ];
+        $this->viewRenderer = $viewRenderer;
     }
 
-    public function postRegistrate(RegistrateRequest $request): array
+    public function getRegistrate(): string
+    {
+        return $this->viewRenderer->render('get_registrate.phtml', []);
+    }
+
+    public function postRegistrate(RegistrateRequest $request): string
     {
         $errors = $request->validate();
 
@@ -42,23 +44,15 @@ class UserController
             }
         }
 
-        return [
-            'view' => 'get_registrate.phtml',
-            'params' => [
-                'errors' => $errors,
-            ],
-        ];
+        return $this->viewRenderer->render('get_registrate.phtml', ['errors' => $errors]);
     }
 
-    public function getLogin(): array
+    public function getLogin(): string
     {
-        return [
-            'view' => 'get_login.phtml',
-            'params' => [],
-        ];
+        return $this->viewRenderer->render('get_login.phtml', []);
     }
 
-    public function postLogin(LoginRequest $request): array
+    public function postLogin(LoginRequest $request): string
     {
         $errors = $request->validate();
 
@@ -76,12 +70,7 @@ class UserController
             }
         }
 
-        return [
-          'view' => 'get_login.phtml',
-          'params' => [
-              'errors' => $errors,
-          ],
-        ];
+        return $this->viewRenderer->render('get_login.phtml', ['errors' => $errors]);
     }
 
     public function logout(): void

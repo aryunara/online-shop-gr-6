@@ -2,6 +2,7 @@
 
 namespace Controller;
 
+use Core\ViewRenderer;
 use Model\Product;
 use Model\UserProduct;
 use Request\OrderRequest;
@@ -12,14 +13,16 @@ class OrderController
 {
     private AuthenticationServiceInterface $authenticationService;
     private OrderService $orderService;
+    private ViewRenderer $viewRenderer;
 
-    public function __construct(AuthenticationServiceInterface $authenticationService, OrderService $orderService)
+    public function __construct(AuthenticationServiceInterface $authenticationService, OrderService $orderService, ViewRenderer $viewRenderer)
     {
         $this->authenticationService = $authenticationService;
         $this->orderService = $orderService;
+        $this->viewRenderer = $viewRenderer;
     }
 
-    public function getOrderPage(): array
+    public function getOrderPage(): string
     {
         if (!$this->authenticationService->check()) {
             header('Location: /login');
@@ -34,16 +37,10 @@ class OrderController
         $userProducts = UserProduct::getCart($userId);
         $products = Product::getProducts($userId);
 
-        return [
-            'view' => 'order.phtml',
-            'params' => [
-                'userProducts' => $userProducts,
-                'products' => $products,
-            ],
-        ];
+        return $this->viewRenderer->render('order.phtml', ['userProducts' => $userProducts, 'products' => $products]);
     }
 
-    public function postOrderPage(OrderRequest $request): array
+    public function postOrderPage(OrderRequest $request) : string
     {
         if (!$this->authenticationService->check()) {
             header('Location: /login');
@@ -64,23 +61,15 @@ class OrderController
                 if ($result) {
                     header('Location: /main');
                 }
-                return [
-                    'view' => '500.phtml',
-                    'params' => [],
-                    ];
+
+                return $this->viewRenderer->render('500.phtml', []);
             } else {
                 header('Location: /cart');
             }
         } else {
             $products = Product::getProducts($userId);
 
-            return [
-                'view' => 'order.phtml',
-                'params' => [
-                    'userProducts' => $userProducts,
-                    'products' => $products,
-                ],
-            ];
+            return $this->viewRenderer->render('order.phtml', ['userProducts' => $userProducts, 'products' => $products]);
         }
     }
 }
