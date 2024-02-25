@@ -33,7 +33,7 @@ class ProductController
         $products = Product::getAll();
         $productsCount = UserProduct::getCount($userId);
 
-        return $this->viewRenderer->render('catalog.phtml', ['user' => $user, 'products' => $products, 'productsCount' => $productsCount]);
+        return $this->viewRenderer->render('catalog.phtml', ['user' => $user, 'products' => $products, 'productsCount' => $productsCount], true);
     }
 
 }

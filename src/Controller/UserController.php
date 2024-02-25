@@ -22,7 +22,7 @@ class UserController
 
     public function getRegistrate(): string
     {
-        return $this->viewRenderer->render('get_registrate.phtml', []);
+        return $this->viewRenderer->render('get_registrate.phtml', [], true);
     }
 
     public function postRegistrate(RegistrateRequest $request): string
@@ -44,12 +44,12 @@ class UserController
             }
         }
 
-        return $this->viewRenderer->render('get_registrate.phtml', ['errors' => $errors]);
+        return $this->viewRenderer->render('get_registrate.phtml', ['errors' => $errors], true);
     }
 
     public function getLogin(): string
     {
-        return $this->viewRenderer->render('get_login.phtml', []);
+        return $this->viewRenderer->render('get_login.phtml', [], true);
     }
 
     public function postLogin(LoginRequest $request): string
@@ -70,7 +70,7 @@ class UserController
             }
         }
 
-        return $this->viewRenderer->render('get_login.phtml', ['errors' => $errors]);
+        return $this->viewRenderer->render('get_login.phtml', ['errors' => $errors], true);
     }
 
     public function logout(): void

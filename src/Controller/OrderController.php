@@ -9,17 +9,14 @@ use Request\OrderRequest;
 use Service\Authentication\AuthenticationServiceInterface;
 use Service\OrderService;
 
-class OrderController
+class OrderController extends MainController
 {
-    private AuthenticationServiceInterface $authenticationService;
     private OrderService $orderService;
-    private ViewRenderer $viewRenderer;
 
-    public function __construct(AuthenticationServiceInterface $authenticationService, OrderService $orderService, ViewRenderer $viewRenderer)
+    public function __construct(AuthenticationServiceInterface $authenticationService, ViewRenderer $viewRenderer, OrderService $orderService)
     {
-        $this->authenticationService = $authenticationService;
+        parent::__construct($authenticationService, $viewRenderer);
         $this->orderService = $orderService;
-        $this->viewRenderer = $viewRenderer;
     }
 
     public function getOrderPage(): string
@@ -37,7 +34,7 @@ class OrderController
         $userProducts = UserProduct::getCart($userId);
         $products = Product::getProducts($userId);
 
-        return $this->viewRenderer->render('order.phtml', ['userProducts' => $userProducts, 'products' => $products]);
+        return $this->viewRenderer->render('order.phtml', ['userProducts' => $userProducts, 'products' => $products], false);
     }
 
     public function postOrderPage(OrderRequest $request) : string
@@ -62,14 +59,14 @@ class OrderController
                     header('Location: /main');
                 }
 
-                return $this->viewRenderer->render('500.phtml', []);
+                return $this->viewRenderer->render('500.phtml', [], false);
             } else {
                 header('Location: /cart');
             }
         } else {
             $products = Product::getProducts($userId);
 
-            return $this->viewRenderer->render('order.phtml', ['userProducts' => $userProducts, 'products' => $products]);
+            return $this->viewRenderer->render('order.phtml', ['userProducts' => $userProducts, 'products' => $products], false);
         }
     }
 }

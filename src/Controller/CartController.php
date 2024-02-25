@@ -10,17 +10,8 @@ use Request\PlusProductRequest;
 use Request\RemoveProductRequest;
 use Service\Authentication\AuthenticationServiceInterface;
 
-class CartController
+class CartController extends MainController
 {
-    private AuthenticationServiceInterface $authenticationService;
-    private ViewRenderer $viewRenderer;
-
-    public function __construct(AuthenticationServiceInterface $authenticationService, ViewRenderer $viewRenderer)
-    {
-        $this->authenticationService = $authenticationService;
-        $this->viewRenderer = $viewRenderer;
-    }
-
     public function getCartProducts(): string
     {
         if (!$this->authenticationService->check()) {
@@ -37,8 +28,7 @@ class CartController
 
         $products = Product::getProducts($userId);
 
-        return $this->viewRenderer->render('cart.phtml', ['user' => $user, 'userProducts' => $userProducts, 'products' => $products]);
-
+        return $this->viewRenderer->render('cart.phtml', ['user' => $user, 'userProducts' => $userProducts, 'products' => $products], false);
     }
 
     public function plus(PlusProductRequest $request): void

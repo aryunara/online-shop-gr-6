@@ -44,7 +44,7 @@ return [
         $orderService = $container->get(OrderService::class);
         $viewRenderer = $container->get(ViewRenderer::class);
 
-        return new OrderController($authenticationService, $orderService, $viewRenderer);
+        return new OrderController($authenticationService, $viewRenderer, $orderService);
     },
     PDO::class => function () {
         $host = getenv('DB_HOST', 'db');
