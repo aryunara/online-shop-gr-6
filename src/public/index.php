@@ -40,7 +40,8 @@ $app->post('/product-minus', CartController::class, 'minus', MinusProductRequest
 $app->post('/remove-product', CartController::class, 'removeProductFromCart', RemoveProductRequest::class);
 $app->post('/order', OrderController::class, 'postOrderPage', OrderRequest::class);
 
-//$app->get('/api/user', \Controller\Api\UserController::class,  );
+$app->get('/api/user', \Controller\Api\UserController::class, 'index');
+$app->post('/api/user', \Controller\Api\UserController::class, 'create', \Request\Api\CreateUserRequest::class);
 
 $app->run();
 

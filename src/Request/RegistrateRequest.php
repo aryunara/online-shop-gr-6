@@ -76,6 +76,7 @@ class RegistrateRequest extends Request
         } else {
             $errors['psw-repeat'] = 'Поле repeat password не указано';
         }
+
         return $errors;
     }
 }

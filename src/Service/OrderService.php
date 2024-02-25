@@ -2,7 +2,6 @@
 
 namespace Service;
 
-use Model\Model;
 use Model\Order;
 use Model\OrderedProduct;
 use Model\Product;

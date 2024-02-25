@@ -3,9 +3,7 @@
 use Core\Container;
 use Model\Model;
 use Request\Request;
-use Service\Authentication\SessionAuthenticationService;
 use Service\LoggerService;
-use Service\OrderService;
 
 class App
 {

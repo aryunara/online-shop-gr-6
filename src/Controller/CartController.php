@@ -2,13 +2,11 @@
 
 namespace Controller;
 
-use Core\ViewRenderer;
 use Model\Product;
 use Model\UserProduct;
 use Request\MinusProductRequest;
 use Request\PlusProductRequest;
 use Request\RemoveProductRequest;
-use Service\Authentication\AuthenticationServiceInterface;
 
 class CartController extends MainController
 {
@@ -42,14 +40,18 @@ class CartController extends MainController
             header('Location: /login');
         }
 
-        $userProduct = UserProduct::getUserProduct($request->getId(), $user->getId());
-        if (isset($userProduct)) {
-            $userProduct->incrementQuantity();
-        } else {
-            UserProduct::create($user->getId(), $request->getId(), 1);
-        }
+        $errors = $request->validate();
 
-        header('Location: /main');
+        if (empty($errors)) {
+            $userProduct = UserProduct::getUserProduct($request->getId(), $user->getId());
+            if (isset($userProduct)) {
+                $userProduct->incrementQuantity();
+            } else {
+                UserProduct::create($user->getId(), $request->getId(), 1);
+            }
+
+            header('Location: /main');
+        }
     }
 
     public function minus(MinusProductRequest $request): void
@@ -63,10 +65,14 @@ class CartController extends MainController
             header('Location: /login');
         }
 
-        $userProduct = UserProduct::getUserProduct($request->getId(), $user->getId());
-        $userProduct->decrementQuantity();
+        $errors = $request->validate();
 
-        header('Location: /main');
+        if (empty($errors)) {
+            $userProduct = UserProduct::getUserProduct($request->getId(), $user->getId());
+            $userProduct->decrementQuantity();
+
+            header('Location: /main');
+        }
     }
 
     public function removeProductFromCart(RemoveProductRequest $request): void

@@ -1624,3 +1624,13 @@ Message: Call to undefined function
     }
 </style>()
 
+Date: 2024-02-25 09:57:51
+File: /var/www/html/src/Model/User.php
+Line: 90
+Message: Model\User::hydrateAll(): Return value must be of type array, Model\User returned
+
+Date: 2024-02-25 10:08:52
+File: /var/www/html/src/Model/User.php
+Line: 90
+Message: Model\User::hydrateAll(): Return value must be of type array, Model\User returned
+

@@ -1,10 +1,11 @@
 <?php
 
-namespace Request;
+namespace Request\Api;
 
-class LoginRequest extends Request
+use Request\Request;
+
+class CreateUserRequest extends Request
 {
-
     public function getName(): string
     {
         return $this->body['name'];
@@ -24,18 +25,16 @@ class LoginRequest extends Request
     {
         $errors = [];
 
-        if (isset($this->body['email'])) {
-            $email = $this->body['email'];
-        } else {
+        if (!isset($this->body['name'])) {
+            $errors['name'] = 'Поле name не указано';
+        }
+        if (!isset($this->body['email'])) {
             $errors['email'] = 'Поле email не указано';
         }
-        if (isset($this->body['psw'])) {
-            $password = $this->body['psw'];
-        } else {
+        if (!isset($this->body['psw'])) {
             $errors['psw'] = 'Поле password не указано';
         }
 
         return $errors;
     }
-
 }

@@ -14,4 +14,22 @@ class RemoveProductRequest extends Request
     {
         return $this->body['product-id'];
     }
+
+    public function validate(): array
+    {
+        $errors = [];
+        $productId = $this->getProductId();
+        $userId = $this->getUserId();
+
+        if (empty($productId))
+        {
+            $errors['product-id'] =  "Поле product-id не заполнено";
+        }
+
+        if (empty($userId)) {
+            $errors['user-id'] = "Поле user-id не заполнено";
+        }
+
+        return $errors;
+    }
 }

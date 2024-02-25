@@ -1,6 +1,7 @@
 <?php
 
 namespace Model;
+
 class UserProduct extends Model
 {
     private int $id;

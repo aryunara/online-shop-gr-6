@@ -84,6 +84,7 @@ class OrderRequest extends Request
         } else {
             $errors['address_input'] = 'Поле address не указано';
         }
+
         return $errors;
     }
 }
